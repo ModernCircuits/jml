@@ -6,13 +6,14 @@
 #include <sol/sol.hpp>
 
 struct MainComponent : juce::Component {
-  MainComponent();
+    MainComponent();
+    ~MainComponent() = default;
 
-  void paint(juce::Graphics &) override;
-  void resized() override;
+    void resized() override;
 
 private:
-  auto mouseDown(juce::MouseEvent const &event) -> void override;
-  sol::state _lua;
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)
+    std::unique_ptr<juce::Component> _comp { nullptr };
+    juce::TextButton _button { "Reload" };
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)
 };
