@@ -5,7 +5,6 @@
 #define SOL_ALL_SAFETIES_ON 1
 #include <sol/sol.hpp>
 
-namespace mc {
 template <typename T, typename State>
 auto add_juce_rectangle(State& state, char const* name) -> void
 {
@@ -85,16 +84,38 @@ auto add_juce_mouse_event(State& state) -> void
     event["tiltY"]       = &juce::MouseEvent::tiltY;
 }
 
+template <typename State>
+auto add_juce_component(State& state) -> void
+{
+    // clang-format off
+    auto comp = state.new_usertype<juce::Component>("Component");
+    comp.set_function("getName",            &juce::Component::getName);
+    comp.set_function("setName",            &juce::Component::setName);
+    comp.set_function("getComponentID",     &juce::Component::getComponentID);
+    comp.set_function("setComponentID",     &juce::Component::setComponentID);
+    comp.set_function("setVisible",         &juce::Component::setVisible);
+    comp.set_function("isVisible",          &juce::Component::isVisible);
+    comp.set_function("getBounds",          &juce::Component::getBounds);
+    comp.set_function("getLocalBounds",     &juce::Component::getLocalBounds);
+    comp.set_function("getBoundsInParent",  &juce::Component::getBoundsInParent);
+    comp.set_function("repaint", sol::overload(
+            static_cast<void (juce::Component::*)()>(&juce::Component::repaint),
+            static_cast<void (juce::Component::*)(juce::Rectangle<int>)>(&juce::Component::repaint),
+            static_cast<void (juce::Component::*)(int, int, int, int)>(&juce::Component::repaint)
+        )
+    );
+    // clang-format on
+}
+
 auto add_juce_module(sol::state& lua) -> void
 {
     auto juceModule = lua["juce"].get_or_create<sol::table>();
     add_juce_rectangle<int>(juceModule, "RectangleInt");
     add_juce_rectangle<float>(juceModule, "RectangleFloat");
     add_juce_rectangle<double>(juceModule, "RectangleDouble");
-
     add_juce_colour(juceModule);
     add_juce_graphics(juceModule);
     add_juce_random(juceModule);
     add_juce_mouse_event(juceModule);
+    add_juce_component(juceModule);
 }
-} // namespace mc
