@@ -14,6 +14,9 @@ struct LuaComponent final : juce::Component {
         _lua.script_file(script);
         sol::protected_function scriptConstruct = _lua["construct"];
         scriptConstruct(std::ref(*static_cast<juce::Component*>(this)));
+
+        sol::protected_function tests = _lua["unit_tests"];
+        tests();
     }
 
     void paint(juce::Graphics& g) override

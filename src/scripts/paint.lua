@@ -9,7 +9,7 @@ function randomColor ()
   return juce.Colour.new(r, g, b, 255);
 end
 
-btn_1 = juce.TextButton.new(juce.String.new("Test 4564654"))
+btn_1 = juce.TextButton.new(juce.String.new("Test 1"))
 btn_2 = juce.TextButton.new(juce.String.new("Test 2"))
 
 function construct(comp)
@@ -35,4 +35,30 @@ end
 
 function mouseDown(comp, event)
   comp:repaint()
+end
+
+function test_BigInteger()
+  local bigInt = juce.BigInteger.new()
+  assert(bigInt:isZero())
+  assert(not bigInt:isOne())
+
+  assert(bigInt:getHighestBit() == -1)
+  bigInt:setBit(0)
+  assert(bigInt:getHighestBit() == 0)
+  bigInt:setBit(1)
+  assert(bigInt:getHighestBit() == 1)
+
+  local other = juce.BigInteger.new()
+  other:swapWith(bigInt)
+
+  assert(bigInt:isZero())
+  assert(not bigInt:isOne())
+  assert(not other:isZero())
+  assert(not other:isOne())
+  assert(other:getHighestBit() == 1)
+
+end
+
+function unit_tests()
+  test_BigInteger()
 end
