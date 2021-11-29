@@ -1,0 +1,7 @@
+.atom
+.idea
+.vs
+.vscode
+
+/build
+/cmake-build*

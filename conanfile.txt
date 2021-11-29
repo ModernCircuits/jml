@@ -1,0 +1,10 @@
+[requires]
+sol2/3.2.3
+
+[options]
+
+[generators]
+cmake_find_package
+
+[imports]
+., license* -> ./licenses @ folder=True, ignore_case=True
