@@ -9,10 +9,14 @@ function randomColor ()
   return juce.Colour.new(r, g, b, 255);
 end
 
-button = juce.TextButton.new(juce.String.new("Test"))
+btn_1 = juce.TextButton.new(juce.String.new("Test 4564654"))
+btn_2 = juce.TextButton.new(juce.String.new("Test 2"))
 
 function construct(comp)
-  comp:addAndMakeVisible(button, -1)
+  btn_1.onClick = function() print("Button 1") end
+  btn_2.onClick = function() print("Button 2") end
+  comp:addAndMakeVisible(btn_1, -1)
+  comp:addAndMakeVisible(btn_2, -1)
 end
 
 function paint (comp, g)
@@ -24,7 +28,9 @@ function paint (comp, g)
 end
 
 function resized(comp)
-  button:setBounds(comp:getLocalBounds():reduced(160))
+  local area = comp:getLocalBounds()
+  btn_1:setBounds(10,10,150,150)
+  btn_2:setBounds(10,200,250,150)
 end
 
 function mouseDown(comp, event)
