@@ -1,0 +1,25 @@
+---
+BasedOnStyle: WebKit
+AlignConsecutiveAssignments: true
+AlignEscapedNewlines: Right
+AlignOperands: true
+AlignTrailingComments: true
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowShortBlocksOnASingleLine: true
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: All
+AllowShortIfStatementsOnASingleLine: true
+AllowShortLoopsOnASingleLine: true
+AlwaysBreakTemplateDeclarations: true
+BinPackArguments: false
+BinPackParameters: false
+ColumnLimit: 120
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+FixNamespaceComments: true
+IndentPPDirectives: BeforeHash
+Language: Cpp
+NamespaceIndentation: None
+ReflowComments: true
+Standard: Auto
+UseTab: Never
+...
