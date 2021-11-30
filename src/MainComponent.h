@@ -7,7 +7,7 @@
 
 struct MainComponent : juce::Component {
     MainComponent();
-    ~MainComponent() = default;
+    ~MainComponent() override = default;
 
     void resized() override;
 

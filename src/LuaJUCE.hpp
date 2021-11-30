@@ -5,42 +5,54 @@
 #define SOL_ALL_SAFETIES_ON 1
 #include <sol/sol.hpp>
 
-template <typename T, typename State>
-auto add_juce_rectangle(State& state, char const* name) -> void
+template <typename T>
+auto add_juce_rectangle(auto& state, char const* name) -> void
 {
     // clang-format off
-    auto rect = state.new_usertype<juce::Rectangle<T>>(name,
-        sol::constructors<juce::Rectangle<T>(), juce::Rectangle<T>(T, T, T, T)>(),
-        "x",
-        sol::property(&juce::Rectangle<T>::getX, &juce::Rectangle<T>::setX),
-        "y",
-        sol::property(&juce::Rectangle<T>::getY, &juce::Rectangle<T>::setY)
+    auto rect = state.template new_usertype< juce::Rectangle<T> >(name,
+        sol::constructors<juce::Rectangle<T>(), juce::Rectangle<T>(T, T, T, T)>()
     );
-    rect.set_function("reduced", sol::overload(
+    rect["reduced"] = sol::overload(
             static_cast<juce::Rectangle<T> (juce::Rectangle<T>::*)(T) const noexcept>(&juce::Rectangle<T>::reduced),
             static_cast<juce::Rectangle<T> (juce::Rectangle<T>::*)(T, T) const noexcept>(&juce::Rectangle<T>::reduced)
-        )
     );
-    rect.set_function("reduce", &juce::Rectangle<T>::reduce);
-    rect.set_function("toDouble", &juce::Rectangle<T>::toDouble);
-    rect.set_function("toFloat", &juce::Rectangle<T>::toFloat);
-    rect.set_function("toNearestInt", &juce::Rectangle<T>::toNearestInt);
-    rect.set_function("toNearestIntEdges", &juce::Rectangle<T>::toNearestIntEdges);
     // clang-format on
+
+    rect["getX"]              = &juce::Rectangle<T>::getX;
+    rect["setX"]              = &juce::Rectangle<T>::setX;
+    rect["getY"]              = &juce::Rectangle<T>::getY;
+    rect["setY"]              = &juce::Rectangle<T>::setY;
+    rect["getWidth"]          = &juce::Rectangle<T>::getWidth;
+    rect["setWidth"]          = &juce::Rectangle<T>::setWidth;
+    rect["getHeight"]         = &juce::Rectangle<T>::getHeight;
+    rect["setHeight"]         = &juce::Rectangle<T>::setHeight;
+    rect["translate"]         = &juce::Rectangle<T>::translate;
+    rect["translated"]        = &juce::Rectangle<T>::translated;
+    rect["removeFromTop"]     = &juce::Rectangle<T>::removeFromTop;
+    rect["removeFromBottom"]  = &juce::Rectangle<T>::removeFromBottom;
+    rect["removeFromLeft"]    = &juce::Rectangle<T>::removeFromLeft;
+    rect["removeFromRight"]   = &juce::Rectangle<T>::removeFromRight;
+    rect["toDouble"]          = &juce::Rectangle<T>::toDouble;
+    rect["toFloat"]           = &juce::Rectangle<T>::toFloat;
+    rect["toNearestInt"]      = &juce::Rectangle<T>::toNearestInt;
+    rect["isEmpty"]           = &juce::Rectangle<T>::isEmpty;
+    rect["isFinite"]          = &juce::Rectangle<T>::isFinite;
+    rect["toNearestIntEdges"] = &juce::Rectangle<T>::toNearestIntEdges;
+    rect["toNearestIntEdges"] = &juce::Rectangle<T>::toNearestIntEdges;
+    rect["toNearestIntEdges"] = &juce::Rectangle<T>::toNearestIntEdges;
+    rect["reduce"]            = &juce::Rectangle<T>::reduce;
 }
 
-template <typename State>
-auto add_juce_colour(State& state) -> void
+auto add_juce_colour(auto& state) -> void
 {
-    state.new_usertype<juce::Colour>("Colour",
+    state.template new_usertype<juce::Colour>("Colour",
         sol::constructors<juce::Colour(), juce::Colour(juce::uint8, juce::uint8, juce::uint8, juce::uint8)>());
 }
 
-template <typename State>
-auto add_juce_graphics(State& state) -> void
+auto add_juce_graphics(auto& state) -> void
 {
     // clang-format off
-    auto g = state.new_usertype<juce::Graphics>("Graphics");
+    auto g = state.template new_usertype<juce::Graphics>("Graphics");
     g.set_function("setColour", static_cast<void (juce::Graphics::*)(juce::Colour)>(&juce::Graphics::setColour));
     g.set_function("fillAll", sol::overload(
             static_cast<void (juce::Graphics::*)() const>(&juce::Graphics::fillAll),
@@ -74,11 +86,11 @@ auto add_juce_graphics(State& state) -> void
     // clang-format on
 }
 
-template <typename T, typename State>
-auto add_juce_range(State& state, char const* name) -> void
+template <typename T>
+auto add_juce_range(auto& state, char const* name) -> void
 {
     // clang-format off
-    auto range = state.new_usertype<juce::Range<T>>(name,
+    auto range = state.template new_usertype<juce::Range<T>>(name,
         sol::constructors<juce::Range<T>(), juce::Range<T>(T, T)>(),
         "start",
         sol::property(&juce::Range<T>::getStart, &juce::Range<T>::setStart),
@@ -88,11 +100,10 @@ auto add_juce_range(State& state, char const* name) -> void
     // clang-format on
 }
 
-template <typename State>
-auto add_juce_random(State& state) -> void
+auto add_juce_random(auto& state) -> void
 {
     // clang-format off
-    auto rand = state.new_usertype<juce::Random>("Random");
+    auto rand = state.template new_usertype<juce::Random>("Random");
     rand.set_function("setSeed", &juce::Random::setSeed);
     rand.set_function("getSeed", &juce::Random::getSeed);
     rand.set_function("nextBool", &juce::Random::nextBool);
@@ -108,10 +119,9 @@ auto add_juce_random(State& state) -> void
     // clang-format on
 }
 
-template <typename State>
-auto add_juce_mouse_event(State& state) -> void
+auto add_juce_mouse_event(auto& state) -> void
 {
-    auto event           = state.new_usertype<juce::MouseEvent>("MouseEvent");
+    auto event           = state.template new_usertype<juce::MouseEvent>("MouseEvent");
     event["x"]           = &juce::MouseEvent::x;
     event["y"]           = &juce::MouseEvent::y;
     event["pressure"]    = &juce::MouseEvent::pressure;
@@ -121,11 +131,10 @@ auto add_juce_mouse_event(State& state) -> void
     event["tiltY"]       = &juce::MouseEvent::tiltY;
 }
 
-template <typename State>
-auto add_juce_component(State& state) -> void
+auto add_juce_component(auto& state) -> void
 {
     // clang-format off
-    auto comp = state.new_usertype<juce::Component>("Component");
+    auto comp = state.template new_usertype<juce::Component>("Component");
     comp.set_function("paint",              &juce::Component::paint);
     comp.set_function("resized",            &juce::Component::resized);
     comp.set_function("getName",            &juce::Component::getName);
@@ -156,21 +165,19 @@ auto add_juce_component(State& state) -> void
     // clang-format on
 }
 
-template <typename State>
-auto add_juce_string(State& state) -> void
+auto add_juce_string(auto& state) -> void
 {
     // clang-format off
-    auto comp = state.new_usertype<juce::String>("String",
+    auto comp = state.template new_usertype<juce::String>("String",
         sol::constructors<juce::String(), juce::String(char const*)>()
     );
     // clang-format on
 }
 
-template <typename State>
-auto add_juce_textbutton(State& state) -> void
+auto add_juce_textbutton(auto& state) -> void
 {
     // clang-format off
-    auto button = state.new_usertype<juce::TextButton>("TextButton",
+    auto button = state.template new_usertype<juce::TextButton>("TextButton",
         sol::constructors<juce::TextButton(), juce::TextButton(juce::String const&), juce::TextButton(juce::String const&, juce::String const&)>(),
         sol::base_classes, sol::bases<juce::Component>()
     );
@@ -178,11 +185,10 @@ auto add_juce_textbutton(State& state) -> void
     // clang-format on
 }
 
-template <typename State>
-auto add_juce_biginteger(State& state) -> void
+auto add_juce_biginteger(auto& state) -> void
 {
     // clang-format off
-    auto bigInt = state.new_usertype<juce::BigInteger>("BigInteger",
+    auto bigInt = state.template new_usertype<juce::BigInteger>("BigInteger",
         sol::constructors<
             juce::BigInteger(),
             juce::BigInteger(juce::uint32),

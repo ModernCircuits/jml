@@ -2,7 +2,7 @@
 
 #include "LuaJUCE.hpp"
 
-auto const* script = R"(C:\Developer\moderncircuits\tests\juce-lua\src\scripts\paint.lua)";
+auto const* script = R"(/home/tobante/Developer/tobanteAudio/lua-juce/src/scripts/paint.lua)";
 
 struct LuaComponent final : juce::Component {
 

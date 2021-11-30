@@ -9,14 +9,17 @@ function randomColor ()
   return juce.Colour.new(r, g, b, 255);
 end
 
-btn_1 = juce.TextButton.new(juce.String.new("Test 1"))
-btn_2 = juce.TextButton.new(juce.String.new("Test 2"))
+btn_1 = juce.TextButton.new(juce.String.new("Foo"))
+btn_2 = juce.TextButton.new(juce.String.new("Bar"))
+btn_3 = juce.TextButton.new(juce.String.new("Baz"))
 
 function construct(comp)
   btn_1.onClick = function() print("Button 1") end
   btn_2.onClick = function() print("Button 2") end
+  btn_3.onClick = function() comp:repaint() end
   comp:addAndMakeVisible(btn_1, -1)
   comp:addAndMakeVisible(btn_2, -1)
+  comp:addAndMakeVisible(btn_3, -1)
 end
 
 function paint (comp, g)
@@ -29,12 +32,13 @@ end
 
 function resized(comp)
   local area = comp:getLocalBounds()
-  btn_1:setBounds(10,10,150,150)
+  local b = juce.RectangleInt.new(10,10,150,150)
+  btn_1:setBounds(b)
   btn_2:setBounds(10,200,250,150)
+  btn_3:setBounds(400,200,250,150)
 end
 
 function mouseDown(comp, event)
-  comp:repaint()
 end
 
 function test_BigInteger()
