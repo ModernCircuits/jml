@@ -5,6 +5,44 @@
 #define SOL_ALL_SAFETIES_ON 1
 #include <sol/sol.hpp>
 
+struct LuaComp : juce::Component {
+    LuaComp(sol::this_state L)
+        : scriptPaint(sol::make_reference<sol::function>(L.lua_state(), [](juce::Graphics&, char const*) {}))
+        , scriptResized(sol::make_reference<sol::function>(L.lua_state(), []() -> void {}))
+    {
+    }
+
+    ~LuaComp() override = default;
+
+    auto paint(juce::Graphics& g) -> void override
+    {
+        g.fillAll(juce::Colours::pink);
+        if (scriptPaint.valid()) { scriptPaint(std::ref(*this), std::ref(g), "foo"); }
+    }
+
+    auto resized() -> void override
+    {
+        if (scriptResized.valid()) { scriptResized(std::ref(*this)); }
+    }
+
+    sol::function scriptPaint;
+    sol::function scriptResized;
+};
+
+auto add_lua_comp(auto& state) -> void
+{
+    // clang-format off
+    state.template new_usertype<LuaComp>("LuaComp",
+	    sol::constructors<LuaComp(sol::this_state)>(),
+        sol::base_classes, sol::bases<juce::Component>(),
+	    "paint",
+	    &LuaComp::scriptPaint,
+        "resized",
+	    &LuaComp::scriptResized
+    );
+    // clang-format on
+}
+
 template <typename T>
 auto add_juce_rectangle(auto& state, char const* name) -> void
 {
@@ -253,4 +291,5 @@ auto add_juce_module(sol::state& lua) -> void
     add_juce_component(juceModule);
     add_juce_textbutton(juceModule);
     add_juce_biginteger(juceModule);
+    add_lua_comp(juceModule);
 }

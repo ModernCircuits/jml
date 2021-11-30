@@ -1,6 +1,9 @@
-grey = juce.Colour.new(8,8,8,255);
-black = juce.Colour.new(0,0,0,255);
-white = juce.Colour.new(255,255,255,255);
+local white = juce.Colour.new(255, 255, 255, 255)
+local black = juce.Colour.new(  0,   0,   0, 255)
+local red   = juce.Colour.new(255,   0,   0, 255)
+local green = juce.Colour.new(  0, 255,   0, 255)
+local blue  = juce.Colour.new(  0,   0, 255, 255)
+local grey  = juce.Colour.new( 25,  25,  25, 255)
 
 function randomColor ()
   local r = random:nextInt(255)
@@ -9,9 +12,20 @@ function randomColor ()
   return juce.Colour.new(r, g, b, 255);
 end
 
-btn_1 = juce.TextButton.new(juce.String.new("Foo"))
-btn_2 = juce.TextButton.new(juce.String.new("Bar"))
-btn_3 = juce.TextButton.new(juce.String.new("Baz"))
+local btn_1 = juce.TextButton.new(juce.String.new("Foo"))
+local btn_2 = juce.TextButton.new(juce.String.new("Bar"))
+local btn_3 = juce.TextButton.new(juce.String.new("Baz"))
+
+local lcomp = juce.LuaComp.new()
+
+function lcomp:paint(g, txt)
+  g:fillAll(red)
+  -- print(txt)
+end
+
+function lcomp:resized()
+  print("r")
+end
 
 function construct(comp)
   btn_1.onClick = function() print("Button 1") end
@@ -20,6 +34,7 @@ function construct(comp)
   comp:addAndMakeVisible(btn_1, -1)
   comp:addAndMakeVisible(btn_2, -1)
   comp:addAndMakeVisible(btn_3, -1)
+  comp:addAndMakeVisible(lcomp, -1)
 end
 
 function paint (comp, g)
@@ -36,6 +51,7 @@ function resized(comp)
   btn_1:setBounds(b)
   btn_2:setBounds(10,200,250,150)
   btn_3:setBounds(400,200,250,150)
+  lcomp:setBounds(300,300,50,50)
 end
 
 function mouseDown(comp, event)
