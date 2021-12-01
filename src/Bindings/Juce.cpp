@@ -420,7 +420,7 @@ auto juce_BigInteger(sol::table& state) -> void
     bigInt["loadFromMemoryBlock"]       = &juce::BigInteger::loadFromMemoryBlock;
 }
 
-struct LuaComponent : juce::Component {
+struct LuaComponent final : juce::Component {
     LuaComponent()           = default;
     ~LuaComponent() override = default;
 

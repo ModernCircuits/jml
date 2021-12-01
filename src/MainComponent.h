@@ -12,7 +12,10 @@ struct MainComponent : juce::Component {
     void resized() override;
 
 private:
-    std::unique_ptr<juce::Component> _comp { nullptr };
+    auto reloadScript(juce::File const& path) -> void;
+
+    sol::state _lua;
+    juce::Component* _comp { nullptr };
     juce::TextButton _button { "Reload" };
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)

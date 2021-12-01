@@ -6,13 +6,13 @@ local slider_1 = juce.Slider.new()
 mainComponent:addAndMakeVisible(btn_1, -1)
 mainComponent:addAndMakeVisible(btn_2, -1)
 mainComponent:addAndMakeVisible(slider_1, -1)
+
 btn_1.onClick = function() print("Button 1") end
 btn_2.onClick = function() mainComponent:repaint() end
 
-function mainComponent:paint(g, txt)
-  g:fillAll(juce.Colours.cadetblue)
-  -- local area = mainComponent:getLocalBounds():reduced(random:nextInt(150))
-  -- g:fillRoundedRectangle(area:toFloat(), 5)
+function mainComponent:paint(g)
+  g:setColour(juce.Colours.cadetblue)
+  g:fillAll()
 end
 
 function mainComponent:resized()
@@ -22,13 +22,4 @@ function mainComponent:resized()
   slider_1:setBounds(10, 200, 250, 150)
 end
 
-function construct(comp) comp:addAndMakeVisible(mainComponent, -1) end
-
-function paint(comp, g) g:fillAll(juce.Colours.black) end
-
-function resized(comp)
-  local area = comp:getLocalBounds()
-  mainComponent:setBounds(area)
-end
-
-function mouseDown(comp, event) end
+return mainComponent
