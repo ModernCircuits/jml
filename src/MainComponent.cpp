@@ -2,19 +2,24 @@
 
 #include "Bindings/Juce.hpp"
 
-auto const* scriptPath = R"(/home/tobante/Developer/tobanteAudio/lua-juce/src/scripts/demo_Components.lua)";
+auto const* defaultScriptPath = R"(/home/tobante/Developer/tobanteAudio/lua-juce/src/scripts/demo_Components.lua)";
 
-MainComponent::MainComponent()
+MainComponent::MainComponent() : _currentScript(defaultScriptPath)
 {
-    addAndMakeVisible(_button);
     setSize(1280, 720);
-    _button.onClick = [this] { reloadScript(juce::File { scriptPath }); };
+    addAndMakeVisible(_select);
+    _select.onClick = [this] { loadScriptPath(); };
+    addAndMakeVisible(_reload);
+    _reload.onClick = [this] { reloadScript(_currentScript); };
 }
 
 void MainComponent::resized()
 {
-    auto area = getLocalBounds();
-    _button.setBounds(area.removeFromBottom(area.proportionOfHeight(0.1)));
+    auto area    = getLocalBounds();
+    auto btnArea = area.removeFromBottom(area.proportionOfHeight(0.1));
+    _select.setBounds(btnArea.removeFromLeft(btnArea.proportionOfWidth(0.5)));
+    _reload.setBounds(btnArea);
+
     if (_comp != nullptr) { _comp->setBounds(area); }
 }
 
@@ -31,4 +36,17 @@ auto MainComponent::reloadScript(juce::File const& path) -> void
         addAndMakeVisible(*_comp);
         resized();
     }
+}
+
+auto MainComponent::loadScriptPath() -> void
+{
+    auto const* msg = "Please select the lua script you want to load...";
+    auto const dir  = juce::File::getSpecialLocation(juce::File::currentApplicationFile);
+    _fileChooser    = std::make_unique<juce::FileChooser>(msg, dir, "*.lua");
+    _fileChooser->launchAsync(juce::FileBrowserComponent::openMode, [this](auto const& chooser) {
+        if (auto results = chooser.getResults(); results.size() == 1) {
+            _currentScript = results[0];
+            reloadScript(_currentScript);
+        }
+    });
 }
