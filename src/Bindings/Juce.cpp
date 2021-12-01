@@ -352,6 +352,23 @@ auto juce_TextButton(sol::table& state) -> void
     // clang-format on
 }
 
+auto juce_Slider(sol::table& state) -> void
+{
+    // clang-format off
+    auto slider = state.new_usertype<juce::Slider>("Slider",
+        sol::constructors<
+            juce::Slider(),
+            juce::Slider(juce::String const&)
+        >(),
+        sol::base_classes, sol::bases<juce::Component>()
+    );
+    // clang-format on
+    auto params                 = state.new_usertype<juce::Slider::RotaryParameters>("SliderRotaryParameters");
+    params["startAngleRadians"] = &juce::Slider::RotaryParameters::startAngleRadians;
+    params["endAngleRadians"]   = &juce::Slider::RotaryParameters::endAngleRadians;
+    params["stopAtEnd"]         = &juce::Slider::RotaryParameters::stopAtEnd;
+}
+
 auto juce_BigInteger(sol::table& state) -> void
 {
     // clang-format off
@@ -510,20 +527,29 @@ auto juce_LuaComponent(sol::table& state) -> void
 auto add_juce_module(sol::state& lua) -> void
 {
     sol::table juceModule = lua["juce"].get_or_create<sol::table>();
-    juce_Rectangle<int>(juceModule, "RectangleInt");
-    juce_Rectangle<float>(juceModule, "RectangleFloat");
-    juce_Rectangle<double>(juceModule, "RectangleDouble");
+
+    // juce_core
+    juce_BigInteger(juceModule);
+    juce_Random(juceModule);
     juce_Range<int>(juceModule, "RangeInt");
     juce_Range<float>(juceModule, "RangeFloat");
     juce_Range<double>(juceModule, "RangeDouble");
+    juce_String(juceModule);
+
+    // juce_graphics
     juce_Colour(juceModule);
     juce_Colours(juceModule);
     juce_Graphics(juceModule);
-    juce_Random(juceModule);
-    juce_MouseEvent(juceModule);
-    juce_String(juceModule);
+    juce_Rectangle<int>(juceModule, "RectangleInt");
+    juce_Rectangle<float>(juceModule, "RectangleFloat");
+    juce_Rectangle<double>(juceModule, "RectangleDouble");
+
+    // juce_gui_basics
     juce_Component(juceModule);
+    juce_MouseEvent(juceModule);
     juce_TextButton(juceModule);
-    juce_BigInteger(juceModule);
+    juce_Slider(juceModule);
+
+    // extra
     juce_LuaComponent(juceModule);
 }
