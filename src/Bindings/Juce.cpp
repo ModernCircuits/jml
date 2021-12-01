@@ -16,7 +16,7 @@ private:
         typename std::is_same<decltype(std::declval<T>().toString()), juce::String>::type;
 
     template <typename>
-    static constexpr std::false_type check(...);
+    static constexpr auto check(...) -> std::false_type;
 
     using type = decltype(check<C>(0));
 
@@ -455,6 +455,44 @@ auto juce_BigInteger(sol::table& state) -> void
     bigInt["loadFromMemoryBlock"]       = &juce::BigInteger::loadFromMemoryBlock;
 }
 
+auto juce_Timer(sol::table& state) -> void
+{
+    auto timer = state.new_usertype<juce::Timer>("Timer", sol::no_constructor);
+
+    timer["timerCallback"]                  = &juce::Timer::timerCallback;
+    timer["startTimer"]                     = &juce::Timer::startTimer;
+    timer["startTimerHz"]                   = &juce::Timer::startTimerHz;
+    timer["stopTimer"]                      = &juce::Timer::stopTimer;
+    timer["isTimerRunning"]                 = &juce::Timer::isTimerRunning;
+    timer["getTimerInterval"]               = &juce::Timer::getTimerInterval;
+    timer["callAfterDelay"]                 = &juce::Timer::callAfterDelay;
+    timer["callPendingTimersSynchronously"] = &juce::Timer::callPendingTimersSynchronously;
+}
+
+struct LuaTimer final : juce::Timer {
+    sol::function lua_timerCallback;
+
+    LuaTimer()           = default;
+    ~LuaTimer() override = default;
+
+    auto timerCallback() -> void override
+    {
+        if (lua_timerCallback.valid()) { lua_timerCallback(std::ref(*this)); }
+    }
+};
+
+auto juce_LuaTimer(sol::table& state) -> void
+{
+    // clang-format off
+    state.new_usertype<LuaTimer>("LuaTimer",
+	    sol::constructors<LuaTimer()>(),
+        sol::base_classes, sol::bases<juce::Timer>(),
+        "timerCallback",
+	    &LuaTimer::lua_timerCallback
+    );
+    // clang-format on
+}
+
 struct LuaComponent final : juce::Component {
     LuaComponent()           = default;
     ~LuaComponent() override = default;
@@ -571,6 +609,9 @@ auto add_juce_module(sol::state& lua) -> void
     juce_Range<double>(juceModule, "RangeDouble");
     juce_String(juceModule);
 
+    // juce_events
+    juce_Timer(juceModule);
+
     // juce_graphics
     juce_Colour(juceModule);
     juce_Colours(juceModule);
@@ -587,4 +628,5 @@ auto add_juce_module(sol::state& lua) -> void
 
     // extra
     juce_LuaComponent(juceModule);
+    juce_LuaTimer(juceModule);
 }

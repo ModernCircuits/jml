@@ -1,5 +1,3 @@
-function randomColor() return randomColorWithAlpha(255) end
-
 function randomColorWithAlpha(alpha)
   local sysRandom = juce.Random.getSystemRandom()
   local r = sysRandom:nextInt(255)
@@ -8,18 +6,26 @@ function randomColorWithAlpha(alpha)
   return juce.Colour.new(r, g, b, alpha)
 end
 
+function randomColor()
+  return randomColorWithAlpha(255)
+end
+
 local mainComponent = juce.LuaComponent.new()
 local btn_1 = juce.TextButton.new(juce.String.new("Foo"))
 local btn_2 = juce.TextButton.new(juce.String.new("Baz"))
 local slider_1 = juce.Slider.new()
-local color = juce.Colours.cadetblue;
+local color = juce.Colours.cadetblue
 
 mainComponent:addAndMakeVisible(btn_1)
 mainComponent:addAndMakeVisible(btn_2)
 mainComponent:addAndMakeVisible(slider_1)
 
-btn_1.onClick = function() print("Button 1") end
-btn_2.onClick = function() mainComponent:repaint() end
+btn_1.onClick = function()
+  print("Button 1")
+end
+btn_2.onClick = function()
+  mainComponent:repaint()
+end
 
 function mainComponent:paint(g)
   g:setColour(color)
@@ -39,5 +45,12 @@ function mainComponent:mouseDown()
   color = randomColor()
   mainComponent:repaint()
 end
+
+local timer = juce.LuaTimer.new()
+function timer:timerCallback()
+  color = randomColor()
+  mainComponent:repaint()
+end
+timer:startTimer(2000)
 
 return mainComponent
