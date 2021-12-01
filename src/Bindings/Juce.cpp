@@ -246,36 +246,40 @@ auto juce_BigInteger(sol::table& state) -> void
 }
 
 struct LuaComp : juce::Component {
-    LuaComp(sol::this_state L)
-        : scriptPaint(sol::make_reference<sol::function>(L.lua_state(), [](juce::Graphics&, char const*) {}))
-        , scriptResized(sol::make_reference<sol::function>(L.lua_state(), []() -> void {}))
+    LuaComp()
     {
+        if (scriptConstruct.valid()) { scriptConstruct(self()); }
     }
 
     ~LuaComp() override = default;
 
     auto paint(juce::Graphics& g) -> void override
     {
-        g.fillAll(juce::Colours::pink);
-        if (scriptPaint.valid()) { scriptPaint(std::ref(*this), std::ref(g), "foo"); }
+        if (scriptPaint.valid()) { scriptPaint(self(), std::ref(g)); }
     }
 
     auto resized() -> void override
     {
-        if (scriptResized.valid()) { scriptResized(std::ref(*this)); }
+        if (scriptResized.valid()) { scriptResized(self()); }
     }
 
+    sol::function scriptConstruct;
     sol::function scriptPaint;
     sol::function scriptResized;
+
+private:
+    auto self() -> std::reference_wrapper<LuaComp> { return std::ref(*this); }
 };
 
 auto juce_LuaComponent(sol::table& state) -> void
 {
     // clang-format off
     state.new_usertype<LuaComp>("LuaComp",
-	    sol::constructors<LuaComp(sol::this_state)>(),
+	    sol::constructors<LuaComp()>(),
         sol::base_classes, sol::bases<juce::Component>(),
-	    "paint",
+	    "construct",
+	    &LuaComp::scriptConstruct,
+        "paint",
 	    &LuaComp::scriptPaint,
         "resized",
 	    &LuaComp::scriptResized

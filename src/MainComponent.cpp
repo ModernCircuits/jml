@@ -4,9 +4,9 @@
 
 auto const* script = R"(/home/tobante/Developer/tobanteAudio/lua-juce/src/scripts/paint.lua)";
 
-struct LuaComponent final : juce::Component {
+struct ScriptContainer final : juce::Component {
 
-    LuaComponent()
+    ScriptContainer()
     {
         _lua.open_libraries(sol::lib::base);
         add_juce_module(_lua);
@@ -40,15 +40,15 @@ private:
 
     sol::state _lua;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LuaComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ScriptContainer)
 };
 
 MainComponent::MainComponent()
 {
     addAndMakeVisible(_button);
-    setSize(600, 400);
+    setSize(600, 600);
     _button.onClick = [this] {
-        _comp = std::make_unique<LuaComponent>();
+        _comp = std::make_unique<ScriptContainer>();
         addAndMakeVisible(*_comp);
         resized();
     };
