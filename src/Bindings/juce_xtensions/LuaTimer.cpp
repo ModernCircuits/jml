@@ -18,10 +18,10 @@ auto juce_LuaTimer(sol::table& state) -> void
 {
     // clang-format off
     state.new_usertype<LuaTimer>("LuaTimer",
-	    sol::constructors<LuaTimer()>(),
+        sol::constructors<LuaTimer()>(),
         sol::base_classes, sol::bases<juce::Timer>(),
         "timerCallback",
-	    &LuaTimer::lua_timerCallback
+        &LuaTimer::lua_timerCallback
     );
     // clang-format on
 }
