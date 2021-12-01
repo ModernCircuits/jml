@@ -140,6 +140,16 @@ auto juce_MouseEvent(sol::table& state) -> void
     event["tiltY"]       = &juce::MouseEvent::tiltY;
 }
 
+auto juce_MouseWheelDetails(sol::table& state) -> void
+{
+    auto wheel          = state.new_usertype<juce::MouseWheelDetails>("MouseWheelDetails");
+    wheel["deltaX"]     = &juce::MouseWheelDetails::deltaX;
+    wheel["deltaY"]     = &juce::MouseWheelDetails::deltaY;
+    wheel["isReversed"] = &juce::MouseWheelDetails::isReversed;
+    wheel["isSmooth"]   = &juce::MouseWheelDetails::isSmooth;
+    wheel["isInertial"] = &juce::MouseWheelDetails::isInertial;
+}
+
 auto juce_Component(sol::table& state) -> void
 {
     // clang-format off
@@ -245,44 +255,106 @@ auto juce_BigInteger(sol::table& state) -> void
     bigInt["loadFromMemoryBlock"]       = &juce::BigInteger::loadFromMemoryBlock;
 }
 
-struct LuaComp : juce::Component {
-    LuaComp()
-    {
-        if (scriptConstruct.valid()) { scriptConstruct(self()); }
-    }
+struct LuaComponent : juce::Component {
+    LuaComponent()           = default;
+    ~LuaComponent() override = default;
 
-    ~LuaComp() override = default;
+    // juce::Component
+    sol::function lua_paint;
+    sol::function lua_resized;
 
+    // juce::MouseListener
+    sol::function lua_mouseMove;
+    sol::function lua_mouseEnter;
+    sol::function lua_mouseExit;
+    sol::function lua_mouseDown;
+    sol::function lua_mouseDrag;
+    sol::function lua_mouseUp;
+    sol::function lua_mouseDoubleClick;
+    sol::function lua_mouseWheelMove;
+    sol::function lua_mouseMagnify;
+
+private:
+    auto self() -> std::reference_wrapper<LuaComponent> { return std::ref(*this); }
+
+    // juce::Component
     auto paint(juce::Graphics& g) -> void override
     {
-        if (scriptPaint.valid()) { scriptPaint(self(), std::ref(g)); }
+        if (lua_paint.valid()) { lua_paint(self(), std::ref(g)); }
     }
 
     auto resized() -> void override
     {
-        if (scriptResized.valid()) { scriptResized(self()); }
+        if (lua_resized.valid()) { lua_resized(self()); }
     }
 
-    sol::function scriptConstruct;
-    sol::function scriptPaint;
-    sol::function scriptResized;
-
-private:
-    auto self() -> std::reference_wrapper<LuaComp> { return std::ref(*this); }
+    // juce::MouseListener
+    auto mouseMove(juce::MouseEvent const& event) -> void override
+    {
+        if (lua_mouseMove.valid()) { lua_mouseMove(self(), std::cref(event)); }
+    }
+    auto mouseEnter(juce::MouseEvent const& event) -> void override
+    {
+        if (lua_mouseEnter.valid()) { lua_mouseEnter(self(), std::cref(event)); }
+    }
+    auto mouseExit(juce::MouseEvent const& event) -> void override
+    {
+        if (lua_mouseExit.valid()) { lua_mouseExit(self(), std::cref(event)); }
+    }
+    auto mouseDown(juce::MouseEvent const& event) -> void override
+    {
+        if (lua_mouseDown.valid()) { lua_mouseDown(self(), std::cref(event)); }
+    }
+    auto mouseDrag(juce::MouseEvent const& event) -> void override
+    {
+        if (lua_mouseDrag.valid()) { lua_mouseDrag(self(), std::cref(event)); }
+    }
+    auto mouseUp(juce::MouseEvent const& event) -> void override
+    {
+        if (lua_mouseUp.valid()) { lua_mouseUp(self(), std::cref(event)); }
+    }
+    auto mouseDoubleClick(juce::MouseEvent const& event) -> void override
+    {
+        if (lua_mouseDoubleClick.valid()) { lua_mouseDoubleClick(self(), std::cref(event)); }
+    }
+    auto mouseWheelMove(juce::MouseEvent const& event, juce::MouseWheelDetails const& wheel) -> void override
+    {
+        if (lua_mouseWheelMove.valid()) { lua_mouseWheelMove(self(), std::cref(event), std::cref(wheel)); }
+    }
+    auto mouseMagnify(juce::MouseEvent const& event, float scaleFactor) -> void override
+    {
+        if (lua_mouseMagnify.valid()) { lua_mouseMagnify(self(), std::cref(event), scaleFactor); }
+    }
 };
 
 auto juce_LuaComponent(sol::table& state) -> void
 {
     // clang-format off
-    state.new_usertype<LuaComp>("LuaComp",
-	    sol::constructors<LuaComp()>(),
+    state.new_usertype<LuaComponent>("LuaComponent",
+	    sol::constructors<LuaComponent()>(),
         sol::base_classes, sol::bases<juce::Component>(),
-	    "construct",
-	    &LuaComp::scriptConstruct,
         "paint",
-	    &LuaComp::scriptPaint,
+	    &LuaComponent::lua_paint,
         "resized",
-	    &LuaComp::scriptResized
+	    &LuaComponent::lua_resized,
+        "mouseMove",
+	    &LuaComponent::lua_mouseMove,
+        "mouseEnter",
+	    &LuaComponent::lua_mouseEnter,
+        "mouseExit",
+	    &LuaComponent::lua_mouseExit,
+        "mouseDown",
+	    &LuaComponent::lua_mouseDown,
+        "mouseDrag",
+	    &LuaComponent::lua_mouseDrag,
+        "mouseUp",
+	    &LuaComponent::lua_mouseUp,
+        "mouseDoubleClick",
+	    &LuaComponent::lua_mouseDoubleClick,
+        "mouseWheelMove",
+	    &LuaComponent::lua_mouseWheelMove,
+        "mouseMagnify",
+	    &LuaComponent::lua_mouseMagnify
     );
     // clang-format on
 }

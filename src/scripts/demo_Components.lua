@@ -12,25 +12,25 @@ function randomColor ()
   return juce.Colour.new(r, g, b, 255);
 end
 
-local lcomp = juce.LuaComp.new()
+local mainComponent = juce.LuaComponent.new()
 local btn_1 = juce.TextButton.new(juce.String.new("Foo"))
 local btn_2 = juce.TextButton.new(juce.String.new("Bar"))
 local btn_3 = juce.TextButton.new(juce.String.new("Baz"))
 
-lcomp:addAndMakeVisible(btn_1, -1)
-lcomp:addAndMakeVisible(btn_2, -1)
-lcomp:addAndMakeVisible(btn_3, -1)
+mainComponent:addAndMakeVisible(btn_1, -1)
+mainComponent:addAndMakeVisible(btn_2, -1)
+mainComponent:addAndMakeVisible(btn_3, -1)
 btn_1.onClick = function() print("Button 1") end
 btn_2.onClick = function() print("Button 2") end
-btn_3.onClick = function() lcomp:repaint() end
+btn_3.onClick = function() mainComponent:repaint() end
 
-function lcomp:paint(g, txt)
+function mainComponent:paint(g, txt)
   g:setColour(randomColor())
-  local area = lcomp:getLocalBounds():reduced(random:nextInt(150))
+  local area = mainComponent:getLocalBounds():reduced(random:nextInt(150))
   g:fillRoundedRectangle(area:toFloat(), 5)
 end
 
-function lcomp:resized()
+function mainComponent:resized()
   local b = juce.RectangleInt.new(10,10,40,40)
   btn_1:setBounds(b)
   btn_2:setBounds(10,200,250,150)
@@ -38,7 +38,7 @@ function lcomp:resized()
 end
 
 function construct(comp)
-  comp:addAndMakeVisible(lcomp, -1)
+  comp:addAndMakeVisible(mainComponent, -1)
 end
 
 function paint (comp, g)
@@ -47,7 +47,7 @@ end
 
 function resized(comp)
   local area = comp:getLocalBounds()
-  lcomp:setBounds(area)
+  mainComponent:setBounds(area)
 end
 
 function mouseDown(comp, event)
