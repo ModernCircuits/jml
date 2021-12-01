@@ -28,6 +28,7 @@ end
 
 function mainComponent:resized()
   local area = mainComponent:getLocalBounds()
+  print(area)
   local btn1Area = area:removeFromTop(50):reduced(5)
   btn_1:setBounds(btn1Area)
   btn_2:setBounds(400, 200, 250, 150)
