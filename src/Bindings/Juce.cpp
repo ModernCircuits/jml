@@ -261,6 +261,7 @@ auto juce_Random(sol::table& state) -> void
 {
     // clang-format off
     auto rand = state.new_usertype<juce::Random>("Random");
+    rand.set_function("getSystemRandom", &juce::Random::getSystemRandom);
     rand.set_function("setSeed", &juce::Random::setSeed);
     rand.set_function("getSeed", &juce::Random::getSeed);
     rand.set_function("nextBool", &juce::Random::nextBool);
@@ -315,7 +316,8 @@ auto juce_Component(sol::table& state) -> void
     comp.set_function("getBoundsInParent",  &juce::Component::getBoundsInParent);
     comp.set_function("addAndMakeVisible", sol::overload(
             static_cast<void (juce::Component::*)(juce::Component*, int)>(&juce::Component::addAndMakeVisible),
-            static_cast<void (juce::Component::*)(juce::Component&, int)>(&juce::Component::addAndMakeVisible)
+            static_cast<void (juce::Component::*)(juce::Component&, int)>(&juce::Component::addAndMakeVisible),
+            [](juce::Component* self, juce::Component* child) -> void { self->addAndMakeVisible(child, -1); }
         )
     );
     comp.set_function("setBounds", sol::overload(
