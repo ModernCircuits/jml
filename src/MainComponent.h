@@ -2,8 +2,7 @@
 
 #include <juce_gui_extra/juce_gui_extra.h>
 
-#define SOL_ALL_SAFETIES_ON 1
-#include <sol/sol.hpp>
+#include "Sol3.hpp"
 
 struct MainComponent : juce::Component {
     MainComponent();

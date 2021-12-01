@@ -40,8 +40,50 @@ target_sources(JuceLuaTest
         src/MainComponent.h
         src/MainComponent.cpp
 
-        src/Bindings/Juce.cpp
-        src/Bindings/Juce.hpp
+        "src/Bindings/Juce.cpp"
+        "src/Bindings/Juce.hpp"
+
+        "src/Bindings/juce_core/BigInteger.cpp"
+        "src/Bindings/juce_core/BigInteger.hpp"
+        "src/Bindings/juce_core/Random.cpp"
+        "src/Bindings/juce_core/Random.hpp"
+        "src/Bindings/juce_core/Range.cpp"
+        "src/Bindings/juce_core/Range.hpp"
+        "src/Bindings/juce_core/String.cpp"
+        "src/Bindings/juce_core/String.hpp"
+
+        "src/Bindings/juce_events/Timer.cpp"
+        "src/Bindings/juce_events/Timer.hpp"
+
+        "src/Bindings/juce_graphics/Colour.cpp"
+        "src/Bindings/juce_graphics/Colour.hpp"
+        "src/Bindings/juce_graphics/Colours.cpp"
+        "src/Bindings/juce_graphics/Colours.hpp"
+        "src/Bindings/juce_graphics/Graphics.cpp"
+        "src/Bindings/juce_graphics/Graphics.hpp"
+        "src/Bindings/juce_graphics/Rectangle.cpp"
+        "src/Bindings/juce_graphics/Rectangle.hpp"
+
+        "src/Bindings/juce_gui_basics/Component.cpp"
+        "src/Bindings/juce_gui_basics/Component.hpp"
+        "src/Bindings/juce_gui_basics/MouseEvent.cpp"
+        "src/Bindings/juce_gui_basics/MouseEvent.hpp"
+        "src/Bindings/juce_gui_basics/MouseWheelDetails.cpp"
+        "src/Bindings/juce_gui_basics/MouseWheelDetails.hpp"
+        "src/Bindings/juce_gui_basics/Slider.cpp"
+        "src/Bindings/juce_gui_basics/Slider.hpp"
+        "src/Bindings/juce_gui_basics/TextButton.cpp"
+        "src/Bindings/juce_gui_basics/TextButton.hpp"
+
+        "src/Bindings/juce_xtensions/LuaComponent.cpp"
+        "src/Bindings/juce_xtensions/LuaComponent.hpp"
+        "src/Bindings/juce_xtensions/LuaTimer.cpp"
+        "src/Bindings/juce_xtensions/LuaTimer.hpp"
+)
+
+target_include_directories(JuceLuaTest
+    PUBLIC
+        ${PROJECT_SOURCE_DIR}/src
 )
 
 target_compile_definitions(JuceLuaTest
