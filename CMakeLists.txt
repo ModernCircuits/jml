@@ -39,6 +39,9 @@ target_sources(JuceLuaTest
         src/Main.cpp
         src/MainComponent.h
         src/MainComponent.cpp
+
+        src/Bindings/Juce.cpp
+        src/Bindings/Juce.hpp
 )
 
 target_compile_definitions(JuceLuaTest

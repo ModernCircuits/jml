@@ -1,54 +1,19 @@
-#pragma once
-
-#include <juce_gui_extra/juce_gui_extra.h>
+#include "Juce.hpp"
 
 #define SOL_ALL_SAFETIES_ON 1
 #include <sol/sol.hpp>
 
-struct LuaComp : juce::Component {
-    LuaComp(sol::this_state L)
-        : scriptPaint(sol::make_reference<sol::function>(L.lua_state(), [](juce::Graphics&, char const*) {}))
-        , scriptResized(sol::make_reference<sol::function>(L.lua_state(), []() -> void {}))
-    {
-    }
-
-    ~LuaComp() override = default;
-
-    auto paint(juce::Graphics& g) -> void override
-    {
-        g.fillAll(juce::Colours::pink);
-        if (scriptPaint.valid()) { scriptPaint(std::ref(*this), std::ref(g), "foo"); }
-    }
-
-    auto resized() -> void override
-    {
-        if (scriptResized.valid()) { scriptResized(std::ref(*this)); }
-    }
-
-    sol::function scriptPaint;
-    sol::function scriptResized;
-};
-
-auto add_lua_comp(auto& state) -> void
-{
-    // clang-format off
-    state.template new_usertype<LuaComp>("LuaComp",
-	    sol::constructors<LuaComp(sol::this_state)>(),
-        sol::base_classes, sol::bases<juce::Component>(),
-	    "paint",
-	    &LuaComp::scriptPaint,
-        "resized",
-	    &LuaComp::scriptResized
-    );
-    // clang-format on
-}
+#include <juce_gui_extra/juce_gui_extra.h>
 
 template <typename T>
-auto add_juce_rectangle(auto& state, char const* name) -> void
+auto juce_Rectangle(sol::table& state, char const* name) -> void
 {
     // clang-format off
-    auto rect = state.template new_usertype< juce::Rectangle<T> >(name,
-        sol::constructors<juce::Rectangle<T>(), juce::Rectangle<T>(T, T, T, T)>()
+    auto rect = state.new_usertype<juce::Rectangle<T>>(name,
+        sol::constructors<
+            juce::Rectangle<T>(),
+            juce::Rectangle<T>(T, T, T, T)
+        >()
     );
     rect["reduced"] = sol::overload(
             static_cast<juce::Rectangle<T> (juce::Rectangle<T>::*)(T) const noexcept>(&juce::Rectangle<T>::reduced),
@@ -81,16 +46,22 @@ auto add_juce_rectangle(auto& state, char const* name) -> void
     rect["reduce"]            = &juce::Rectangle<T>::reduce;
 }
 
-auto add_juce_colour(auto& state) -> void
-{
-    state.template new_usertype<juce::Colour>("Colour",
-        sol::constructors<juce::Colour(), juce::Colour(juce::uint8, juce::uint8, juce::uint8, juce::uint8)>());
-}
-
-auto add_juce_graphics(auto& state) -> void
+auto juce_Colour(sol::table& state) -> void
 {
     // clang-format off
-    auto g = state.template new_usertype<juce::Graphics>("Graphics");
+    state.new_usertype<juce::Colour>("Colour",
+        sol::constructors<
+            juce::Colour(),
+            juce::Colour(juce::uint8, juce::uint8, juce::uint8, juce::uint8)
+        >()
+    );
+    // clang-format on
+}
+
+auto juce_Graphics(sol::table& state) -> void
+{
+    // clang-format off
+    auto g = state.new_usertype<juce::Graphics>("Graphics");
     g.set_function("setColour", static_cast<void (juce::Graphics::*)(juce::Colour)>(&juce::Graphics::setColour));
     g.set_function("fillAll", sol::overload(
             static_cast<void (juce::Graphics::*)() const>(&juce::Graphics::fillAll),
@@ -125,10 +96,10 @@ auto add_juce_graphics(auto& state) -> void
 }
 
 template <typename T>
-auto add_juce_range(auto& state, char const* name) -> void
+auto juce_Range(sol::table& state, char const* name) -> void
 {
     // clang-format off
-    auto range = state.template new_usertype<juce::Range<T>>(name,
+    auto range = state.new_usertype<juce::Range<T>>(name,
         sol::constructors<juce::Range<T>(), juce::Range<T>(T, T)>(),
         "start",
         sol::property(&juce::Range<T>::getStart, &juce::Range<T>::setStart),
@@ -138,10 +109,10 @@ auto add_juce_range(auto& state, char const* name) -> void
     // clang-format on
 }
 
-auto add_juce_random(auto& state) -> void
+auto juce_Random(sol::table& state) -> void
 {
     // clang-format off
-    auto rand = state.template new_usertype<juce::Random>("Random");
+    auto rand = state.new_usertype<juce::Random>("Random");
     rand.set_function("setSeed", &juce::Random::setSeed);
     rand.set_function("getSeed", &juce::Random::getSeed);
     rand.set_function("nextBool", &juce::Random::nextBool);
@@ -157,9 +128,9 @@ auto add_juce_random(auto& state) -> void
     // clang-format on
 }
 
-auto add_juce_mouse_event(auto& state) -> void
+auto juce_MouseEvent(sol::table& state) -> void
 {
-    auto event           = state.template new_usertype<juce::MouseEvent>("MouseEvent");
+    auto event           = state.new_usertype<juce::MouseEvent>("MouseEvent");
     event["x"]           = &juce::MouseEvent::x;
     event["y"]           = &juce::MouseEvent::y;
     event["pressure"]    = &juce::MouseEvent::pressure;
@@ -169,10 +140,10 @@ auto add_juce_mouse_event(auto& state) -> void
     event["tiltY"]       = &juce::MouseEvent::tiltY;
 }
 
-auto add_juce_component(auto& state) -> void
+auto juce_Component(sol::table& state) -> void
 {
     // clang-format off
-    auto comp = state.template new_usertype<juce::Component>("Component");
+    auto comp = state.new_usertype<juce::Component>("Component");
     comp.set_function("paint",              &juce::Component::paint);
     comp.set_function("resized",            &juce::Component::resized);
     comp.set_function("getName",            &juce::Component::getName);
@@ -203,19 +174,19 @@ auto add_juce_component(auto& state) -> void
     // clang-format on
 }
 
-auto add_juce_string(auto& state) -> void
+auto juce_String(sol::table& state) -> void
 {
     // clang-format off
-    auto comp = state.template new_usertype<juce::String>("String",
+    auto comp = state.new_usertype<juce::String>("String",
         sol::constructors<juce::String(), juce::String(char const*)>()
     );
     // clang-format on
 }
 
-auto add_juce_textbutton(auto& state) -> void
+auto juce_TextButton(sol::table& state) -> void
 {
     // clang-format off
-    auto button = state.template new_usertype<juce::TextButton>("TextButton",
+    auto button = state.new_usertype<juce::TextButton>("TextButton",
         sol::constructors<juce::TextButton(), juce::TextButton(juce::String const&), juce::TextButton(juce::String const&, juce::String const&)>(),
         sol::base_classes, sol::bases<juce::Component>()
     );
@@ -223,10 +194,10 @@ auto add_juce_textbutton(auto& state) -> void
     // clang-format on
 }
 
-auto add_juce_biginteger(auto& state) -> void
+auto juce_BigInteger(sol::table& state) -> void
 {
     // clang-format off
-    auto bigInt = state.template new_usertype<juce::BigInteger>("BigInteger",
+    auto bigInt = state.new_usertype<juce::BigInteger>("BigInteger",
         sol::constructors<
             juce::BigInteger(),
             juce::BigInteger(juce::uint32),
@@ -274,22 +245,60 @@ auto add_juce_biginteger(auto& state) -> void
     bigInt["loadFromMemoryBlock"]       = &juce::BigInteger::loadFromMemoryBlock;
 }
 
+struct LuaComp : juce::Component {
+    LuaComp(sol::this_state L)
+        : scriptPaint(sol::make_reference<sol::function>(L.lua_state(), [](juce::Graphics&, char const*) {}))
+        , scriptResized(sol::make_reference<sol::function>(L.lua_state(), []() -> void {}))
+    {
+    }
+
+    ~LuaComp() override = default;
+
+    auto paint(juce::Graphics& g) -> void override
+    {
+        g.fillAll(juce::Colours::pink);
+        if (scriptPaint.valid()) { scriptPaint(std::ref(*this), std::ref(g), "foo"); }
+    }
+
+    auto resized() -> void override
+    {
+        if (scriptResized.valid()) { scriptResized(std::ref(*this)); }
+    }
+
+    sol::function scriptPaint;
+    sol::function scriptResized;
+};
+
+auto juce_LuaComponent(sol::table& state) -> void
+{
+    // clang-format off
+    state.new_usertype<LuaComp>("LuaComp",
+	    sol::constructors<LuaComp(sol::this_state)>(),
+        sol::base_classes, sol::bases<juce::Component>(),
+	    "paint",
+	    &LuaComp::scriptPaint,
+        "resized",
+	    &LuaComp::scriptResized
+    );
+    // clang-format on
+}
+
 auto add_juce_module(sol::state& lua) -> void
 {
-    auto juceModule = lua["juce"].get_or_create<sol::table>();
-    add_juce_rectangle<int>(juceModule, "RectangleInt");
-    add_juce_rectangle<float>(juceModule, "RectangleFloat");
-    add_juce_rectangle<double>(juceModule, "RectangleDouble");
-    add_juce_range<int>(juceModule, "RangeInt");
-    add_juce_range<float>(juceModule, "RangeFloat");
-    add_juce_range<double>(juceModule, "RangeDouble");
-    add_juce_colour(juceModule);
-    add_juce_graphics(juceModule);
-    add_juce_random(juceModule);
-    add_juce_mouse_event(juceModule);
-    add_juce_string(juceModule);
-    add_juce_component(juceModule);
-    add_juce_textbutton(juceModule);
-    add_juce_biginteger(juceModule);
-    add_lua_comp(juceModule);
+    sol::table juceModule = lua["juce"].get_or_create<sol::table>();
+    juce_Rectangle<int>(juceModule, "RectangleInt");
+    juce_Rectangle<float>(juceModule, "RectangleFloat");
+    juce_Rectangle<double>(juceModule, "RectangleDouble");
+    juce_Range<int>(juceModule, "RangeInt");
+    juce_Range<float>(juceModule, "RangeFloat");
+    juce_Range<double>(juceModule, "RangeDouble");
+    juce_Colour(juceModule);
+    juce_Graphics(juceModule);
+    juce_Random(juceModule);
+    juce_MouseEvent(juceModule);
+    juce_String(juceModule);
+    juce_Component(juceModule);
+    juce_TextButton(juceModule);
+    juce_BigInteger(juceModule);
+    juce_LuaComponent(juceModule);
 }

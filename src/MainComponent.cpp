@@ -1,6 +1,6 @@
 #include "MainComponent.h"
 
-#include "LuaJUCE.hpp"
+#include "Bindings/Juce.hpp"
 
 auto const* script = R"(/home/tobante/Developer/tobanteAudio/lua-juce/src/scripts/paint.lua)";
 
