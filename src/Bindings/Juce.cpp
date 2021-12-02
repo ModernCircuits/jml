@@ -1,9 +1,17 @@
 #include "Juce.hpp"
 
 #include "Bindings/juce_core/BigInteger.hpp"
+#include "Bindings/juce_core/File.hpp"
+#include "Bindings/juce_core/IPAddress.hpp"
+#include "Bindings/juce_core/Int.hpp"
+#include "Bindings/juce_core/MathConstants.hpp"
+#include "Bindings/juce_core/NormalisableRange.hpp"
 #include "Bindings/juce_core/Random.hpp"
 #include "Bindings/juce_core/Range.hpp"
+#include "Bindings/juce_core/Result.hpp"
+#include "Bindings/juce_core/StatisticsAccumulator.hpp"
 #include "Bindings/juce_core/String.hpp"
+#include "Bindings/juce_core/Uuid.hpp"
 #include "Bindings/juce_events/Timer.hpp"
 #include "Bindings/juce_graphics/AffineTransform.hpp"
 #include "Bindings/juce_graphics/Colour.hpp"
@@ -28,9 +36,17 @@ auto add_juce_module(sol::state& lua) -> void
 
     // juce_core
     juce_BigInteger(juceModule);
+    juce_File(juceModule);
+    juce_IPAddress(juceModule);
+    juce_Int(juceModule);
+    juce_MathConstants(juceModule);
+    juce_NormalisableRange(juceModule);
     juce_Random(juceModule);
     juce_Range(juceModule);
+    juce_Result(juceModule);
+    juce_StatisticsAccumulator(juceModule);
     juce_String(juceModule);
+    juce_Uuid(juceModule);
 
     // juce_events
     juce_Timer(juceModule);

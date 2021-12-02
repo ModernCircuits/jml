@@ -2,7 +2,7 @@
 
 #include "Bindings/Juce.hpp"
 
-auto const* defaultScriptPath = R"(/home/tobante/Developer/tobanteAudio/lua-juce/src/scripts/demo_Components.lua)";
+auto const* defaultScriptPath = R"(C:\Developer\moderncircuits\tests\juce-lua\src\scripts\demo_Components.lua)";
 
 MainComponent::MainComponent() : _currentScript(defaultScriptPath)
 {

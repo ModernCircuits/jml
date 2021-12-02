@@ -19,6 +19,8 @@ auto juce_RangeImpl(sol::table& state, char const* name) -> void
 auto juce_Range(sol::table& state) -> void
 {
     juce_RangeImpl<int>(state, "RangeInt");
+    juce_RangeImpl<juce::int64>(state, "RangeInt64");
+
     juce_RangeImpl<float>(state, "RangeFloat");
     juce_RangeImpl<double>(state, "RangeDouble");
 }

@@ -36,21 +36,37 @@ juce_add_gui_app(JuceLuaTest
 
 target_sources(JuceLuaTest
     PRIVATE
-        src/Main.cpp
-        src/MainComponent.h
-        src/MainComponent.cpp
+        "src/Main.cpp"
+        "src/MainComponent.h"
+        "src/MainComponent.cpp"
 
         "src/Bindings/Juce.cpp"
         "src/Bindings/Juce.hpp"
 
         "src/Bindings/juce_core/BigInteger.cpp"
         "src/Bindings/juce_core/BigInteger.hpp"
+        "src/Bindings/juce_core/File.hpp"
+        "src/Bindings/juce_core/File.cpp"
+        "src/Bindings/juce_core/Int.hpp"
+        "src/Bindings/juce_core/Int.cpp"
+        "src/Bindings/juce_core/IPAddress.hpp"
+        "src/Bindings/juce_core/IPAddress.cpp"
+        "src/Bindings/juce_core/MathConstants.hpp"
+        "src/Bindings/juce_core/MathConstants.cpp"
+        "src/Bindings/juce_core/NormalisableRange.hpp"
+        "src/Bindings/juce_core/NormalisableRange.cpp"
         "src/Bindings/juce_core/Random.cpp"
         "src/Bindings/juce_core/Random.hpp"
         "src/Bindings/juce_core/Range.cpp"
         "src/Bindings/juce_core/Range.hpp"
+        "src/Bindings/juce_core/Result.cpp"
+        "src/Bindings/juce_core/Result.hpp"
+        "src/Bindings/juce_core/StatisticsAccumulator.cpp"
+        "src/Bindings/juce_core/StatisticsAccumulator.hpp"
         "src/Bindings/juce_core/String.cpp"
         "src/Bindings/juce_core/String.hpp"
+        "src/Bindings/juce_core/Uuid.cpp"
+        "src/Bindings/juce_core/Uuid.hpp"
 
         "src/Bindings/juce_events/Timer.cpp"
         "src/Bindings/juce_events/Timer.hpp"
