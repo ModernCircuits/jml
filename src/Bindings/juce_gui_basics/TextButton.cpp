@@ -11,8 +11,16 @@ auto juce_TextButton(sol::table& state) -> void
             juce::TextButton(juce::String const&),
             juce::TextButton(juce::String const&, juce::String const&)
         >(),
-        sol::base_classes, sol::bases<juce::Component>()
+        sol::base_classes,
+        sol::bases<
+            juce::MouseListener,
+            juce::Component,
+            juce::Button,
+            juce::TooltipClient,
+            juce::SettableTooltipClient
+        >()
     );
-    button["onClick"] = &juce::Button::onClick;
     // clang-format on
+
+    button["onClick"] = &juce::Button::onClick;
 }

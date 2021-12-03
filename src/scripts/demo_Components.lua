@@ -10,8 +10,6 @@ local function randomColor()
   return randomColorWithAlpha(255)
 end
 
-
-
 local mainComponent = juce.LuaComponent.new()
 local btn_1 = juce.TextButton.new(juce.String.new("Foo"))
 local btn_2 = juce.TextButton.new(juce.String.new("Baz"))
@@ -33,8 +31,6 @@ end
 btn_2.onClick = function()
   mainComponent:repaint()
 end
-
-
 
 function mainComponent:paint(g)
   local gradient = juce.ColourGradient.vertical(topColor, bottomColor, mainComponent:getLocalBounds())
@@ -58,10 +54,10 @@ function mainComponent:mouseDown()
 end
 
 lnf = juce.LuaLookAndFeel.new()
-function lnf:drawButtonBackground(g, btn, color, highlighted, down)
-	print("foo")
-	g:fillAll(color)
-	--g:fillRoundedRectangle(btn:getBounds():toFloat(), 5.0)
+function lnf:drawButtonBackground(g, b, color, highlighted, down)
+  g:fillAll(color)
+  -- g:setColour(juce.Colours.black)
+  -- g:fillRoundedRectangle(b:getBounds():toFloat(), 5.0)
 end
 mainComponent:setLookAndFeel(lnf)
 
