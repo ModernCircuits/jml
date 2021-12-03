@@ -28,7 +28,8 @@ btn_2.onClick = function()
 end
 
 function mainComponent:paint(g)
-  g:setColour(color)
+  local gradient = juce.ColourGradient.vertical(randomColor(), randomColor(), mainComponent:getLocalBounds())
+  g:setGradientFill(gradient)
   g:fillAll()
 end
 

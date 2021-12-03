@@ -15,6 +15,20 @@ auto juce_ColourGradient(sol::table& state) -> void
             juce::ColourGradient(juce::Colour, juce::Point<float>, juce::Colour, juce::Point<float>, bool)
         >()
     );
+    gradient.set_function("vertical", sol::overload(
+            static_cast<juce::ColourGradient (*)(juce::Colour, float, juce::Colour, float)>(&juce::ColourGradient::vertical),
+            static_cast<juce::ColourGradient (*)(juce::Colour, juce::Colour, juce::Rectangle<int>)>(&juce::ColourGradient::template vertical<int>),
+            static_cast<juce::ColourGradient (*)(juce::Colour, juce::Colour, juce::Rectangle<float>)>(&juce::ColourGradient::template vertical<float>),
+            static_cast<juce::ColourGradient (*)(juce::Colour, juce::Colour, juce::Rectangle<double>)>(&juce::ColourGradient::template vertical<double>)
+        )
+    );
+    gradient.set_function("horizontal", sol::overload(
+            static_cast<juce::ColourGradient (*)(juce::Colour, float, juce::Colour, float)>(&juce::ColourGradient::horizontal),
+            static_cast<juce::ColourGradient (*)(juce::Colour, juce::Colour, juce::Rectangle<int>)>(&juce::ColourGradient::template horizontal<int>),
+            static_cast<juce::ColourGradient (*)(juce::Colour, juce::Colour, juce::Rectangle<float>)>(&juce::ColourGradient::template horizontal<float>),
+            static_cast<juce::ColourGradient (*)(juce::Colour, juce::Colour, juce::Rectangle<double>)>(&juce::ColourGradient::template horizontal<double>)
+        )
+    );
     // clang-format on
 
     gradient["clearColours"]        = &juce::ColourGradient::clearColours;
