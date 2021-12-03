@@ -83,6 +83,8 @@ target_sources(JuceLuaTest
         "src/Bindings/juce_graphics/Line.hpp"
         "src/Bindings/juce_graphics/Path.cpp"
         "src/Bindings/juce_graphics/Path.hpp"
+        "src/Bindings/juce_graphics/Point.cpp"
+        "src/Bindings/juce_graphics/Point.hpp"
         "src/Bindings/juce_graphics/Rectangle.cpp"
         "src/Bindings/juce_graphics/Rectangle.hpp"
 
