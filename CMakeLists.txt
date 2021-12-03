@@ -90,6 +90,8 @@ target_sources(JuceLuaTest
         "src/Bindings/juce_graphics/Rectangle.cpp"
         "src/Bindings/juce_graphics/Rectangle.hpp"
 
+        "src/Bindings/juce_gui_basics/ComboBox.cpp"
+        "src/Bindings/juce_gui_basics/ComboBox.hpp"
         "src/Bindings/juce_gui_basics/Component.cpp"
         "src/Bindings/juce_gui_basics/Component.hpp"
         "src/Bindings/juce_gui_basics/Label.cpp"
