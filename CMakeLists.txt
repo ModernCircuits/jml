@@ -92,6 +92,8 @@ target_sources(JuceLuaTest
 
         "src/Bindings/juce_gui_basics/Component.cpp"
         "src/Bindings/juce_gui_basics/Component.hpp"
+        "src/Bindings/juce_gui_basics/Label.cpp"
+        "src/Bindings/juce_gui_basics/Label.hpp"
         "src/Bindings/juce_gui_basics/LookAndFeel_V4.cpp"
         "src/Bindings/juce_gui_basics/LookAndFeel_V4.hpp"
         "src/Bindings/juce_gui_basics/LookAndFeel.cpp"

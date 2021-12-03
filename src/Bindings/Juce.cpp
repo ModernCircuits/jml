@@ -23,6 +23,7 @@
 #include "Bindings/juce_graphics/Point.hpp"
 #include "Bindings/juce_graphics/Rectangle.hpp"
 #include "Bindings/juce_gui_basics/Component.hpp"
+#include "Bindings/juce_gui_basics/Label.hpp"
 #include "Bindings/juce_gui_basics/LookAndFeel.hpp"
 #include "Bindings/juce_gui_basics/LookAndFeel_V4.hpp"
 #include "Bindings/juce_gui_basics/MouseEvent.hpp"
@@ -66,6 +67,7 @@ auto add_juce_module(sol::state& lua) -> void
 
     // juce_gui_basics
     juce_Component(juceModule);
+    juce_Label(juceModule);
     juce_LookAndFeel(juceModule);
     juce_LookAndFeel_V4(juceModule);
     juce_MouseEvent(juceModule);
