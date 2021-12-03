@@ -75,6 +75,8 @@ target_sources(JuceLuaTest
         "src/Bindings/juce_graphics/AffineTransform.hpp"
         "src/Bindings/juce_graphics/Colour.cpp"
         "src/Bindings/juce_graphics/Colour.hpp"
+        "src/Bindings/juce_graphics/ColourGradient.cpp"
+        "src/Bindings/juce_graphics/ColourGradient.hpp"
         "src/Bindings/juce_graphics/Colours.cpp"
         "src/Bindings/juce_graphics/Colours.hpp"
         "src/Bindings/juce_graphics/Graphics.cpp"

@@ -15,6 +15,7 @@
 #include "Bindings/juce_events/Timer.hpp"
 #include "Bindings/juce_graphics/AffineTransform.hpp"
 #include "Bindings/juce_graphics/Colour.hpp"
+#include "Bindings/juce_graphics/ColourGradient.hpp"
 #include "Bindings/juce_graphics/Colours.hpp"
 #include "Bindings/juce_graphics/Graphics.hpp"
 #include "Bindings/juce_graphics/Line.hpp"
@@ -55,6 +56,7 @@ auto add_juce_module(sol::state& lua) -> void
     // juce_graphics
     juce_AffineTransform(juceModule);
     juce_Colour(juceModule);
+    juce_ColourGradient(juceModule);
     juce_Colours(juceModule);
     juce_Graphics(juceModule);
     juce_Line(juceModule);
