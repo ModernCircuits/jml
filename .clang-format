@@ -13,7 +13,7 @@ AllowShortLoopsOnASingleLine: true
 AlwaysBreakTemplateDeclarations: true
 BinPackArguments: false
 BinPackParameters: false
-ColumnLimit: 120
+ColumnLimit: 140
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
 FixNamespaceComments: true
 IndentPPDirectives: BeforeHash

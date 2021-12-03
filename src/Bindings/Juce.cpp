@@ -34,6 +34,7 @@
 #include "Bindings/juce_gui_basics/Slider.hpp"
 #include "Bindings/juce_gui_basics/TextButton.hpp"
 #include "Bindings/juce_xtensions/LuaComponent.hpp"
+#include "Bindings/juce_xtensions/LuaLookAndFeel.hpp"
 #include "Bindings/juce_xtensions/LuaTimer.hpp"
 
 auto add_juce_module(sol::state& lua) -> void
@@ -80,7 +81,8 @@ auto add_juce_module(sol::state& lua) -> void
     juce_TextButton(juceModule);
     juce_Slider(juceModule);
 
-    // extra
+    // xtensions
     juce_LuaComponent(juceModule);
+    juce_LuaLookAndFeel(juceModule);
     juce_LuaTimer(juceModule);
 }
