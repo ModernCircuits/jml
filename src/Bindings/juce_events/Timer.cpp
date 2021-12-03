@@ -4,7 +4,7 @@
 
 auto juce_Timer(sol::table& state) -> void
 {
-    auto timer = state.new_usertype<juce::Timer>("Timer", sol::no_constructor);
+    auto timer = state.new_usertype<juce::Timer>("Timer", sol::meta_function::construct, sol::no_constructor);
 
     timer["timerCallback"]                  = &juce::Timer::timerCallback;
     timer["startTimer"]                     = &juce::Timer::startTimer;

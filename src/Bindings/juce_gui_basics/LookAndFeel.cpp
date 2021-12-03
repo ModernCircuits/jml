@@ -4,7 +4,7 @@
 
 auto juce_LookAndFeel(sol::table& state) -> void
 {
-    auto lnf                               = state.new_usertype<juce::LookAndFeel>("LookAndFeel", sol::no_constructor);
+    auto lnf = state.new_usertype<juce::LookAndFeel>("LookAndFeel", sol::meta_function::construct, sol::no_constructor);
     lnf["findColour"]                      = &juce::LookAndFeel::findColour;
     lnf["setColour"]                       = &juce::LookAndFeel::setColour;
     lnf["isColourSpecified"]               = &juce::LookAndFeel::isColourSpecified;

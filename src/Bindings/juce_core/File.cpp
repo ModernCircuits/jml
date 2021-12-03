@@ -5,6 +5,60 @@
 auto juce_File(sol::table& state) -> void
 {
     // clang-format off
+    state.new_enum("FileTypesOfFileToFind",
+        "findDirectories",
+        juce::File::TypesOfFileToFind::findDirectories,
+        "findFiles",
+        juce::File::TypesOfFileToFind::findFiles,
+        "findFilesAndDirectories",
+        juce::File::TypesOfFileToFind::findFilesAndDirectories,
+        "ignoreHiddenFiles",
+        juce::File::TypesOfFileToFind::ignoreHiddenFiles
+    );
+
+    state.new_enum("FileSpecialLocationType",
+        "userHomeDirectory",
+        juce::File::userHomeDirectory,
+        "userDocumentsDirectory",
+        juce::File::userDocumentsDirectory,
+        "userDesktopDirectory",
+        juce::File::userDesktopDirectory,
+        "userMusicDirectory",
+        juce::File::userMusicDirectory,
+        "userMoviesDirectory",
+        juce::File::userMoviesDirectory,
+        "userPicturesDirectory",
+        juce::File::userPicturesDirectory,
+        "userApplicationDataDirectory",
+        juce::File::userApplicationDataDirectory,
+        "commonApplicationDataDirectory",
+        juce::File::commonApplicationDataDirectory,
+        "commonDocumentsDirectory",
+        juce::File::commonDocumentsDirectory,
+        "tempDirectory",
+        juce::File::tempDirectory,
+        "currentExecutableFile",
+        juce::File::currentExecutableFile,
+        "currentApplicationFile",
+        juce::File::currentApplicationFile,
+        "invokedExecutableFile",
+        juce::File::invokedExecutableFile,
+        "hostApplicationPath",
+        juce::File::hostApplicationPath,
+        "windowsSystemDirectory",
+        juce::File::windowsSystemDirectory,
+        "globalApplicationsDirectory",
+        juce::File::globalApplicationsDirectory,
+        "globalApplicationsDirectoryX86",
+        juce::File::globalApplicationsDirectoryX86
+    );
+
+    auto cmp = state.new_usertype<juce::File::NaturalFileComparator>("FileNaturalFileComparator",
+        sol::constructors<juce::File::NaturalFileComparator(bool)>()
+    );
+    cmp["compareElements"] = &juce::File::NaturalFileComparator::compareElements;
+    cmp["foldersFirst"] = &juce::File::NaturalFileComparator::foldersFirst;
+
     auto file = state.new_usertype<juce::File>("File",
         sol::constructors<juce::File(), juce::File(juce::String const&)>()
     );
@@ -12,14 +66,13 @@ auto juce_File(sol::table& state) -> void
             // Array<File> findChildFiles(int whatToLookFor, bool searchRecursively, const String &wildCardPattern="*") const
             [](juce::File const* self, int what, bool recursive) { return self->findChildFiles(what, recursive); },
             static_cast<juce::Array<juce::File> (juce::File::*)(int, bool, juce::String const&) const>(&juce::File::findChildFiles),
-            
+
             // int findChildFiles(Array<File> &results, int whatToLookFor, bool searchRecursively, const String &wildCardPattern="*") const
             [](juce::File const* self, juce::Array<juce::File>& results, int what, bool recursive) { return self->findChildFiles(results, what, recursive); },
             static_cast<int (juce::File::*)(juce::Array<juce::File>&, int, bool, juce::String const&) const>(&juce::File::findChildFiles)
         )
     );
     // clang-format on
-
     file["exists"]                        = &juce::File::exists;
     file["existsAsFile"]                  = &juce::File::existsAsFile;
     file["isDirectory"]                   = &juce::File::isDirectory;
