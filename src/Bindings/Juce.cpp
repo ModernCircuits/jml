@@ -18,6 +18,8 @@
 #include "Bindings/juce_graphics/ColourGradient.hpp"
 #include "Bindings/juce_graphics/Colours.hpp"
 #include "Bindings/juce_graphics/Graphics.hpp"
+#include "Bindings/juce_graphics/Image.hpp"
+#include "Bindings/juce_graphics/ImageCache.hpp"
 #include "Bindings/juce_graphics/Line.hpp"
 #include "Bindings/juce_graphics/Path.hpp"
 #include "Bindings/juce_graphics/Point.hpp"
@@ -61,6 +63,8 @@ auto add_juce_module(sol::state& lua) -> void
     juce_ColourGradient(juceModule);
     juce_Colours(juceModule);
     juce_Graphics(juceModule);
+    juce_Image(juceModule);
+    juce_ImageCache(juceModule);
     juce_Line(juceModule);
     juce_Path(juceModule);
     juce_Point(juceModule);
