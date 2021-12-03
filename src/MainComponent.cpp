@@ -25,7 +25,10 @@ void MainComponent::resized()
 
 auto MainComponent::reloadScript(juce::File const& path) -> void
 {
-    if (_comp != nullptr) { removeChildComponent(_comp); }
+    if (_comp != nullptr) {
+        _comp->setLookAndFeel(nullptr);
+        removeChildComponent(_comp);
+    }
 
     _lua.open_libraries(sol::lib::base);
     add_juce_module(_lua);
