@@ -5,6 +5,21 @@
 auto juce_ComboBox(sol::table& state) -> void
 {
     // clang-format off
+    state.new_enum("ComboBoxColourIds",
+        "arrowColourId",
+            juce::ComboBox::ColourIds::arrowColourId,
+        "backgroundColourId",
+            juce::ComboBox::ColourIds::backgroundColourId,
+        "buttonColourId",
+            juce::ComboBox::ColourIds::buttonColourId,
+        "focusedOutlineColourId",
+            juce::ComboBox::ColourIds::focusedOutlineColourId,
+        "outlineColourId",
+            juce::ComboBox::ColourIds::outlineColourId,
+        "textColourId",
+            juce::ComboBox::ColourIds::textColourId
+    );
+
     auto combo = state.new_usertype<juce::ComboBox>("ComboBox",
         sol::constructors<juce::ComboBox(juce::String const&)>(),
         sol::base_classes,
@@ -20,6 +35,11 @@ auto juce_ComboBox(sol::table& state) -> void
 
     // combo["getRootMenu"]                   = &juce::ComboBox::getRootMenu;
     // combo["getRootMenu"]                   = &juce::ComboBox::getRootMenu;
+    // combo["clear"]                         = &juce::ComboBox::clear;
+    // combo["setSelectedId"]                 = &juce::ComboBox::setSelectedId;
+    // combo["setSelectedItemIndex"]          = &juce::ComboBox::setSelectedItemIndex;
+    // combo["setText"]                       = &juce::ComboBox::setText;
+
     combo["setEditableText"]               = &juce::ComboBox::setEditableText;
     combo["isTextEditable"]                = &juce::ComboBox::isTextEditable;
     combo["setJustificationType"]          = &juce::ComboBox::setJustificationType;
@@ -31,18 +51,14 @@ auto juce_ComboBox(sol::table& state) -> void
     combo["setItemEnabled"]                = &juce::ComboBox::setItemEnabled;
     combo["isItemEnabled"]                 = &juce::ComboBox::isItemEnabled;
     combo["changeItemText"]                = &juce::ComboBox::changeItemText;
-    // combo["clear"]                         = &juce::ComboBox::clear;
     combo["getNumItems"]                   = &juce::ComboBox::getNumItems;
     combo["getItemText"]                   = &juce::ComboBox::getItemText;
     combo["getItemId"]                     = &juce::ComboBox::getItemId;
     combo["indexOfItemId"]                 = &juce::ComboBox::indexOfItemId;
     combo["getSelectedId"]                 = &juce::ComboBox::getSelectedId;
     combo["getSelectedIdAsValue"]          = &juce::ComboBox::getSelectedIdAsValue;
-    // combo["setSelectedId"]                 = &juce::ComboBox::setSelectedId;
     combo["getSelectedItemIndex"]          = &juce::ComboBox::getSelectedItemIndex;
-    // combo["setSelectedItemIndex"]          = &juce::ComboBox::setSelectedItemIndex;
     combo["getText"]                       = &juce::ComboBox::getText;
-    // combo["setText"]                       = &juce::ComboBox::setText;
     combo["showEditor"]                    = &juce::ComboBox::showEditor;
     combo["showPopup"]                     = &juce::ComboBox::showPopup;
     combo["hidePopup"]                     = &juce::ComboBox::hidePopup;

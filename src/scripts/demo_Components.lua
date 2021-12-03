@@ -1,4 +1,4 @@
-function randomColorWithAlpha(alpha)
+local function randomColorWithAlpha(alpha)
   local sysRandom = juce.Random.getSystemRandom()
   local r = sysRandom:nextInt(255)
   local g = sysRandom:nextInt(255)
@@ -6,7 +6,7 @@ function randomColorWithAlpha(alpha)
   return juce.Colour.new(r, g, b, alpha)
 end
 
-function randomColor()
+local function randomColor()
   return randomColorWithAlpha(255)
 end
 
@@ -14,11 +14,16 @@ local mainComponent = juce.LuaComponent.new()
 local btn_1 = juce.TextButton.new(juce.String.new("Foo"))
 local btn_2 = juce.TextButton.new(juce.String.new("Baz"))
 local slider_1 = juce.Slider.new()
-local color = juce.Colours.cadetblue
+local topColor = juce.Colours.cadetblue
+local bottomColor = juce.Colours.black
 
 mainComponent:addAndMakeVisible(btn_1)
 mainComponent:addAndMakeVisible(btn_2)
 mainComponent:addAndMakeVisible(slider_1)
+
+slider_1.onValueChange = function()
+  slider_1:setColour(juce.SliderColourIds.thumbColourId, randomColor())
+end
 
 btn_1.onClick = function()
   print("Button 1")
@@ -28,7 +33,7 @@ btn_2.onClick = function()
 end
 
 function mainComponent:paint(g)
-  local gradient = juce.ColourGradient.vertical(randomColor(), randomColor(), mainComponent:getLocalBounds())
+  local gradient = juce.ColourGradient.vertical(topColor, bottomColor, mainComponent:getLocalBounds())
   g:setGradientFill(gradient)
   g:fillAll()
 end
@@ -43,13 +48,15 @@ function mainComponent:resized()
 end
 
 function mainComponent:mouseDown()
-  color = randomColor()
+  topColor = randomColor()
+  bottomColor = randomColor()
   mainComponent:repaint()
 end
 
 local timer = juce.LuaTimer.new()
 function timer:timerCallback()
-  color = randomColor()
+  topColor = randomColor()
+  bottomColor = randomColor()
   mainComponent:repaint()
 end
 timer:startTimer(2000)

@@ -25,6 +25,7 @@ auto juce_Component(sol::table& state) -> void
     );
     // clang-format on
 
+    comp["setColour"]         = &juce::Component::setColour;
     comp["getLookAndFeel"]    = &juce::Component::getLookAndFeel;
     comp["setLookAndFeel"]    = &juce::Component::setLookAndFeel;
     comp["paint"]             = &juce::Component::paint;

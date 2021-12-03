@@ -4,12 +4,85 @@
 
 auto juce_Slider(sol::table& state) -> void
 {
+
     auto params                 = state.new_usertype<juce::Slider::RotaryParameters>("SliderRotaryParameters");
     params["startAngleRadians"] = &juce::Slider::RotaryParameters::startAngleRadians;
     params["endAngleRadians"]   = &juce::Slider::RotaryParameters::endAngleRadians;
     params["stopAtEnd"]         = &juce::Slider::RotaryParameters::stopAtEnd;
 
     // clang-format off
+    state.new_enum("SliderColourIds",
+        "backgroundColourId",
+            juce::Slider::ColourIds::backgroundColourId,
+        "thumbColourId",
+            juce::Slider::ColourIds::thumbColourId,
+        "trackColourId",
+            juce::Slider::ColourIds::trackColourId,
+        "rotarySliderFillColourId",
+            juce::Slider::ColourIds::rotarySliderFillColourId,
+        "rotarySliderOutlineColourId",
+            juce::Slider::ColourIds::rotarySliderOutlineColourId,
+        "textBoxBackgroundColourId",
+            juce::Slider::ColourIds::textBoxBackgroundColourId,
+        "textBoxHighlightColourId",
+            juce::Slider::ColourIds::textBoxHighlightColourId,
+        "textBoxOutlineColourId",
+            juce::Slider::ColourIds::textBoxOutlineColourId,
+        "textBoxTextColourId",
+            juce::Slider::ColourIds::textBoxTextColourId
+    );
+
+    state.new_enum("SliderStyle",
+        "LinearHorizontal",
+            juce::Slider::SliderStyle::LinearHorizontal,
+        "LinearVertical",
+            juce::Slider::SliderStyle::LinearVertical,
+        "LinearBar",
+            juce::Slider::SliderStyle::LinearBar,
+        "LinearBarVertical",
+            juce::Slider::SliderStyle::LinearBarVertical,
+        "Rotary",
+            juce::Slider::SliderStyle::Rotary,
+        "RotaryHorizontalDrag",
+            juce::Slider::SliderStyle::RotaryHorizontalDrag,
+        "RotaryVerticalDrag",
+            juce::Slider::SliderStyle::RotaryVerticalDrag,
+        "RotaryHorizontalVerticalDrag",
+            juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag,
+        "IncDecButtons",
+            juce::Slider::SliderStyle::IncDecButtons,
+        "TwoValueHorizontal",
+            juce::Slider::SliderStyle::TwoValueHorizontal,
+        "TwoValueVertical",
+            juce::Slider::SliderStyle::TwoValueVertical,
+        "ThreeValueHorizontal",
+            juce::Slider::SliderStyle::ThreeValueHorizontal,
+        "ThreeValueVertical",
+            juce::Slider::SliderStyle::ThreeValueVertical
+    );
+
+    state.new_enum("SliderTextEntryBoxPosition",
+        "NoTextBox",
+            juce::Slider::TextEntryBoxPosition::NoTextBox,
+        "TextBoxLeft",
+            juce::Slider::TextEntryBoxPosition::TextBoxLeft,
+        "TextBoxRight",
+            juce::Slider::TextEntryBoxPosition::TextBoxRight,
+        "TextBoxAbove",
+            juce::Slider::TextEntryBoxPosition::TextBoxAbove,
+        "TextBoxBelow",
+            juce::Slider::TextEntryBoxPosition::TextBoxBelow
+    );
+
+    state.new_enum("SliderDragMode",
+        "notDragging",
+            juce::Slider::DragMode::notDragging,
+        "absoluteDrag",
+            juce::Slider::DragMode::absoluteDrag,
+        "velocityDrag",
+            juce::Slider::DragMode::velocityDrag
+    );
+
     auto slider = state.new_usertype<juce::Slider>("Slider",
         sol::constructors<
             juce::Slider(),
@@ -62,7 +135,6 @@ auto juce_Slider(sol::table& state) -> void
     slider["isTextBoxEditable"]                  = &juce::Slider::isTextBoxEditable;
     slider["showTextBox"]                        = &juce::Slider::showTextBox;
     slider["hideTextBox"]                        = &juce::Slider::hideTextBox;
-    // slider["setValue"]                           = &juce::Slider::setValue;
     slider["getValue"]                           = &juce::Slider::getValue;
     slider["getValueObject"]                     = &juce::Slider::getValueObject;
     slider["setNormalisableRange"]               = &juce::Slider::setNormalisableRange;
@@ -72,11 +144,8 @@ auto juce_Slider(sol::table& state) -> void
     slider["getInterval"]                        = &juce::Slider::getInterval;
     slider["getMinValue"]                        = &juce::Slider::getMinValue;
     slider["getMinValueObject"]                  = &juce::Slider::getMinValueObject;
-    // slider["setMinValue"]                        = &juce::Slider::setMinValue;
     slider["getMaxValue"]                        = &juce::Slider::getMaxValue;
     slider["getMaxValueObject"]                  = &juce::Slider::getMaxValueObject;
-    // slider["setMaxValue"]                        = &juce::Slider::setMaxValue;
-    // slider["setMinAndMaxValues"]                 = &juce::Slider::setMinAndMaxValues;
     slider["addListener"]                        = &juce::Slider::addListener;
     slider["removeListener"]                     = &juce::Slider::removeListener;
     slider["setDoubleClickReturnValue"]          = &juce::Slider::setDoubleClickReturnValue;
@@ -111,9 +180,14 @@ auto juce_Slider(sol::table& state) -> void
     slider["isBar"]                              = &juce::Slider::isBar;
     slider["isTwoValue"]                         = &juce::Slider::isTwoValue;
 
-    //slider["onValueChange"]         = &juce::Slider::onValueChange;
-    //slider["onDragStart"]           = &juce::Slider::onDragStart;
-    //slider["onDragEnd"]             = &juce::Slider::onDragEnd;
-    //slider["valueFromTextFunction"] = &juce::Slider::valueFromTextFunction;
-    //slider["textFromValueFunction"] = &juce::Slider::textFromValueFunction;
+    // slider["setValue"]                           = &juce::Slider::setValue;
+    // slider["setMinValue"]                        = &juce::Slider::setMinValue;
+    // slider["setMaxValue"]                        = &juce::Slider::setMaxValue;
+    // slider["setMinAndMaxValues"]                 = &juce::Slider::setMinAndMaxValues;
+
+    slider["onValueChange"]         = &juce::Slider::onValueChange;
+    // slider["onDragStart"]           = &juce::Slider::onDragStart;
+    // slider["onDragEnd"]             = &juce::Slider::onDragEnd;
+    // slider["valueFromTextFunction"] = &juce::Slider::valueFromTextFunction;
+    // slider["textFromValueFunction"] = &juce::Slider::textFromValueFunction;
 }
