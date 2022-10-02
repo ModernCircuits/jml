@@ -13,6 +13,11 @@ MainComponent::MainComponent() : _currentScript(defaultScriptPath)
     _reload.onClick = [this] { reloadScript(_currentScript); };
 }
 
+MainComponent::~MainComponent()
+{
+    if (_comp != nullptr) { _comp->setLookAndFeel(nullptr); }
+}
+
 void MainComponent::resized()
 {
     auto area    = getLocalBounds();

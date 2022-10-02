@@ -40,7 +40,6 @@ end
 
 function mainComponent:resized()
   local area = mainComponent:getLocalBounds()
-  print(area)
   local btn1Area = area:removeFromTop(50):reduced(5)
   btn_1:setBounds(btn1Area)
   btn_2:setBounds(400, 200, 250, 150)
@@ -48,22 +47,24 @@ function mainComponent:resized()
 end
 
 function mainComponent:mouseDown()
-  topColor = randomColor()
+  topColor = juce.Colours.pink
   bottomColor = randomColor()
   mainComponent:repaint()
 end
 
 lnf = juce.LuaLookAndFeel.new()
-function lnf:drawButtonBackground(g, b, color, highlighted, down)
-  g:fillAll(color)
-  -- g:setColour(juce.Colours.black)
-  -- g:fillRoundedRectangle(b:getBounds():toFloat(), 5.0)
+function lnf:drawButtonBackground(g, btn, color, highlighted, down)
+  local b = btn:getBounds()
+  local bf = juce.RectangleInt.new(b:getX(), b:getY(), b:getWidth(), b:getHeight())
+  g:setColour(juce.Colours.blue)
+  g:fillAll()
+  print(bf)
 end
 mainComponent:setLookAndFeel(lnf)
 
 local timer = juce.LuaTimer.new()
 function timer:timerCallback()
-  topColor = randomColor()
+  topColor = juce.Colours.pink
   bottomColor = randomColor()
   mainComponent:repaint()
 end
