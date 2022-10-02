@@ -22,8 +22,12 @@ list(APPEND CMAKE_PREFIX_PATH ${CMAKE_CURRENT_BINARY_DIR})
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 include(mcConan)
 
+include(FetchContent)
+FetchContent_Declare(JUCE GIT_REPOSITORY "https://github.com/juce-framework/JUCE" GIT_TAG "7.0.2")
+FetchContent_MakeAvailable(JUCE)
+juce_disable_default_flags()
+
 find_package(sol2 REQUIRED)
-add_subdirectory(3rd_party/JUCE)
 
 juce_add_gui_app(JuceLuaTest
     # VERSION ...                       # Set this if the app version is different to the project version

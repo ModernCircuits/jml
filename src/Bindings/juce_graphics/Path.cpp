@@ -28,8 +28,8 @@ auto juce_Path(sol::table& state) -> void
             static_cast<bool (juce::Path::*)(juce::Point<float>, float) const>(&juce::Path::contains)
     );
     path["intersectsLine"] = sol::overload(
-            [] (juce::Path* self, juce::Line<float> line) -> bool { return self->intersectsLine(line); },
-            static_cast<bool (juce::Path::*)(juce::Line<float>, float)>(&juce::Path::intersectsLine)
+            [] (juce::Path const* self, juce::Line<float> line) -> bool { return self->intersectsLine(line); },
+            static_cast<bool (juce::Path::*)(juce::Line<float>, float) const>(&juce::Path::intersectsLine)
     );
     // clang-format on
 

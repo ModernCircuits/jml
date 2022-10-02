@@ -65,11 +65,11 @@ auto juce_File(sol::table& state) -> void
     file.set_function("findChildFiles", sol::overload(
             // Array<File> findChildFiles(int whatToLookFor, bool searchRecursively, const String &wildCardPattern="*") const
             [](juce::File const* self, int what, bool recursive) { return self->findChildFiles(what, recursive); },
-            static_cast<juce::Array<juce::File> (juce::File::*)(int, bool, juce::String const&) const>(&juce::File::findChildFiles),
+            static_cast<juce::Array<juce::File> (juce::File::*)(int, bool, juce::String const&, juce::File::FollowSymlinks) const>(&juce::File::findChildFiles),
 
             // int findChildFiles(Array<File> &results, int whatToLookFor, bool searchRecursively, const String &wildCardPattern="*") const
             [](juce::File const* self, juce::Array<juce::File>& results, int what, bool recursive) { return self->findChildFiles(results, what, recursive); },
-            static_cast<int (juce::File::*)(juce::Array<juce::File>&, int, bool, juce::String const&) const>(&juce::File::findChildFiles)
+            static_cast<int (juce::File::*)(juce::Array<juce::File>&, int, bool, juce::String const&, juce::File::FollowSymlinks) const>(&juce::File::findChildFiles)
         )
     );
     // clang-format on
