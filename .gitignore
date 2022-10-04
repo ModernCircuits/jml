@@ -7,3 +7,5 @@
 /cmake-build*
 /venv
 /out
+
+__pycache__
