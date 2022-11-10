@@ -35,9 +35,10 @@ auto MainComponent::reloadScript(juce::File const& path) -> void
         removeChildComponent(_comp);
     }
 
-    _lua.open_libraries(sol::lib::base);
+    _lua.open_libraries(sol::lib::base, sol::lib::package);
     add_juce_module(_lua);
 
+    path.getParentDirectory().setAsCurrentWorkingDirectory();
     auto script = _lua.load_file(path.getFullPathName().toStdString());
     if (juce::Component* c = script(); c != nullptr) {
         _comp = c;
