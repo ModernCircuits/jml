@@ -25,12 +25,17 @@ void MainComponent::resized()
     _select.setBounds(btnArea.removeFromLeft(btnArea.proportionOfWidth(0.5)));
     _reload.setBounds(btnArea);
 
+    if (_componentTree != nullptr) { _componentTree->setBounds(area.removeFromRight(area.proportionOfWidth(0.2))); }
     if (_comp != nullptr) { _comp->setBounds(area); }
 }
 
 auto MainComponent::reloadScript(juce::File const& path) -> void
 {
     if (_comp != nullptr) {
+        _componentTree->setLookAndFeel(nullptr);
+        removeChildComponent(_componentTree.get());
+        _componentTree.reset(nullptr);
+
         _comp->setLookAndFeel(nullptr);
         removeChildComponent(_comp);
     }
@@ -43,6 +48,10 @@ auto MainComponent::reloadScript(juce::File const& path) -> void
     if (juce::Component* c = script(); c != nullptr) {
         _comp = c;
         addAndMakeVisible(*_comp);
+
+        _componentTree = std::make_unique<ComponentTree>(c);
+        addAndMakeVisible(*_componentTree);
+
         resized();
     }
 }

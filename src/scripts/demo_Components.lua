@@ -8,6 +8,11 @@ local function makeMainComponent()
   local topColor = juce.Colours.cadetblue
   local bottomColor = juce.Colours.black
 
+  mainComponent:setComponentID(juce.String.new("Main Window"))
+  btn_1:setComponentID(juce.String.new("Foo"))
+  btn_2:setComponentID(juce.String.new("Baz"))
+  slider_1:setComponentID(juce.String.new("Slider Linear"))
+
   mainComponent:addAndMakeVisible(btn_1)
   mainComponent:addAndMakeVisible(btn_2)
   mainComponent:addAndMakeVisible(slider_1)
