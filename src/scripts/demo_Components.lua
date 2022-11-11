@@ -33,8 +33,10 @@ local function makeMainComponent()
   end
 
   btn_1.onClick = function()
+    print("Button 1")
   end
   btn_2.onClick = function()
+    print("Button 2")
     mainComponent:repaint()
   end
 

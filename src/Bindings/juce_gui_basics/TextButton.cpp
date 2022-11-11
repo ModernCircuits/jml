@@ -22,5 +22,5 @@ auto juce_TextButton(sol::table& state) -> void
     );
     // clang-format on
 
-    button["onClick"] = &juce::Button::onClick;
+    // button["onClick"] = &juce::Button::onClick;
 }

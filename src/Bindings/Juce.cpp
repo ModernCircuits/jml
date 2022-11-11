@@ -24,6 +24,7 @@
 #include "Bindings/juce_graphics/Path.hpp"
 #include "Bindings/juce_graphics/Point.hpp"
 #include "Bindings/juce_graphics/Rectangle.hpp"
+#include "Bindings/juce_gui_basics/Button.hpp"
 #include "Bindings/juce_gui_basics/ComboBox.hpp"
 #include "Bindings/juce_gui_basics/Component.hpp"
 #include "Bindings/juce_gui_basics/Label.hpp"
@@ -72,6 +73,7 @@ auto add_juce_module(sol::state& lua) -> void
     juce_Rectangle(juceModule);
 
     // juce_gui_basics
+    juce_Button(juceModule);
     juce_ComboBox(juceModule);
     juce_Component(juceModule);
     juce_Label(juceModule);
