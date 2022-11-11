@@ -11,6 +11,9 @@ MainComponent::MainComponent() : _currentScript(defaultScriptPath)
     _select.onClick = [this] { loadScriptPath(); };
     addAndMakeVisible(_reload);
     _reload.onClick = [this] { reloadScript(_currentScript); };
+
+    _lua.open_libraries(sol::lib::base, sol::lib::package);
+    add_juce_module(_lua);
 }
 
 MainComponent::~MainComponent()
@@ -32,7 +35,6 @@ void MainComponent::resized()
 auto MainComponent::reloadScript(juce::File const& path) -> void
 {
     if (_comp != nullptr) {
-        _componentTree->setLookAndFeel(nullptr);
         removeChildComponent(_componentTree.get());
         _componentTree.reset(nullptr);
 
@@ -40,8 +42,7 @@ auto MainComponent::reloadScript(juce::File const& path) -> void
         removeChildComponent(_comp);
     }
 
-    _lua.open_libraries(sol::lib::base, sol::lib::package);
-    add_juce_module(_lua);
+    _lua.collect_garbage();
 
     path.getParentDirectory().setAsCurrentWorkingDirectory();
     auto script = _lua.load_file(path.getFullPathName().toStdString());

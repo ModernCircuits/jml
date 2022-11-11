@@ -1,12 +1,23 @@
 color = require("color")
 
 local function makeMainComponent()
+  local lnf = juce.LuaLookAndFeel.new()
+  function lnf:drawButtonBackground(g, btn, color, highlighted, down)
+    local b = btn:getBounds()
+    local bf = juce.RectangleInt.new(b:getX(), b:getY(), b:getWidth(), b:getHeight())
+    local c = highlighted and juce.Colours.red or juce.Colours.blue
+    g:setColour(c)
+    g:fillAll()
+  end
+
   local mainComponent = juce.LuaComponent.new()
   local btn_1 = juce.TextButton.new(juce.String.new("Foo"))
   local btn_2 = juce.TextButton.new(juce.String.new("Baz"))
   local slider_1 = juce.Slider.new()
   local topColor = juce.Colours.cadetblue
   local bottomColor = juce.Colours.black
+
+  mainComponent:setLookAndFeel(lnf)
 
   mainComponent:setComponentID(juce.String.new("Main Window"))
   btn_1:setComponentID(juce.String.new("Foo"))
@@ -46,16 +57,6 @@ local function makeMainComponent()
     bottomColor = color.random()
     mainComponent:repaint()
   end
-
-  local lnf = juce.LuaLookAndFeel.new()
-  function lnf:drawButtonBackground(g, btn, color, highlighted, down)
-    local b = btn:getBounds()
-    local bf = juce.RectangleInt.new(b:getX(), b:getY(), b:getWidth(), b:getHeight())
-    local c = highlighted and juce.Colours.red or juce.Colours.blue
-    g:setColour(c)
-    g:fillAll()
-  end
-  mainComponent:setLookAndFeel(lnf)
 
   local timer = juce.LuaTimer.new()
   function timer:timerCallback()
