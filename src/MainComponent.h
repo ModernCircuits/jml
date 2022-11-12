@@ -57,7 +57,8 @@ struct MainComponent : juce::Component {
     MainComponent();
     ~MainComponent() override;
 
-    void resized() override;
+    auto paint(juce::Graphics& g) -> void override;
+    auto resized() -> void override;
 
 private:
     auto reloadScript(juce::File const& path) -> void;

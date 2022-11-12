@@ -30,6 +30,7 @@ auto juce_Component(sol::table& state) -> void
     comp["setLookAndFeel"]    = &juce::Component::setLookAndFeel;
     comp["paint"]             = &juce::Component::paint;
     comp["resized"]           = &juce::Component::resized;
+    comp["setSize"]           = &juce::Component::setSize;
     comp["getName"]           = &juce::Component::getName;
     comp["setName"]           = &juce::Component::setName;
     comp["getComponentID"]    = &juce::Component::getComponentID;

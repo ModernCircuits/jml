@@ -2,23 +2,33 @@
 
 #include "Bindings/Juce.hpp"
 
-auto const* defaultScriptPath = R"(C:\Developer\moderncircuits\tests\juce-lua\src\scripts\supernova.lua)";
+auto const* defaultScriptPath = R"(C:\Developer\moderncircuits\tests\juce-lua\src\scripts\zentrale.lua)";
 
 MainComponent::MainComponent() : _currentScript(defaultScriptPath)
 {
-    setSize(1280, 720);
+    addAndMakeVisible(_viewport);
     addAndMakeVisible(_select);
-    _select.onClick = [this] { loadScriptPath(); };
     addAndMakeVisible(_reload);
+
+    _select.onClick = [this] { loadScriptPath(); };
     _reload.onClick = [this] { reloadScript(_currentScript); };
 
     _lua.open_libraries(sol::lib::base, sol::lib::package);
     add_juce_module(_lua);
+
+    setSize(1280, 720);
 }
 
 MainComponent::~MainComponent()
 {
     if (_comp != nullptr) { _comp->setLookAndFeel(nullptr); }
+}
+
+auto MainComponent::paint(juce::Graphics& g) -> void
+{
+    g.fillAll(juce::Colours::white);
+    g.setColour(juce::Colours::black.withAlpha(0.75F));
+    g.drawRect(_viewport.getBounds());
 }
 
 void MainComponent::resized()
@@ -29,7 +39,7 @@ void MainComponent::resized()
     _reload.setBounds(btnArea);
 
     if (_componentTree != nullptr) { _componentTree->setBounds(area.removeFromRight(area.proportionOfWidth(0.2))); }
-    if (_comp != nullptr) { _comp->setBounds(area); }
+    _viewport.setBounds(area);
 }
 
 auto MainComponent::reloadScript(juce::File const& path) -> void
@@ -39,7 +49,7 @@ auto MainComponent::reloadScript(juce::File const& path) -> void
         _componentTree.reset(nullptr);
 
         _comp->setLookAndFeel(nullptr);
-        removeChildComponent(_comp);
+        _viewport.setViewedComponent(nullptr);
     }
 
     _lua.collect_garbage();
@@ -48,7 +58,9 @@ auto MainComponent::reloadScript(juce::File const& path) -> void
     auto script = _lua.load_file(path.getFullPathName().toStdString());
     if (juce::Component* c = script(); c != nullptr) {
         _comp = c;
-        addAndMakeVisible(*_comp);
+        _comp->resized();
+
+        _viewport.setViewedComponent(_comp, false);
 
         _componentTree = std::make_unique<ComponentTree>(c);
         addAndMakeVisible(*_componentTree);

@@ -53,9 +53,10 @@ local function makeMainComponent()
   local sidebar = makeSidebar()
   local content = makeContent()
 
-  mainComponent:setComponentID(juce.String.new("Zentrale"))
   mainComponent:addAndMakeVisible(sidebar)
   mainComponent:addAndMakeVisible(content)
+  mainComponent:setComponentID(juce.String.new("Zentrale"))
+  mainComponent:setSize(1280, 720)
 
   function mainComponent:paint(g)
     g:setColour(black)
