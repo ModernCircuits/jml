@@ -12,8 +12,7 @@ template <typename C>
 struct has_toString {
 private:
     template <typename T>
-    static constexpr auto check(T*) ->
-        typename std::is_same<decltype(std::declval<T>().toString()), juce::String>::type;
+    static constexpr auto check(T*) -> typename std::is_same<decltype(std::declval<T>().toString()), juce::String>::type;
 
     template <typename>
     static constexpr auto check(...) -> std::false_type;

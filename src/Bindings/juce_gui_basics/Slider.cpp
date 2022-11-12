@@ -185,7 +185,7 @@ auto juce_Slider(sol::table& state) -> void
     // slider["setMaxValue"]                        = &juce::Slider::setMaxValue;
     // slider["setMinAndMaxValues"]                 = &juce::Slider::setMinAndMaxValues;
 
-    slider["onValueChange"]         = &juce::Slider::onValueChange;
+    slider["onValueChange"] = &juce::Slider::onValueChange;
     // slider["onDragStart"]           = &juce::Slider::onDragStart;
     // slider["onDragEnd"]             = &juce::Slider::onDragEnd;
     // slider["valueFromTextFunction"] = &juce::Slider::valueFromTextFunction;

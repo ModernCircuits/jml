@@ -11,6 +11,7 @@ auto juce_PointImpl(sol::table& state, char const* name) -> void
     // point["getDotProduct"]                = &juce::Point<T>::getDotProduct;
 
     auto point = state.new_usertype<juce::Point<T>>(name, sol::constructors<juce::Point<T>(), juce::Point<T>(T, T)>());
+
     point["isOrigin"]                     = &juce::Point<T>::isOrigin;
     point["isFinite"]                     = &juce::Point<T>::isFinite;
     point["getX"]                         = &juce::Point<T>::getX;

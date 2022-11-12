@@ -21,6 +21,8 @@ struct ComponentTreeItem final : juce::TreeViewItem {
         return _root->getComponentID();
     }
 
+    auto itemSelectionChanged(bool isNowSelected) -> void override { juce::ignoreUnused(isNowSelected); }
+
     auto paintItem(juce::Graphics& g, int width, int height) -> void override
     {
         auto const bounds = juce::Rectangle { 0, 0, width, height }.reduced(1);
@@ -60,6 +62,8 @@ struct MainComponent : juce::Component {
 private:
     auto reloadScript(juce::File const& path) -> void;
     auto loadScriptPath() -> void;
+
+    juce::Viewport _viewport;
 
     sol::state _lua;
     juce::Component* _comp { nullptr };
