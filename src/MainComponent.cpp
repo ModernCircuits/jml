@@ -45,6 +45,8 @@ void MainComponent::resized()
 auto MainComponent::reloadScript(juce::File const& path) -> void
 {
     if (_comp != nullptr) {
+        _fileListener.reset(nullptr);
+
         removeChildComponent(_componentTree.get());
         _componentTree.reset(nullptr);
 
@@ -64,6 +66,9 @@ auto MainComponent::reloadScript(juce::File const& path) -> void
 
         _componentTree = std::make_unique<ComponentTree>(c);
         addAndMakeVisible(*_componentTree);
+
+        _fileListener           = std::make_unique<FileChangeListener>(path);
+        _fileListener->onChange = [this] { reloadScript(_currentScript); };
 
         resized();
     }
