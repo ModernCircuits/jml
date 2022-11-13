@@ -17,7 +17,7 @@ struct ComponentContainer final : juce::Component {
         }
     }
 
-    auto paint(juce::Graphics& g) -> void override { g.fillAll(juce::Colours::white); }
+    auto paint(juce::Graphics& g) -> void override { g.fillAll(juce::Colour::fromRGB(240, 240, 240)); }
 
     auto resized() -> void override
     {
@@ -29,7 +29,7 @@ struct ComponentContainer final : juce::Component {
     }
 
 private:
-    juce::Component* _component{nullptr};
+    juce::Component* _component { nullptr };
 };
 
 } // namespace mc

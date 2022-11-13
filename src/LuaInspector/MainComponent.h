@@ -13,6 +13,7 @@ struct MainComponent : juce::Component {
     ~MainComponent() override;
 
     auto paint(juce::Graphics& g) -> void override;
+    auto paintOverChildren(juce::Graphics& g) -> void override;
     auto resized() -> void override;
 
 private:

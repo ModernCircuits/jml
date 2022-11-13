@@ -31,18 +31,24 @@ MainComponent::~MainComponent()
 auto MainComponent::paint(juce::Graphics& g) -> void
 {
     g.fillAll(juce::Colours::white);
+}
+
+auto MainComponent::paintOverChildren(juce::Graphics& g) -> void
+{
     g.setColour(juce::Colours::black.withAlpha(0.75F));
     g.drawRect(_viewport.getBounds());
 }
 
 void MainComponent::resized()
 {
-    auto area    = getLocalBounds();
-    auto btnArea = area.removeFromBottom(area.proportionOfHeight(0.1));
-    _select.setBounds(btnArea.removeFromLeft(btnArea.proportionOfWidth(0.5)));
-    _reload.setBounds(btnArea);
+    auto area = getLocalBounds();
 
-    _componentTree.setBounds(area.removeFromRight(area.proportionOfWidth(0.2)));
+    auto settings = area.removeFromRight(area.proportionOfWidth(0.2));
+    auto buttons  = settings.removeFromTop(50);
+    _select.setBounds(buttons.removeFromLeft(buttons.proportionOfWidth(0.5)));
+    _reload.setBounds(buttons);
+    _componentTree.setBounds(settings);
+
     _viewport.setBounds(area);
 }
 
