@@ -43,6 +43,8 @@ target_sources(LuaInspector
         "src/LuaInspector/Main.cpp"
         "src/LuaInspector/MainComponent.h"
         "src/LuaInspector/MainComponent.cpp"
+
+        "src/LuaInspector/ComponentTree.hpp"
         "src/LuaInspector/FileChangeListener.hpp"
 
         "src/Bindings/Juce.cpp"

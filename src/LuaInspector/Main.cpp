@@ -28,7 +28,7 @@ struct GuiAppApplication final : juce::JUCEApplication {
                 DocumentWindow::allButtons)
         {
             setUsingNativeTitleBar(true);
-            setContentOwned(new MainComponent(), true);
+            setContentOwned(new mc::MainComponent(), true);
 
 #if JUCE_IOS || JUCE_ANDROID
             setFullScreen(true);

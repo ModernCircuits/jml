@@ -2,11 +2,15 @@
 
 #include "Bindings/Juce.hpp"
 
+namespace mc {
+namespace {
 auto const* defaultScriptPath = R"(C:\Developer\moderncircuits\tests\juce-lua\src\scripts\zentrale.lua)";
+}
 
 MainComponent::MainComponent() : _currentScript(defaultScriptPath)
 {
     addAndMakeVisible(_viewport);
+    addAndMakeVisible(_componentTree);
     addAndMakeVisible(_select);
     addAndMakeVisible(_reload);
 
@@ -38,7 +42,7 @@ void MainComponent::resized()
     _select.setBounds(btnArea.removeFromLeft(btnArea.proportionOfWidth(0.5)));
     _reload.setBounds(btnArea);
 
-    if (_componentTree != nullptr) { _componentTree->setBounds(area.removeFromRight(area.proportionOfWidth(0.2))); }
+    _componentTree.setBounds(area.removeFromRight(area.proportionOfWidth(0.2)));
     _viewport.setBounds(area);
 }
 
@@ -46,9 +50,6 @@ auto MainComponent::reloadScript(juce::File const& path) -> void
 {
     if (_comp != nullptr) {
         _fileListener.reset(nullptr);
-
-        removeChildComponent(_componentTree.get());
-        _componentTree.reset(nullptr);
 
         _comp->setLookAndFeel(nullptr);
         _viewport.setViewedComponent(nullptr);
@@ -63,11 +64,9 @@ auto MainComponent::reloadScript(juce::File const& path) -> void
         _comp->resized();
 
         _viewport.setViewedComponent(_comp, false);
+        _componentTree.setRootComponent(_comp);
 
-        _componentTree = std::make_unique<ComponentTree>(c);
-        addAndMakeVisible(*_componentTree);
-
-        _fileListener           = std::make_unique<mc::FileChangeListener>(path);
+        _fileListener           = std::make_unique<FileChangeListener>(path);
         _fileListener->onChange = [this] { reloadScript(_currentScript); };
 
         resized();
@@ -86,3 +85,4 @@ auto MainComponent::loadScriptPath() -> void
         }
     });
 }
+} // namespace mc
