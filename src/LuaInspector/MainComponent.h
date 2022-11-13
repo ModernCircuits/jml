@@ -2,6 +2,7 @@
 
 #include <juce_gui_extra/juce_gui_extra.h>
 
+#include "ComponentContainer.hpp"
 #include "ComponentTree.hpp"
 #include "FileChangeListener.hpp"
 #include "Sol3.hpp"
@@ -21,7 +22,7 @@ private:
     sol::state _lua;
     juce::Component* _comp { nullptr };
 
-    juce::Viewport _viewport;
+    ComponentContainer _viewport;
     ComponentTree _componentTree;
     juce::TextButton _select { "Select Script" };
     juce::TextButton _reload { "Reload" };

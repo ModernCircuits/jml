@@ -52,7 +52,7 @@ auto MainComponent::reloadScript(juce::File const& path) -> void
         _fileListener.reset(nullptr);
 
         _comp->setLookAndFeel(nullptr);
-        _viewport.setViewedComponent(nullptr);
+        _viewport.component(nullptr);
     }
 
     _lua.collect_garbage();
@@ -63,7 +63,7 @@ auto MainComponent::reloadScript(juce::File const& path) -> void
         _comp = c;
         _comp->resized();
 
-        _viewport.setViewedComponent(_comp, false);
+        _viewport.component(_comp);
         _componentTree.setRootComponent(_comp);
 
         _fileListener           = std::make_unique<FileChangeListener>(path);
