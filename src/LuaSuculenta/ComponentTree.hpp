@@ -1,5 +1,7 @@
 #pragma once
 
+#include "LuaSuculentaColors.hpp"
+
 #include <juce_gui_basics/juce_gui_basics.h>
 
 namespace mc {
@@ -26,10 +28,10 @@ struct ComponentTreeItem final : juce::TreeViewItem {
     auto paintItem(juce::Graphics& g, int width, int height) -> void override
     {
         auto const bounds = juce::Rectangle { 0, 0, width, height }.reduced(1);
-        g.setColour(juce::Colours::green);
+        g.setColour(LuaSuculentaColors::whiteDirt);
         g.fillRect(bounds);
 
-        g.setColour(juce::Colours::black);
+        g.setColour(LuaSuculentaColors::black);
         g.drawText(getUniqueName(), bounds.toFloat(), juce::Justification::centred, false);
     }
 

@@ -32,7 +32,9 @@ auto LuaPreview::script(juce::File const& path) -> void
 
     _lua.collect_garbage();
 
+    if (not path.existsAsFile()) { return; }
     path.getParentDirectory().setAsCurrentWorkingDirectory();
+
     auto luaScript = _lua.load_file(path.getFullPathName().toStdString());
     if (juce::Component* c = luaScript(); c != nullptr) {
         _comp = c;

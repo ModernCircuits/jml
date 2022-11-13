@@ -6,6 +6,7 @@
 #include "ComponentTree.hpp"
 #include "FileChangeListener.hpp"
 #include "LuaPreview.hpp"
+#include "LuaSuculentaLookAndFeel.hpp"
 #include "MenuBar.hpp"
 #include "Sol3.hpp"
 
@@ -27,9 +28,11 @@ private:
 
     juce::ApplicationCommandManager _commandManager {};
     juce::UndoManager _undoManager;
-    MenuBar _menuBar { _commandManager };
-    LuaPreview _preview;
+    LuaSuculentaLookAndFeel _lnf;
 
+    MenuBar _menuBar { _commandManager };
+    juce::TabbedComponent _tabs { juce::TabbedButtonBar::TabsAtLeft };
+    LuaPreview _preview;
     std::unique_ptr<juce::FileChooser> _fileChooser;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)

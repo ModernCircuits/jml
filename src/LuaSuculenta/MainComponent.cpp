@@ -12,13 +12,20 @@ MainComponent::MainComponent()
     addKeyListener(_commandManager.getKeyMappings());
     setWantsKeyboardFocus(true);
 
+    _tabs.addTab("Viewer", juce::Colours::black, &_preview, false);
+    _tabs.setTabBarDepth(50);
     addAndMakeVisible(_menuBar);
-    addAndMakeVisible(_preview);
+    addAndMakeVisible(_tabs);
 
+    setLookAndFeel(&_lnf);
     setSize(1280, 720);
 }
 
-MainComponent::~MainComponent() = default;
+MainComponent::~MainComponent()
+{
+    _preview.script(juce::File {});
+    setLookAndFeel(nullptr);
+}
 
 auto MainComponent::paint(juce::Graphics& g) -> void { g.fillAll(juce::Colours::white); }
 
@@ -26,7 +33,7 @@ void MainComponent::resized()
 {
     auto area = getLocalBounds();
     _menuBar.setBounds(area.removeFromTop(getLookAndFeel().getDefaultMenuBarHeight()));
-    _preview.setBounds(area);
+    _tabs.setBounds(area);
 }
 
 auto MainComponent::getNextCommandTarget() -> juce::ApplicationCommandTarget* { return findFirstTargetParentComponent(); }
