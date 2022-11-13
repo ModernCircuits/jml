@@ -5,7 +5,7 @@
 auto juce_Component(sol::table& state) -> void
 {
     // clang-format off
-    auto comp = state.new_usertype<juce::Component>("Component", sol::base_classes, sol::bases<juce::MouseListener>());
+    auto comp = state.new_usertype<juce::Component>("InternalComponent", sol::base_classes, sol::bases<juce::MouseListener>());
     comp.set_function("addAndMakeVisible", sol::overload(
             static_cast<void (juce::Component::*)(juce::Component*, int)>(&juce::Component::addAndMakeVisible),
             static_cast<void (juce::Component::*)(juce::Component&, int)>(&juce::Component::addAndMakeVisible),

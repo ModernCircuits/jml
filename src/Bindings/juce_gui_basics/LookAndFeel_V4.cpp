@@ -5,7 +5,7 @@
 auto juce_LookAndFeel_V4(sol::table& state) -> void
 {
     // clang-format off
-    auto lnf = state.new_usertype<juce::LookAndFeel_V4>("LookAndFeel_V4",
+    auto lnf = state.new_usertype<juce::LookAndFeel_V4>("InternalLookAndFeel_V4",
         sol::constructors<
             juce::LookAndFeel_V4(),
             juce::LookAndFeel_V4(juce::LookAndFeel_V4::ColourScheme)

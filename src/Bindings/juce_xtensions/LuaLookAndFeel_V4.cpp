@@ -1,10 +1,10 @@
-#include "LuaLookAndFeel.hpp"
+#include "LuaLookAndFeel_V4.hpp"
 
 #include <juce_gui_basics/juce_gui_basics.h>
 
-struct LuaLookAndFeel final : juce::LookAndFeel_V4 {
-    LuaLookAndFeel()           = default;
-    ~LuaLookAndFeel() override = default;
+struct LuaLookAndFeel_V4 final : juce::LookAndFeel_V4 {
+    LuaLookAndFeel_V4()           = default;
+    ~LuaLookAndFeel_V4() override = default;
 
     // juce::LookAndFeel_V4
     sol::safe_function lua_getTextButtonFont;
@@ -12,7 +12,7 @@ struct LuaLookAndFeel final : juce::LookAndFeel_V4 {
     sol::safe_function lua_drawToggleButton;
 
 private:
-    auto self() -> std::reference_wrapper<LuaLookAndFeel> { return std::ref(*this); }
+    auto self() -> std::reference_wrapper<LuaLookAndFeel_V4> { return std::ref(*this); }
 
     // juce::Button
     auto getTextButtonFont(juce::TextButton& btn, int buttonHeight) -> juce::Font override
@@ -44,10 +44,10 @@ private:
     }
 };
 
-auto juce_LuaLookAndFeel(sol::table& state) -> void
+auto juce_LuaLookAndFeel_V4(sol::table& state) -> void
 {
     // clang-format off
-    auto lnf = state.new_usertype<LuaLookAndFeel>("LuaLookAndFeel",
+    auto lnf = state.new_usertype<LuaLookAndFeel_V4>("LookAndFeel_V4",
 	    sol::default_constructor,
         sol::base_classes,
         sol::bases<
@@ -59,7 +59,7 @@ auto juce_LuaLookAndFeel(sol::table& state) -> void
     );
     // clang-format on
 
-    lnf["getTextButtonFont"]    = &LuaLookAndFeel::lua_getTextButtonFont;
-    lnf["drawButtonBackground"] = &LuaLookAndFeel::lua_drawButtonBackground;
-    lnf["drawToggleButton"]     = &LuaLookAndFeel::lua_drawToggleButton;
+    lnf["getTextButtonFont"]    = &LuaLookAndFeel_V4::lua_getTextButtonFont;
+    lnf["drawButtonBackground"] = &LuaLookAndFeel_V4::lua_drawButtonBackground;
+    lnf["drawToggleButton"]     = &LuaLookAndFeel_V4::lua_drawToggleButton;
 }

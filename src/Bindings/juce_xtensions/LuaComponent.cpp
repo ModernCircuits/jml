@@ -77,7 +77,7 @@ private:
 auto juce_LuaComponent(sol::table& state) -> void
 {
     // clang-format off
-    state.new_usertype<LuaComponent>("LuaComponent",
+    state.new_usertype<LuaComponent>("Component",
 	    sol::constructors<LuaComponent()>(),
         sol::base_classes, sol::bases<juce::Component>(),
         "paint",

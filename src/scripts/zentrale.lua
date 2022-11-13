@@ -2,7 +2,7 @@ local black = juce.Colour.new(0, 0, 0, 255)
 local grey = juce.Colour.new(53, 54, 59, 255)
 
 local function PluginThumbnail(name)
-  local thumbnail = juce.LuaComponent.new()
+  local thumbnail = juce.Component.new()
   thumbnail:setComponentID(juce.String.new(name))
 
   local tag1 = juce.TextButton.new(juce.String.new("tag1"))
@@ -34,7 +34,7 @@ local function PluginThumbnail(name)
 end
 
 local function Sidebar()
-  local sidebar = juce.LuaComponent.new()
+  local sidebar = juce.Component.new()
 
   local plug = juce.TextButton.new(juce.String.new("Plug"))
   local music = juce.TextButton.new(juce.String.new("Music"))
@@ -69,7 +69,7 @@ local function Sidebar()
 end
 
 local function ContentHeader()
-  local header = juce.LuaComponent.new()
+  local header = juce.Component.new()
   header:setComponentID(juce.String.new("Content Header"))
 
   local titleText = juce.String.new("Installed Products")
@@ -93,7 +93,7 @@ local function ContentHeader()
 end
 
 local function MainContent()
-  local content = juce.LuaComponent.new()
+  local content = juce.Component.new()
   local header = ContentHeader()
   local dynamic = PluginThumbnail("ASIC Dynamic")
   local filter = PluginThumbnail("ASIC Filter")
@@ -129,7 +129,7 @@ local function MainContent()
 end
 
 local function MainWindow()
-  local mainComponent = juce.LuaComponent.new()
+  local mainComponent = juce.Component.new()
   local sidebar = Sidebar()
   local content = MainContent()
 

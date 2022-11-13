@@ -17,11 +17,10 @@ struct LuaTimer final : juce::Timer {
 auto juce_LuaTimer(sol::table& state) -> void
 {
     // clang-format off
-    state.new_usertype<LuaTimer>("LuaTimer",
+    state.new_usertype<LuaTimer>("Timer",
         sol::constructors<LuaTimer()>(),
         sol::base_classes, sol::bases<juce::Timer>(),
-        "timerCallback",
-        &LuaTimer::lua_timerCallback
+        "timerCallback", &LuaTimer::lua_timerCallback
     );
     // clang-format on
 }

@@ -122,8 +122,8 @@ target_sources(LuaInspector
 
         "src/Bindings/juce_xtensions/LuaComponent.cpp"
         "src/Bindings/juce_xtensions/LuaComponent.hpp"
-        "src/Bindings/juce_xtensions/LuaLookAndFeel.cpp"
-        "src/Bindings/juce_xtensions/LuaLookAndFeel.hpp"
+        "src/Bindings/juce_xtensions/LuaLookAndFeel_V4.cpp"
+        "src/Bindings/juce_xtensions/LuaLookAndFeel_V4.hpp"
         "src/Bindings/juce_xtensions/LuaTimer.cpp"
         "src/Bindings/juce_xtensions/LuaTimer.hpp"
 )
