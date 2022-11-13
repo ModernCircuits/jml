@@ -29,20 +29,21 @@ juce_disable_default_flags()
 
 find_package(sol2 REQUIRED)
 
-juce_add_gui_app(JuceLuaTest
+juce_add_gui_app(LuaInspector
     # VERSION ...                       # Set this if the app version is different to the project version
     # ICON_BIG ...                      # ICON_* arguments specify a path to an image file to use as an icon
     # ICON_SMALL ...
     # DOCUMENT_EXTENSIONS ...           # Specify file extensions that should be associated with this app
     # COMPANY_NAME ...                  # Specify the name of the app's author
-    PRODUCT_NAME "JUCE Lua"             # The name of the final executable, which can differ from the target name
+    PRODUCT_NAME "Lua Inspector"        # The name of the final executable, which can differ from the target name
 )
 
-target_sources(JuceLuaTest
+target_sources(LuaInspector
     PRIVATE
-        "src/Main.cpp"
-        "src/MainComponent.h"
-        "src/MainComponent.cpp"
+        "src/LuaInspector/Main.cpp"
+        "src/LuaInspector/MainComponent.h"
+        "src/LuaInspector/MainComponent.cpp"
+        "src/LuaInspector/FileChangeListener.hpp"
 
         "src/Bindings/Juce.cpp"
         "src/Bindings/Juce.hpp"
@@ -127,20 +128,20 @@ target_sources(JuceLuaTest
         "src/Bindings/juce_xtensions/LuaTimer.hpp"
 )
 
-target_include_directories(JuceLuaTest
+target_include_directories(LuaInspector
     PUBLIC
         ${PROJECT_SOURCE_DIR}/src
 )
 
-target_compile_definitions(JuceLuaTest
+target_compile_definitions(LuaInspector
     PRIVATE
         JUCE_WEB_BROWSER=0
         JUCE_USE_CURL=0
-        JUCE_APPLICATION_NAME_STRING="$<TARGET_PROPERTY:JuceLuaTest,JUCE_PRODUCT_NAME>"
-        JUCE_APPLICATION_VERSION_STRING="$<TARGET_PROPERTY:JuceLuaTest,JUCE_VERSION>"
+        JUCE_APPLICATION_NAME_STRING="$<TARGET_PROPERTY:LuaInspector,JUCE_PRODUCT_NAME>"
+        JUCE_APPLICATION_VERSION_STRING="$<TARGET_PROPERTY:LuaInspector,JUCE_VERSION>"
 )
 
-target_link_libraries(JuceLuaTest
+target_link_libraries(LuaInspector
     PRIVATE
         juce::juce_gui_extra
     PUBLIC

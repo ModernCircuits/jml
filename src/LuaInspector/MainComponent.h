@@ -2,6 +2,8 @@
 
 #include <juce_gui_extra/juce_gui_extra.h>
 
+
+#include "FileChangeListener.hpp"
 #include "Sol3.hpp"
 
 struct ComponentTreeItem final : juce::TreeViewItem {
@@ -53,28 +55,7 @@ private:
     juce::TreeView _tree;
 };
 
-struct FileChangeListener final : juce::Timer {
-    explicit FileChangeListener(juce::File file)
-        : _file { std::move(file) }, _writeTime { _file.getLastModificationTime() }
-    {
-        startTimer(500);
-    }
 
-    std::function<void()> onChange {};
-
-private:
-    auto timerCallback() -> void override
-    {
-        auto const writeTime = _file.getLastModificationTime();
-        if (writeTime == _writeTime) { return; }
-        _writeTime = writeTime;
-
-        if (onChange) { onChange(); }
-    }
-
-    juce::File _file;
-    juce::Time _writeTime;
-};
 
 struct MainComponent : juce::Component {
     MainComponent();
@@ -97,7 +78,7 @@ private:
     std::unique_ptr<ComponentTree> _componentTree { nullptr };
 
     juce::File _currentScript;
-    std::unique_ptr<FileChangeListener> _fileListener;
+    std::unique_ptr<mc::FileChangeListener> _fileListener;
     std::unique_ptr<juce::FileChooser> _fileChooser;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)
