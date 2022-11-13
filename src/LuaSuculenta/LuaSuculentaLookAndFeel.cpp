@@ -16,6 +16,9 @@ LuaSuculentaLookAndFeel::LuaSuculentaLookAndFeel()
         LuaSuculentaColors::black,       // menuText
     } }
 {
+    setColour(juce::CodeEditorComponent::backgroundColourId, LuaSuculentaColors::whiteDirt);
+    setColour(juce::CodeEditorComponent::lineNumberBackgroundId, LuaSuculentaColors::transparent);
+    setColour(juce::CodeEditorComponent::lineNumberTextId, LuaSuculentaColors::black);
     // setColour(juce::ComboBox::backgroundColourId, LuaSuculentaColors::bg3);
 
     // setColour(juce::DrawableButton::backgroundColourId, LuaSuculentaColors::transparent);

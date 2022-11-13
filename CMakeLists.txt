@@ -44,6 +44,8 @@ target_sources(LuaSuculenta
         "src/LuaSuculenta/MainComponent.h"
         "src/LuaSuculenta/MainComponent.cpp"
 
+        "src/LuaSuculenta/CodeEditor.cpp"
+        "src/LuaSuculenta/CodeEditor.hpp"
         "src/LuaSuculenta/ComponentContainer.hpp"
         "src/LuaSuculenta/ComponentTree.hpp"
         "src/LuaSuculenta/FileChangeListener.hpp"

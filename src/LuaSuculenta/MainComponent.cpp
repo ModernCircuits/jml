@@ -12,8 +12,10 @@ MainComponent::MainComponent()
     addKeyListener(_commandManager.getKeyMappings());
     setWantsKeyboardFocus(true);
 
-    _tabs.addTab("Viewer", juce::Colours::black, &_preview, false);
     _tabs.setTabBarDepth(50);
+    _tabs.addTab("Viewer", LuaSuculentaColors::black, &_preview, false);
+    _tabs.addTab("Code", LuaSuculentaColors::black, &_editor, false);
+
     addAndMakeVisible(_menuBar);
     addAndMakeVisible(_tabs);
 
