@@ -93,6 +93,8 @@ target_sources(LuaInspector
         "src/Bindings/juce_graphics/Image.hpp"
         "src/Bindings/juce_graphics/ImageCache.cpp"
         "src/Bindings/juce_graphics/ImageCache.hpp"
+        "src/Bindings/juce_graphics/Justification.cpp"
+        "src/Bindings/juce_graphics/Justification.hpp"
         "src/Bindings/juce_graphics/Line.cpp"
         "src/Bindings/juce_graphics/Line.hpp"
         "src/Bindings/juce_graphics/Path.cpp"

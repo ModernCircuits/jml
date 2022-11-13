@@ -17,7 +17,7 @@ MainComponent::MainComponent() : _currentScript(defaultScriptPath)
     _select.onClick = [this] { loadScriptPath(); };
     _reload.onClick = [this] { reloadScript(_currentScript); };
 
-    _lua.open_libraries(sol::lib::base, sol::lib::package);
+    _lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string);
     add_juce_module(_lua);
 
     setSize(1280, 720);

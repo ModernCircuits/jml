@@ -22,6 +22,7 @@
 #include "Bindings/juce_graphics/ImageCache.hpp"
 #include "Bindings/juce_graphics/Line.hpp"
 #include "Bindings/juce_graphics/Path.hpp"
+#include "Bindings/juce_graphics/Justification.hpp"
 #include "Bindings/juce_graphics/Point.hpp"
 #include "Bindings/juce_graphics/Rectangle.hpp"
 #include "Bindings/juce_gui_basics/Button.hpp"
@@ -67,6 +68,7 @@ auto add_juce_module(sol::state& lua) -> void
     juce_Graphics(juceModule);
     juce_Image(juceModule);
     juce_ImageCache(juceModule);
+    juce_Justification(juceModule);
     juce_Line(juceModule);
     juce_Path(juceModule);
     juce_Point(juceModule);
