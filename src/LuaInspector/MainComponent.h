@@ -4,11 +4,12 @@
 
 #include "ComponentContainer.hpp"
 #include "ComponentTree.hpp"
+#include "MenuBar.hpp"
 #include "FileChangeListener.hpp"
 #include "Sol3.hpp"
 
 namespace mc {
-struct MainComponent : juce::Component {
+struct MainComponent : juce::Component,juce::ApplicationCommandTarget {
     MainComponent();
     ~MainComponent() override;
 
@@ -16,9 +17,19 @@ struct MainComponent : juce::Component {
     auto paintOverChildren(juce::Graphics& g) -> void override;
     auto resized() -> void override;
 
+    auto getNextCommandTarget() -> juce::ApplicationCommandTarget* override;
+    auto getAllCommands(juce::Array<juce::CommandID>& commands) -> void override;
+    auto getCommandInfo(juce::CommandID commandID, juce::ApplicationCommandInfo& result) -> void override;
+    auto perform(juce::ApplicationCommandTarget::InvocationInfo const& info) -> bool override;
+
 private:
     auto reloadScript(juce::File const& path) -> void;
     auto loadScriptPath() -> void;
+
+
+    juce::ApplicationCommandManager _commandManager{};
+    juce::UndoManager _undoManager;
+    MenuBar _menuBar{_commandManager};
 
     sol::state _lua;
     juce::Component* _comp { nullptr };

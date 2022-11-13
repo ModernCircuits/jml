@@ -110,8 +110,8 @@ local function ContentHeader()
   chat:setComponentID(juce.String.new("Chat"))
   component:addAndMakeVisible(chat)
 
-  local user = juce.TextButton.new(juce.String.new("User Profile"))
-  user:setComponentID(juce.String.new("User Profile"))
+  local user = juce.TextButton.new(juce.String.new("User"))
+  user:setComponentID(juce.String.new("User"))
   component:addAndMakeVisible(user)
 
   function component:resized()

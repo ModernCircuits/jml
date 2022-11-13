@@ -47,6 +47,8 @@ target_sources(LuaInspector
         "src/LuaInspector/ComponentContainer.hpp"
         "src/LuaInspector/ComponentTree.hpp"
         "src/LuaInspector/FileChangeListener.hpp"
+        "src/LuaInspector/MenuBar.hpp"
+        "src/LuaInspector/MenuBar.cpp"
 
         "src/Bindings/Juce.cpp"
         "src/Bindings/Juce.hpp"
