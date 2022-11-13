@@ -87,6 +87,8 @@ target_sources(LuaInspector
         "src/Bindings/juce_graphics/ColourGradient.hpp"
         "src/Bindings/juce_graphics/Colours.cpp"
         "src/Bindings/juce_graphics/Colours.hpp"
+        "src/Bindings/juce_graphics/Font.cpp"
+        "src/Bindings/juce_graphics/Font.hpp"
         "src/Bindings/juce_graphics/Graphics.cpp"
         "src/Bindings/juce_graphics/Graphics.hpp"
         "src/Bindings/juce_graphics/Image.cpp"

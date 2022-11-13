@@ -92,12 +92,14 @@ local function ContentHeader()
   local titleText = juce.String.new("Installed Products")
   local title = juce.Label.new(titleText, titleText)
   title:setComponentID(titleText)
+  title:setFont(juce.Font.new(24.0))
   component:addAndMakeVisible(title)
 
   local searchText = juce.String.new("Search")
   local search = juce.Label.new(searchText, searchText)
   search:setComponentID(searchText)
   search:setJustificationType(juce.Justification.new(juce.JustificationFlags.centred))
+  search:setFont(juce.Font.new(24.0))
   component:addAndMakeVisible(search)
 
   local music = juce.TextButton.new(juce.String.new("Music"))
@@ -114,11 +116,12 @@ local function ContentHeader()
 
   function component:resized()
     local area = self:getLocalBounds():reduced(16)
-    title:setBounds(area:removeFromLeft(150))
+    title:setBounds(area:removeFromLeft(200))
 
     user:setBounds(area:removeFromRight(50):reduced(2))
     chat:setBounds(area:removeFromRight(50):reduced(2))
     music:setBounds(area:removeFromRight(50):reduced(2))
+    area:removeFromRight(50)
 
     search:setBounds(area)
   end

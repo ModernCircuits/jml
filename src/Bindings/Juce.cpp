@@ -17,12 +17,13 @@
 #include "Bindings/juce_graphics/Colour.hpp"
 #include "Bindings/juce_graphics/ColourGradient.hpp"
 #include "Bindings/juce_graphics/Colours.hpp"
+#include "Bindings/juce_graphics/Font.hpp"
 #include "Bindings/juce_graphics/Graphics.hpp"
 #include "Bindings/juce_graphics/Image.hpp"
 #include "Bindings/juce_graphics/ImageCache.hpp"
+#include "Bindings/juce_graphics/Justification.hpp"
 #include "Bindings/juce_graphics/Line.hpp"
 #include "Bindings/juce_graphics/Path.hpp"
-#include "Bindings/juce_graphics/Justification.hpp"
 #include "Bindings/juce_graphics/Point.hpp"
 #include "Bindings/juce_graphics/Rectangle.hpp"
 #include "Bindings/juce_gui_basics/Button.hpp"
@@ -65,6 +66,7 @@ auto add_juce_module(sol::state& lua) -> void
     juce_Colour(juceModule);
     juce_ColourGradient(juceModule);
     juce_Colours(juceModule);
+    juce_Font(juceModule);
     juce_Graphics(juceModule);
     juce_Image(juceModule);
     juce_ImageCache(juceModule);
