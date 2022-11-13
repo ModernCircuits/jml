@@ -42,7 +42,7 @@ auto juce_Graphics(sol::table& state) -> void
     g.set_function("resetToDefaultState", &juce::Graphics::resetToDefaultState);
     g.set_function("isVectorDevice", &juce::Graphics::isVectorDevice);
     g.set_function("getInternalContext", &juce::Graphics::getInternalContext);
-    
+
     g.set_function("setFont", sol::overload(
             static_cast<void (juce::Graphics::*)(float)>(&juce::Graphics::setFont),
             static_cast<void (juce::Graphics::*)(juce::Font const&)>(&juce::Graphics::setFont)
@@ -95,7 +95,9 @@ auto juce_Graphics(sol::table& state) -> void
     );
     g.set_function("fillRoundedRectangle", sol::overload(
             static_cast<void (juce::Graphics::*)(float, float, float, float, float) const>(&juce::Graphics::fillRoundedRectangle),
-            static_cast<void (juce::Graphics::*)(juce::Rectangle<float>, float) const>(&juce::Graphics::fillRoundedRectangle)
+            [](juce::Graphics* g, juce::Rectangle<int> rect, double radius){ g->fillRoundedRectangle(rect.toFloat(), static_cast<float>(radius)); },
+            [](juce::Graphics* g, juce::Rectangle<float> rect, double radius){ g->fillRoundedRectangle(rect, static_cast<float>(radius)); },
+            [](juce::Graphics* g, juce::Rectangle<double> rect, double radius){ g->fillRoundedRectangle(rect.toFloat(), static_cast<float>(radius)); }
         )
     );
     g.set_function("drawRect", sol::overload(
