@@ -47,6 +47,8 @@ target_sources(LuaSuculenta
         "src/LuaSuculenta/ComponentContainer.hpp"
         "src/LuaSuculenta/ComponentTree.hpp"
         "src/LuaSuculenta/FileChangeListener.hpp"
+        "src/LuaSuculenta/LuaPreview.cpp"
+        "src/LuaSuculenta/LuaPreview.hpp"
         "src/LuaSuculenta/MenuBar.hpp"
         "src/LuaSuculenta/MenuBar.cpp"
 
