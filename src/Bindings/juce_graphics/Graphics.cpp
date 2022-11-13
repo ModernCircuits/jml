@@ -10,44 +10,44 @@ auto juce_Graphics(sol::table& state) -> void
     // reduceClipRegion
     // setOrigin
 
-    // clang-format off
     auto g = state.new_usertype<juce::Graphics>("Graphics");
-    g.set_function("setColour", &juce::Graphics::setColour);
-    g.set_function("setOpacity", &juce::Graphics::setOpacity);
-    g.set_function("setTiledImageFill", &juce::Graphics::setTiledImageFill);
-    g.set_function("setFillType", &juce::Graphics::setFillType);
-    g.set_function("getCurrentFont", &juce::Graphics::getCurrentFont);
-    g.set_function("drawSingleLineText", &juce::Graphics::drawSingleLineText);
-    g.set_function("drawMultiLineText", &juce::Graphics::drawMultiLineText);
-    g.set_function("getCurrentFont", &juce::Graphics::getCurrentFont);
-    g.set_function("fillCheckerBoard", &juce::Graphics::fillCheckerBoard);
-    g.set_function("drawDashedLine", &juce::Graphics::drawDashedLine);
-    g.set_function("drawVerticalLine", &juce::Graphics::drawVerticalLine);
-    g.set_function("drawHorizontalLine", &juce::Graphics::drawHorizontalLine);
-    g.set_function("strokePath", &juce::Graphics::strokePath);
-    g.set_function("drawArrow", &juce::Graphics::drawArrow);
-    g.set_function("setImageResamplingQuality", &juce::Graphics::setImageResamplingQuality);
-    g.set_function("drawImageAt", &juce::Graphics::drawImageAt);
-    g.set_function("drawImageTransformed", &juce::Graphics::drawImageTransformed);
-    g.set_function("drawImageWithin", &juce::Graphics::drawImageWithin);
-    g.set_function("getClipBounds", &juce::Graphics::getClipBounds);
-    g.set_function("clipRegionIntersects", &juce::Graphics::clipRegionIntersects);
-    g.set_function("excludeClipRegion", &juce::Graphics::excludeClipRegion);
-    g.set_function("isClipEmpty", &juce::Graphics::isClipEmpty);
-    g.set_function("saveState", &juce::Graphics::saveState);
-    g.set_function("restoreState", &juce::Graphics::restoreState);
-    g.set_function("beginTransparencyLayer", &juce::Graphics::beginTransparencyLayer);
-    g.set_function("endTransparencyLayer", &juce::Graphics::endTransparencyLayer);
-    g.set_function("addTransform", &juce::Graphics::addTransform);
-    g.set_function("resetToDefaultState", &juce::Graphics::resetToDefaultState);
-    g.set_function("isVectorDevice", &juce::Graphics::isVectorDevice);
-    g.set_function("getInternalContext", &juce::Graphics::getInternalContext);
 
-    g.set_function("setFont", sol::overload(
-            static_cast<void (juce::Graphics::*)(float)>(&juce::Graphics::setFont),
-            static_cast<void (juce::Graphics::*)(juce::Font const&)>(&juce::Graphics::setFont)
-        )
+    g["setColour"]                 = &juce::Graphics::setColour;
+    g["setOpacity"]                = &juce::Graphics::setOpacity;
+    g["setTiledImageFill"]         = &juce::Graphics::setTiledImageFill;
+    g["setFillType"]               = &juce::Graphics::setFillType;
+    g["getCurrentFont"]            = &juce::Graphics::getCurrentFont;
+    g["drawSingleLineText"]        = &juce::Graphics::drawSingleLineText;
+    g["drawMultiLineText"]         = &juce::Graphics::drawMultiLineText;
+    g["getCurrentFont"]            = &juce::Graphics::getCurrentFont;
+    g["fillCheckerBoard"]          = &juce::Graphics::fillCheckerBoard;
+    g["drawDashedLine"]            = &juce::Graphics::drawDashedLine;
+    g["drawVerticalLine"]          = &juce::Graphics::drawVerticalLine;
+    g["drawHorizontalLine"]        = &juce::Graphics::drawHorizontalLine;
+    g["strokePath"]                = &juce::Graphics::strokePath;
+    g["drawArrow"]                 = &juce::Graphics::drawArrow;
+    g["setImageResamplingQuality"] = &juce::Graphics::setImageResamplingQuality;
+    g["drawImageAt"]               = &juce::Graphics::drawImageAt;
+    g["drawImageTransformed"]      = &juce::Graphics::drawImageTransformed;
+    g["drawImageWithin"]           = &juce::Graphics::drawImageWithin;
+    g["getClipBounds"]             = &juce::Graphics::getClipBounds;
+    g["clipRegionIntersects"]      = &juce::Graphics::clipRegionIntersects;
+    g["excludeClipRegion"]         = &juce::Graphics::excludeClipRegion;
+    g["isClipEmpty"]               = &juce::Graphics::isClipEmpty;
+    g["saveState"]                 = &juce::Graphics::saveState;
+    g["restoreState"]              = &juce::Graphics::restoreState;
+    g["beginTransparencyLayer"]    = &juce::Graphics::beginTransparencyLayer;
+    g["endTransparencyLayer"]      = &juce::Graphics::endTransparencyLayer;
+    g["addTransform"]              = &juce::Graphics::addTransform;
+    g["resetToDefaultState"]       = &juce::Graphics::resetToDefaultState;
+    g["isVectorDevice"]            = &juce::Graphics::isVectorDevice;
+    g["getInternalContext"]        = &juce::Graphics::getInternalContext;
+    g["setFont"]                   = sol::overload(                                                          //
+        static_cast<void (juce::Graphics::*)(float)>(&juce::Graphics::setFont),            //
+        static_cast<void (juce::Graphics::*)(juce::Font const&)>(&juce::Graphics::setFont) //
     );
+
+    // clang-format off
     g.set_function("drawText", sol::overload(
             static_cast<void (juce::Graphics::*)(juce::String const&, int, int, int, int, juce::Justification, bool) const>(&juce::Graphics::drawText),
             [](juce::Graphics const* g, juce::String const& s, int x, int y, int w, int h, juce::Justification j) { g->drawText(s, x, y, w, h, j); },

@@ -28,7 +28,7 @@ private:
         -> void override
     {
         if (lua_drawButtonBackground.valid()) {
-            lua_drawButtonBackground(self(), std::ref(g), std::ref(btn), color, isHighlighted, isDown);
+            lua_drawButtonBackground(self(), std::ref(g), &btn, color, isHighlighted, isDown);
         } else {
             juce::LookAndFeel_V4::drawButtonBackground(g, btn, color, isHighlighted, isDown);
         }

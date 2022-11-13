@@ -24,7 +24,7 @@ local function PluginThumbnail(name)
 
   function thumbnail:paint(g)
     g:setColour(juce.Colours.black)
-    g:fillRect(imageArea)
+    g:fillRoundedRectangle(imageArea, 8.0)
   end
 
   function thumbnail:resized()
@@ -65,11 +65,11 @@ local function Sidebar()
   end
 
   function sidebar:resized()
-    local area = sidebar:getLocalBounds()
-    star:setBounds(area:removeFromBottom(75):reduced(4))
-    rocket:setBounds(area:removeFromBottom(75):reduced(4))
-    music:setBounds(area:removeFromBottom(75):reduced(4))
-    plug:setBounds(area:removeFromBottom(75):reduced(4))
+    local area = sidebar:getLocalBounds():reduced(4)
+    star:setBounds(area:removeFromBottom(60):reduced(4))
+    rocket:setBounds(area:removeFromBottom(60):reduced(4))
+    music:setBounds(area:removeFromBottom(60):reduced(4))
+    plug:setBounds(area:removeFromBottom(60):reduced(4))
   end
 
   return sidebar
@@ -116,14 +116,14 @@ local function MainContent()
 
   function content:paint(g)
     g:setColour(grey)
-    g:fillAll()
+    g:fillRoundedRectangle(content:getLocalBounds(), 8.0)
   end
 
   function content:resized()
     local area = content:getLocalBounds():reduced(16)
     header:setBounds(area:removeFromTop(75):reduced(8):toNearestInt())
 
-    local height = area:getHeight() / 2
+    local height = area:getHeight() / 2.5
     local width = area:getWidth() / 4
     local thumbnailArea = area:removeFromTop(height):reduced(8)
     dynamic:setBounds(thumbnailArea:removeFromLeft(width):reduced(8))
@@ -137,9 +137,9 @@ end
 
 local function MainWindow()
   local lnf = juce.LookAndFeel_V4.new()
-  function lnf:drawButtonBackground(g, btn, color, highlighted, down)
-    g:setColour(highlighted and lightGreen or lightBlue)
-    g:fillAll()
+  function lnf:drawButtonBackground(g, btn, color, isHighlighted, isDown)
+    g:setColour(isHighlighted and lightGreen or lightBlue)
+    g:fillRoundedRectangle(btn:getLocalBounds(), 8.0)
   end
 
   local mainComponent = juce.Component.new()
@@ -162,7 +162,7 @@ local function MainWindow()
   function mainComponent:resized()
     local area = mainComponent:getLocalBounds()
     sidebar:setBounds(area:removeFromLeft(75):toNearestInt())
-    content:setBounds(area:reduced(8))
+    content:setBounds(area:reduced( 8))
   end
 
   return mainComponent

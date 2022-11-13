@@ -17,5 +17,10 @@ auto juce_Button(sol::table& state) -> void
     );
     // clang-format on
 
-    button["onClick"] = &juce::Button::onClick;
+    button["onClick"]   = &juce::Button::onClick;
+    button["getBounds"] = &juce::Component::getBounds;
+    button["getWidth"]  = &juce::Component::getWidth;
+    button["getHeight"] = &juce::Component::getHeight;
+    button["getX"]      = &juce::Component::getX;
+    button["getY"]      = &juce::Component::getY;
 }
