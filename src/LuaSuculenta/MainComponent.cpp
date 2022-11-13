@@ -11,6 +11,9 @@ auto const* defaultScriptPath = R"(C:\Developer\moderncircuits\tests\juce-lua\ex
 
 MainComponent::MainComponent() : _currentScript(defaultScriptPath)
 {
+    _lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string);
+    add_juce_module(_lua);
+
     _commandManager.registerAllCommandsForTarget(this);
     addKeyListener(_commandManager.getKeyMappings());
     setWantsKeyboardFocus(true);
@@ -18,14 +21,6 @@ MainComponent::MainComponent() : _currentScript(defaultScriptPath)
     addAndMakeVisible(_menuBar);
     addAndMakeVisible(_viewport);
     addAndMakeVisible(_componentTree);
-    addAndMakeVisible(_select);
-    addAndMakeVisible(_reload);
-
-    _select.onClick = [this] { loadScriptPath(); };
-    _reload.onClick = [this] { reloadScript(_currentScript); };
-
-    _lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string);
-    add_juce_module(_lua);
 
     setSize(1280, 720);
 }
@@ -47,13 +42,7 @@ void MainComponent::resized()
 {
     auto area = getLocalBounds();
     _menuBar.setBounds(area.removeFromTop(getLookAndFeel().getDefaultMenuBarHeight()));
-
-    auto settings = area.removeFromRight(area.proportionOfWidth(0.2));
-    auto buttons  = settings.removeFromTop(50);
-    _select.setBounds(buttons.removeFromLeft(buttons.proportionOfWidth(0.5)));
-    _reload.setBounds(buttons);
-    _componentTree.setBounds(settings);
-
+    _componentTree.setBounds(area.removeFromRight(area.proportionOfWidth(0.2)));
     _viewport.setBounds(area);
 }
 
@@ -63,6 +52,7 @@ auto MainComponent::getAllCommands(juce::Array<juce::CommandID>& c) -> void
 {
     c.addArray({
         CommandIDs::open,
+        CommandIDs::reload,
         CommandIDs::save,
         CommandIDs::saveAs,
         CommandIDs::redo,
@@ -77,15 +67,19 @@ auto MainComponent::getCommandInfo(juce::CommandID commandID, juce::ApplicationC
 
     switch (commandID) {
     case CommandIDs::open:
-        result.setInfo("Open", "Opens a project file", "File", 0);
+        result.setInfo("Open", "Opens a script file", "File", 0);
         result.addDefaultKeypress('o', ModifierKeys::commandModifier);
         break;
+    case CommandIDs::reload:
+        result.setInfo("Reload", "Reload script file", "File", 0);
+        result.addDefaultKeypress('r', ModifierKeys::commandModifier);
+        break;
     case CommandIDs::save:
-        result.setInfo("Save", "Saves a project file", "File", 0);
+        result.setInfo("Save", "Saves a script file", "File", 0);
         result.addDefaultKeypress('s', ModifierKeys::commandModifier);
         break;
     case CommandIDs::saveAs:
-        result.setInfo("Save As", "Saves a project file to a new location", "File", 0);
+        result.setInfo("Save As", "Saves a script file to a new location", "File", 0);
         result.addDefaultKeypress('s', ModifierKeys::commandModifier | ModifierKeys::shiftModifier);
         break;
     case CommandIDs::undo:
@@ -103,7 +97,8 @@ auto MainComponent::getCommandInfo(juce::CommandID commandID, juce::ApplicationC
 auto MainComponent::perform(juce::ApplicationCommandTarget::InvocationInfo const& info) -> bool
 {
     switch (info.commandID) {
-    case CommandIDs::open: /*loadProject();*/ break;
+    case CommandIDs::open: loadScriptPath(); break;
+    case CommandIDs::reload: reloadScript(_currentScript); break;
     case CommandIDs::save:
     case CommandIDs::saveAs: /*saveProject();*/ break;
     case CommandIDs::undo: _undoManager.undo(); break;

@@ -5,6 +5,7 @@ struct CommandIDs {
     enum Values {
         unknown,
         open,
+        reload,
         save,
         saveAs,
         undo,

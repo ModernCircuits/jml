@@ -36,8 +36,6 @@ private:
 
     ComponentContainer _viewport;
     ComponentTree _componentTree;
-    juce::TextButton _select { "Select Script" };
-    juce::TextButton _reload { "Reload" };
 
     juce::File _currentScript;
     std::unique_ptr<FileChangeListener> _fileListener;
