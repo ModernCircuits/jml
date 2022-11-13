@@ -28,10 +28,7 @@ MainComponent::~MainComponent()
     if (_comp != nullptr) { _comp->setLookAndFeel(nullptr); }
 }
 
-auto MainComponent::paint(juce::Graphics& g) -> void
-{
-    g.fillAll(juce::Colours::white);
-}
+auto MainComponent::paint(juce::Graphics& g) -> void { g.fillAll(juce::Colours::white); }
 
 auto MainComponent::paintOverChildren(juce::Graphics& g) -> void
 {

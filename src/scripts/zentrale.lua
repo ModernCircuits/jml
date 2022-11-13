@@ -1,5 +1,8 @@
 local black = juce.Colour.new(0, 0, 0, 255)
 local grey = juce.Colour.new(53, 54, 59, 255)
+local lightViolet = juce.Colour.new(93, 152, 255, 255)
+local lightBlue = juce.Colour.new(82, 178, 225, 255)
+local lightGreen = juce.Colour.new(120, 192, 206, 255)
 
 local function PluginThumbnail(name)
   local thumbnail = juce.Component.new()
@@ -12,6 +15,10 @@ local function PluginThumbnail(name)
   thumbnail:addAndMakeVisible(tag1)
   thumbnail:addAndMakeVisible(tag2)
   thumbnail:addAndMakeVisible(tag3)
+
+  tag1:setComponentID(juce.String.new("tag1"))
+  tag2:setComponentID(juce.String.new("tag2"))
+  tag3:setComponentID(juce.String.new("tag3"))
 
   local imageArea = juce.RectangleInt.new(0, 0, 0, 0)
 
@@ -129,13 +136,22 @@ local function MainContent()
 end
 
 local function MainWindow()
-  local mainComponent = juce.Component.new()
-  local sidebar = Sidebar()
-  local content = MainContent()
+  local lnf = juce.LookAndFeel_V4.new()
+  function lnf:drawButtonBackground(g, btn, color, highlighted, down)
+    g:setColour(highlighted and lightGreen or lightBlue)
+    g:fillAll()
+  end
 
-  mainComponent:addAndMakeVisible(sidebar)
-  mainComponent:addAndMakeVisible(content)
+  local mainComponent = juce.Component.new()
   mainComponent:setComponentID(juce.String.new("Zentrale"))
+
+  local sidebar = Sidebar()
+  mainComponent:addAndMakeVisible(sidebar)
+
+  local content = MainContent()
+  mainComponent:addAndMakeVisible(content)
+
+  mainComponent:setLookAndFeel(lnf)
   mainComponent:setSize(1152, 648)
 
   function mainComponent:paint(g)
