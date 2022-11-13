@@ -29,26 +29,26 @@ juce_disable_default_flags()
 
 find_package(sol2 REQUIRED)
 
-juce_add_gui_app(LuaInspector
+juce_add_gui_app(LuaSuculenta
     # VERSION ...                       # Set this if the app version is different to the project version
     # ICON_BIG ...                      # ICON_* arguments specify a path to an image file to use as an icon
     # ICON_SMALL ...
     # DOCUMENT_EXTENSIONS ...           # Specify file extensions that should be associated with this app
     # COMPANY_NAME ...                  # Specify the name of the app's author
-    PRODUCT_NAME "Lua Inspector"        # The name of the final executable, which can differ from the target name
+    PRODUCT_NAME "Lua Suculenta"        # The name of the final executable, which can differ from the target name
 )
 
-target_sources(LuaInspector
+target_sources(LuaSuculenta
     PRIVATE
-        "src/LuaInspector/Main.cpp"
-        "src/LuaInspector/MainComponent.h"
-        "src/LuaInspector/MainComponent.cpp"
+        "src/LuaSuculenta/Main.cpp"
+        "src/LuaSuculenta/MainComponent.h"
+        "src/LuaSuculenta/MainComponent.cpp"
 
-        "src/LuaInspector/ComponentContainer.hpp"
-        "src/LuaInspector/ComponentTree.hpp"
-        "src/LuaInspector/FileChangeListener.hpp"
-        "src/LuaInspector/MenuBar.hpp"
-        "src/LuaInspector/MenuBar.cpp"
+        "src/LuaSuculenta/ComponentContainer.hpp"
+        "src/LuaSuculenta/ComponentTree.hpp"
+        "src/LuaSuculenta/FileChangeListener.hpp"
+        "src/LuaSuculenta/MenuBar.hpp"
+        "src/LuaSuculenta/MenuBar.cpp"
 
         "src/Bindings/Juce.cpp"
         "src/Bindings/Juce.hpp"
@@ -137,21 +137,21 @@ target_sources(LuaInspector
         "src/Bindings/juce_xtensions/LuaTimer.hpp"
 )
 
-target_include_directories(LuaInspector
+target_include_directories(LuaSuculenta
     PUBLIC
         ${PROJECT_SOURCE_DIR}/src
 )
 
-target_compile_definitions(LuaInspector
+target_compile_definitions(LuaSuculenta
     PRIVATE
         SOL_ALL_SAFETIES_ON=1
         JUCE_WEB_BROWSER=0
         JUCE_USE_CURL=0
-        JUCE_APPLICATION_NAME_STRING="$<TARGET_PROPERTY:LuaInspector,JUCE_PRODUCT_NAME>"
-        JUCE_APPLICATION_VERSION_STRING="$<TARGET_PROPERTY:LuaInspector,JUCE_VERSION>"
+        JUCE_APPLICATION_NAME_STRING="$<TARGET_PROPERTY:LuaSuculenta,JUCE_PRODUCT_NAME>"
+        JUCE_APPLICATION_VERSION_STRING="$<TARGET_PROPERTY:LuaSuculenta,JUCE_VERSION>"
 )
 
-target_link_libraries(LuaInspector
+target_link_libraries(LuaSuculenta
     PRIVATE
         juce::juce_gui_extra
     PUBLIC
