@@ -82,10 +82,10 @@ auto juce_RectangleImpl(sol::table& state, char const* name) -> void
     rect["translated"]                  = &juce::Rectangle<T>::translated;
     rect["expand"]                      = &juce::Rectangle<T>::expand;
     rect["reduce"]                      = &juce::Rectangle<T>::reduce;
-    rect["removeFromTop"]               = &juce::Rectangle<T>::removeFromTop;
-    rect["removeFromBottom"]            = &juce::Rectangle<T>::removeFromBottom;
-    rect["removeFromLeft"]              = &juce::Rectangle<T>::removeFromLeft;
-    rect["removeFromRight"]             = &juce::Rectangle<T>::removeFromRight;
+    rect["removeFromTop"]               = [](juce::Rectangle<T>* self, double v) { return self->removeFromTop(static_cast<T>(v)); };
+    rect["removeFromBottom"]            = [](juce::Rectangle<T>* self, double v) { return self->removeFromBottom(static_cast<T>(v)); };
+    rect["removeFromLeft"]              = [](juce::Rectangle<T>* self, double v) { return self->removeFromLeft(static_cast<T>(v)); };
+    rect["removeFromRight"]             = [](juce::Rectangle<T>* self, double v) { return self->removeFromRight(static_cast<T>(v)); };
     rect["getConstrainedPoint"]         = &juce::Rectangle<T>::getConstrainedPoint;
     rect["getRelativePoint"]            = &juce::Rectangle<T>::template getRelativePoint<double>;
     rect["proportionOfWidth"]           = &juce::Rectangle<T>::template proportionOfWidth<double>;

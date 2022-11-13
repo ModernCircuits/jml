@@ -13,13 +13,21 @@ local function PluginThumbnail(name)
   thumbnail:addAndMakeVisible(tag2)
   thumbnail:addAndMakeVisible(tag3)
 
+  local imageArea = juce.RectangleInt.new(0, 0, 0, 0)
+
   function thumbnail:paint(g)
     g:setColour(juce.Colours.black)
-    g:fillAll()
+    g:fillRect(imageArea)
   end
 
   function thumbnail:resized()
     local area = thumbnail:getLocalBounds()
+    local buttonArea = area:removeFromBottom(40)
+    imageArea = area:reduced(2)
+    local width = buttonArea:getWidth() / 3
+    tag1:setBounds(buttonArea:removeFromLeft(width):toNearestInt():reduced(2))
+    tag2:setBounds(buttonArea:removeFromLeft(width):toNearestInt():reduced(2))
+    tag3:setBounds(buttonArea:removeFromLeft(width):toNearestInt():reduced(2))
   end
 
   return thumbnail
@@ -106,15 +114,15 @@ local function MainContent()
 
   function content:resized()
     local area = content:getLocalBounds():reduced(16)
-    local height = area:getHeight() / 3
-    local width = area:getWidth() / 3
     header:setBounds(area:removeFromTop(75):reduced(8):toNearestInt())
 
-    thumbnailArea = area:removeFromTop(200):reduced(8)
-    dynamic:setBounds(thumbnailArea:removeFromLeft(200):reduced(5))
-    filter:setBounds(thumbnailArea:removeFromLeft(200):reduced(5))
-    shape:setBounds(thumbnailArea:removeFromLeft(200):reduced(5))
-    space:setBounds(thumbnailArea:removeFromLeft(200):reduced(5))
+    local height = area:getHeight() / 2
+    local width = area:getWidth() / 4
+    local thumbnailArea = area:removeFromTop(height):reduced(8)
+    dynamic:setBounds(thumbnailArea:removeFromLeft(width):reduced(8))
+    filter:setBounds(thumbnailArea:removeFromLeft(width):reduced(8))
+    shape:setBounds(thumbnailArea:removeFromLeft(width):reduced(8))
+    space:setBounds(thumbnailArea:removeFromLeft(width):reduced(8))
   end
 
   return content

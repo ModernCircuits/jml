@@ -7,19 +7,19 @@ struct LuaComponent final : juce::Component {
     ~LuaComponent() override = default;
 
     // juce::Component
-    sol::function lua_paint;
-    sol::function lua_resized;
+    sol::safe_function lua_paint;
+    sol::safe_function lua_resized;
 
     // juce::MouseListener
-    sol::function lua_mouseMove;
-    sol::function lua_mouseEnter;
-    sol::function lua_mouseExit;
-    sol::function lua_mouseDown;
-    sol::function lua_mouseDrag;
-    sol::function lua_mouseUp;
-    sol::function lua_mouseDoubleClick;
-    sol::function lua_mouseWheelMove;
-    sol::function lua_mouseMagnify;
+    sol::safe_function lua_mouseMove;
+    sol::safe_function lua_mouseEnter;
+    sol::safe_function lua_mouseExit;
+    sol::safe_function lua_mouseDown;
+    sol::safe_function lua_mouseDrag;
+    sol::safe_function lua_mouseUp;
+    sol::safe_function lua_mouseDoubleClick;
+    sol::safe_function lua_mouseWheelMove;
+    sol::safe_function lua_mouseMagnify;
 
 private:
     auto self() -> std::reference_wrapper<LuaComponent> { return std::ref(*this); }

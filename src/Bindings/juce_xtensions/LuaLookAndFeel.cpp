@@ -7,9 +7,9 @@ struct LuaLookAndFeel final : juce::LookAndFeel_V4 {
     ~LuaLookAndFeel() override = default;
 
     // juce::LookAndFeel_V4
-    sol::function lua_getTextButtonFont;
-    sol::function lua_drawButtonBackground;
-    sol::function lua_drawToggleButton;
+    sol::safe_function lua_getTextButtonFont;
+    sol::safe_function lua_drawButtonBackground;
+    sol::safe_function lua_drawToggleButton;
 
 private:
     auto self() -> std::reference_wrapper<LuaLookAndFeel> { return std::ref(*this); }

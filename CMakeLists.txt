@@ -135,6 +135,7 @@ target_include_directories(LuaInspector
 
 target_compile_definitions(LuaInspector
     PRIVATE
+        SOL_ALL_SAFETIES_ON=1
         JUCE_WEB_BROWSER=0
         JUCE_USE_CURL=0
         JUCE_APPLICATION_NAME_STRING="$<TARGET_PROPERTY:LuaInspector,JUCE_PRODUCT_NAME>"
