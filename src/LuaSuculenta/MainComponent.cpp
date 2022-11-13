@@ -90,7 +90,7 @@ auto MainComponent::perform(juce::ApplicationCommandTarget::InvocationInfo const
 {
     switch (info.commandID) {
     case CommandIDs::open: loadScriptPath(); break;
-    case CommandIDs::reload: _preview.script(_preview.script()); break;
+    case CommandIDs::reload: doReload(_preview.script()); break;
     case CommandIDs::save:
     case CommandIDs::saveAs: /*saveProject();*/ break;
     case CommandIDs::undo: _undoManager.undo(); break;
@@ -101,13 +101,19 @@ auto MainComponent::perform(juce::ApplicationCommandTarget::InvocationInfo const
     return true;
 }
 
+auto MainComponent::doReload(juce::File const& file) -> void
+{
+    _preview.script(file);
+    _editor.file(file);
+}
+
 auto MainComponent::loadScriptPath() -> void
 {
     auto const* msg = "Please select the lua script you want to load...";
     auto const dir  = juce::File::getSpecialLocation(juce::File::currentApplicationFile);
     _fileChooser    = std::make_unique<juce::FileChooser>(msg, dir, "*.lua");
     _fileChooser->launchAsync(juce::FileBrowserComponent::openMode, [this](auto const& chooser) {
-        if (auto results = chooser.getResults(); results.size() == 1) { _preview.script(results[0]); }
+        if (auto results = chooser.getResults(); results.size() == 1) { doReload(results[0]); }
     });
 }
 } // namespace mc

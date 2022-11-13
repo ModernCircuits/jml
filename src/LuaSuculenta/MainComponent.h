@@ -27,6 +27,8 @@ struct MainComponent : juce::Component, juce::ApplicationCommandTarget {
     auto perform(juce::ApplicationCommandTarget::InvocationInfo const& info) -> bool override;
 
 private:
+    auto doReload(juce::File const& file) -> void;
+
     auto loadScriptPath() -> void;
 
     juce::ApplicationCommandManager _commandManager {};
