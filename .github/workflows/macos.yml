@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         cxx: [17, 20]
-        build_mode: ["Debug", "Release"]
+        build_mode: ["Release"]
       fail-fast: false
     name: ${{ matrix.cxx }} - ${{ matrix.build_mode }}
     steps:
