@@ -9,7 +9,7 @@ jobs:
       matrix:
         cxx: [17, 20, 23]
         build_mode: ["Release"]
-        compiler: ["gcc", "clang"]
+        compiler: ["gcc"]
       fail-fast: false
     name: ${{ matrix.compiler }} - ${{ matrix.cxx }} - ${{ matrix.build_mode }}
     steps:
@@ -40,13 +40,6 @@ jobs:
           libglu1-mesa-dev
           mesa-common-dev
 
-      - name: Install LLVM
-        if: matrix.compiler == 'clang'
-        run: |
-          wget https://apt.llvm.org/llvm.sh
-          chmod +x llvm.sh
-          sudo ./llvm.sh 14 all
-
       - name: Install conan
         run: |
           pip install conan
@@ -61,20 +54,6 @@ jobs:
           -B build
           -D CMAKE_BUILD_TYPE=${{ matrix.build_mode }}
           -D CMAKE_CXX_STANDARD="${{ matrix.cxx }}"
-
-      - name: CMake configure - CLANG
-        if: matrix.compiler == 'clang'
-        run: >
-          cmake
-          -S .
-          -G Ninja
-          -B build
-          -D CMAKE_BUILD_TYPE=${{ matrix.build_mode }}
-          -D CMAKE_CXX_STANDARD="${{ matrix.cxx }}"
-          -D CMAKE_C_COMPILER="clang-14"
-          -D CMAKE_CXX_COMPILER="clang++-14"
-          -D CMAKE_UNITY_BUILD=ON
-          -D MC_BUILD_WERROR=ON
 
       - name: CMake build
         run: cmake --build build --config ${{ matrix.build_mode }}
