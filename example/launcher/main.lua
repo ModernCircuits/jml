@@ -1,4 +1,4 @@
-Theme = require("color")
+Theme = require("theme")
 Content = require("content")
 Sidebar = require("sidebar")
 
@@ -7,6 +7,7 @@ local function MainWindow()
   function lnf:drawButtonBackground(g, btn, c, isHighlighted, isDown)
     g:setColour(isHighlighted and Theme.lightGreen or Theme.lightBlue)
     g:fillRoundedRectangle(btn:getLocalBounds(), 8.0)
+
   end
 
   local component = juce.Component.new()

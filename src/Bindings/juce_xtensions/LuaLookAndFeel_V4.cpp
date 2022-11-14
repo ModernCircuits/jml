@@ -11,6 +11,8 @@ struct LuaLookAndFeel_V4 final : juce::LookAndFeel_V4 {
     sol::safe_function lua_drawButtonBackground;
     sol::safe_function lua_drawToggleButton;
 
+    auto dummy() -> void { juce::ignoreUnused(this); }
+
 private:
     auto self() -> std::reference_wrapper<LuaLookAndFeel_V4> { return std::ref(*this); }
 
@@ -62,4 +64,5 @@ auto juce_LuaLookAndFeel_V4(sol::table& state) -> void
     lnf["getTextButtonFont"]    = &LuaLookAndFeel_V4::lua_getTextButtonFont;
     lnf["drawButtonBackground"] = &LuaLookAndFeel_V4::lua_drawButtonBackground;
     lnf["drawToggleButton"]     = &LuaLookAndFeel_V4::lua_drawToggleButton;
+    lnf["dummy"]                = &LuaLookAndFeel_V4::dummy;
 }

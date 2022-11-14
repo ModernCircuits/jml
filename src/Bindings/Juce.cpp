@@ -30,6 +30,8 @@
 #include "Bindings/juce_gui_basics/ComboBox.hpp"
 #include "Bindings/juce_gui_basics/Component.hpp"
 #include "Bindings/juce_gui_basics/Label.hpp"
+#include "Bindings/juce_gui_basics/ListBox.hpp"
+#include "Bindings/juce_gui_basics/ListBoxModel.hpp"
 #include "Bindings/juce_gui_basics/LookAndFeel.hpp"
 #include "Bindings/juce_gui_basics/LookAndFeel_V4.hpp"
 #include "Bindings/juce_gui_basics/MouseEvent.hpp"
@@ -81,6 +83,8 @@ auto add_juce_module(sol::state& lua) -> void
     juce_ComboBox(juceModule);
     juce_Component(juceModule);
     juce_Label(juceModule);
+    juce_ListBox(juceModule);
+    juce_ListBoxModel(juceModule);
     juce_LookAndFeel(juceModule);
     juce_LookAndFeel_V4(juceModule);
     juce_MouseEvent(juceModule);

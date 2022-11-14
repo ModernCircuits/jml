@@ -59,6 +59,18 @@ function content.new()
   local shape = PluginThumbnail.new("ASIC Shape")
   local space = PluginThumbnail.new("ASIC Space")
 
+  -- local listModel = juce.ListBoxModel.new()
+  -- function listModel:getNumRows()
+  --   return 24
+  -- end
+
+  -- function listModel:paintListBoxItem(rowNumber, g, width, height, rowIsSelected)
+  --   g:setColour(juce.Colours.black)
+  --   g:fillRect(juce.RectangleInt.new(0, 0, width, height):reduced(2))
+  -- end
+
+  -- local list = juce.ListBox.new(juce.String.new("List"), listModel)
+
   dynamic.tag1.onClick = function()
     print("Dynamic: 1")
   end
@@ -105,6 +117,7 @@ function content.new()
   component:addAndMakeVisible(filter.component)
   component:addAndMakeVisible(shape.component)
   component:addAndMakeVisible(space.component)
+  -- component:addAndMakeVisible(list)
 
   function component:paint(g)
     g:setColour(Theme.grey)
@@ -122,6 +135,9 @@ function content.new()
     filter.component:setBounds(thumbnailArea:removeFromLeft(width):reduced(8))
     shape.component:setBounds(thumbnailArea:removeFromLeft(width):reduced(8))
     space.component:setBounds(thumbnailArea:removeFromLeft(width):reduced(8))
+
+    -- list:setBounds(area)
+    -- listModel:getNameForRow(0)
   end
 
   return component
