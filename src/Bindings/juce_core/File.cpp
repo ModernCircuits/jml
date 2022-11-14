@@ -44,15 +44,15 @@ auto juce_File(sol::table& state) -> void
         "invokedExecutableFile",
         juce::File::invokedExecutableFile,
         "hostApplicationPath",
-        juce::File::hostApplicationPath
+        juce::File::hostApplicationPath,
         #if JUCE_WINDOWS
-        ,"windowsSystemDirectory",
+        "windowsSystemDirectory",
         juce::File::windowsSystemDirectory,
         #endif
         "globalApplicationsDirectory",
-        juce::File::globalApplicationsDirectory
+        juce::File::globalApplicationsDirectory,
         #if JUCE_WINDOWS
-        ,"globalApplicationsDirectoryX86",
+        "globalApplicationsDirectoryX86",
         juce::File::globalApplicationsDirectoryX86
         #endif
     );
