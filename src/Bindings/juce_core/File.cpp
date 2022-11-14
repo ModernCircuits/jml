@@ -50,9 +50,9 @@ auto juce_File(sol::table& state) -> void
         juce::File::windowsSystemDirectory,
         #endif
         "globalApplicationsDirectory",
-        juce::File::globalApplicationsDirectory,
+        juce::File::globalApplicationsDirectory
         #if JUCE_WINDOWS
-        "globalApplicationsDirectoryX86",
+        ,"globalApplicationsDirectoryX86",
         juce::File::globalApplicationsDirectoryX86
         #endif
     );
