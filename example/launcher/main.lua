@@ -1,53 +1,40 @@
-local black = juce.Colour.new(0, 0, 0, 255)
-local grey = juce.Colour.new(53, 54, 59, 255)
-local lightViolet = juce.Colour.new(93, 152, 255, 255)
-local lightBlue = juce.Colour.new(82, 178, 225, 255)
-local lightGreen = juce.Colour.new(120, 192, 206, 255)
+color = require("color")
 
-local function PluginThumbnail(name, onTagClick)
-  local component = juce.Component.new()
-  component:setComponentID(juce.String.new(name))
+local function PluginThumbnail(name)
+  local this = {}
+  this.component = juce.Component.new()
+  this.component:setComponentID(juce.String.new(name))
 
-  local tag1 = juce.TextButton.new(juce.String.new("tag1"))
-  local tag2 = juce.TextButton.new(juce.String.new("tag2"))
-  local tag3 = juce.TextButton.new(juce.String.new("tag3"))
+  this.tag1 = juce.TextButton.new(juce.String.new("tag1"))
+  this.tag2 = juce.TextButton.new(juce.String.new("tag2"))
+  this.tag3 = juce.TextButton.new(juce.String.new("tag3"))
 
-  component:addAndMakeVisible(tag1)
-  component:addAndMakeVisible(tag2)
-  component:addAndMakeVisible(tag3)
+  this.component:addAndMakeVisible(this.tag1)
+  this.component:addAndMakeVisible(this.tag2)
+  this.component:addAndMakeVisible(this.tag3)
 
-  tag1:setComponentID(juce.String.new("tag1"))
-  tag2:setComponentID(juce.String.new("tag2"))
-  tag3:setComponentID(juce.String.new("tag3"))
-
-  tag1.onClick = function()
-    onTagClick(string.format("%s: 1", name))
-  end
-  tag2.onClick = function()
-    onTagClick(string.format("%s: 2", name))
-  end
-  tag3.onClick = function()
-    onTagClick(string.format("%s: 3", name))
-  end
+  this.tag1:setComponentID(juce.String.new("tag1"))
+  this.tag2:setComponentID(juce.String.new("tag2"))
+  this.tag3:setComponentID(juce.String.new("tag3"))
 
   local imageArea = juce.RectangleInt.new(0, 0, 0, 0)
 
-  function component:paint(g)
-    g:setColour(juce.Colours.black)
+  function this.component:paint(g)
+    g:setColour(color.black)
     g:fillRoundedRectangle(imageArea, 8.0)
   end
 
-  function component:resized()
+  function this.component:resized()
     local area = self:getLocalBounds()
     local buttonArea = area:removeFromBottom(40)
     imageArea = area:reduced(2)
     local width = buttonArea:getWidth() / 3
-    tag1:setBounds(buttonArea:removeFromLeft(width):reduced(2))
-    tag2:setBounds(buttonArea:removeFromLeft(width):reduced(2))
-    tag3:setBounds(buttonArea:removeFromLeft(width):reduced(2))
+    this.tag1:setBounds(buttonArea:removeFromLeft(width):reduced(2))
+    this.tag2:setBounds(buttonArea:removeFromLeft(width):reduced(2))
+    this.tag3:setBounds(buttonArea:removeFromLeft(width):reduced(2))
   end
 
-  return component
+  return this
 end
 
 local function Sidebar()
@@ -70,7 +57,7 @@ local function Sidebar()
   component:addAndMakeVisible(star)
 
   function component:paint(g)
-    g:setColour(black)
+    g:setColour(color.black)
     g:fillAll()
   end
 
@@ -130,26 +117,66 @@ local function ContentHeader()
 end
 
 local function MainContent()
-  local function callback(txt)
-    print(txt)
+  local function callback()
+    print("txt")
   end
 
   local component = juce.Component.new()
   local header = ContentHeader()
-  local dynamic = PluginThumbnail("ASIC Dynamic", callback)
-  local filter = PluginThumbnail("ASIC Filter", callback)
-  local shape = PluginThumbnail("ASIC Shape", callback)
-  local space = PluginThumbnail("ASIC Space", callback)
+  local dynamic = PluginThumbnail("ASIC Dynamic")
+  local filter = PluginThumbnail("ASIC Filter")
+  local shape = PluginThumbnail("ASIC Shape")
+  local space = PluginThumbnail("ASIC Space")
+
+  dynamic.tag1.onClick = function()
+    print("Dynamic: 1")
+  end
+  dynamic.tag2.onClick = function()
+    print("Dynamic: 2")
+  end
+  dynamic.tag3.onClick = function()
+    print("Dynamic: 3")
+  end
+
+  filter.tag1.onClick = function()
+    print("filter: 1")
+  end
+  filter.tag2.onClick = function()
+    print("filter: 2")
+  end
+  filter.tag3.onClick = function()
+    print("filter: 3")
+  end
+
+  shape.tag1.onClick = function()
+    print("shape: 1")
+  end
+  shape.tag2.onClick = function()
+    print("shape: 2")
+  end
+  shape.tag3.onClick = function()
+    print("shape: 3")
+  end
+
+  space.tag1.onClick = function()
+    print("space: 1")
+  end
+  space.tag2.onClick = function()
+    print("space: 2")
+  end
+  space.tag3.onClick = function()
+    print("space: 3")
+  end
 
   component:setComponentID(juce.String.new("Content"))
   component:addAndMakeVisible(header)
-  component:addAndMakeVisible(dynamic)
-  component:addAndMakeVisible(filter)
-  component:addAndMakeVisible(shape)
-  component:addAndMakeVisible(space)
+  component:addAndMakeVisible(dynamic.component)
+  component:addAndMakeVisible(filter.component)
+  component:addAndMakeVisible(shape.component)
+  component:addAndMakeVisible(space.component)
 
   function component:paint(g)
-    g:setColour(grey)
+    g:setColour(color.grey)
     g:fillRoundedRectangle(component:getLocalBounds(), 8.0)
   end
 
@@ -160,10 +187,10 @@ local function MainContent()
     local height = area:getHeight() / 2.5
     local width = area:getWidth() / 4
     local thumbnailArea = area:removeFromTop(height):reduced(8)
-    dynamic:setBounds(thumbnailArea:removeFromLeft(width):reduced(8))
-    filter:setBounds(thumbnailArea:removeFromLeft(width):reduced(8))
-    shape:setBounds(thumbnailArea:removeFromLeft(width):reduced(8))
-    space:setBounds(thumbnailArea:removeFromLeft(width):reduced(8))
+    dynamic.component:setBounds(thumbnailArea:removeFromLeft(width):reduced(8))
+    filter.component:setBounds(thumbnailArea:removeFromLeft(width):reduced(8))
+    shape.component:setBounds(thumbnailArea:removeFromLeft(width):reduced(8))
+    space.component:setBounds(thumbnailArea:removeFromLeft(width):reduced(8))
   end
 
   return component
@@ -171,8 +198,8 @@ end
 
 local function MainWindow()
   local lnf = juce.LookAndFeel_V4.new()
-  function lnf:drawButtonBackground(g, btn, color, isHighlighted, isDown)
-    g:setColour(isHighlighted and lightGreen or lightBlue)
+  function lnf:drawButtonBackground(g, btn, c, isHighlighted, isDown)
+    g:setColour(isHighlighted and color.lightGreen or color.lightBlue)
     g:fillRoundedRectangle(btn:getLocalBounds(), 8.0)
   end
 
@@ -189,7 +216,7 @@ local function MainWindow()
   component:setSize(1152, 648)
 
   function component:paint(g)
-    g:setColour(black)
+    g:setColour(color.black)
     g:fillAll()
   end
 

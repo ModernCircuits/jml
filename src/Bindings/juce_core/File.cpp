@@ -45,16 +45,16 @@ auto juce_File(sol::table& state) -> void
         juce::File::invokedExecutableFile,
         "hostApplicationPath",
         juce::File::hostApplicationPath,
-        #if JUCE_WINDOWS
+    #if JUCE_WINDOWS
         "windowsSystemDirectory",
         juce::File::windowsSystemDirectory,
-        #endif
+    #endif
         "globalApplicationsDirectory",
         juce::File::globalApplicationsDirectory
-        #if JUCE_WINDOWS
+    #if JUCE_WINDOWS
         ,"globalApplicationsDirectoryX86",
         juce::File::globalApplicationsDirectoryX86
-        #endif
+    #endif
     );
 
     auto cmp = state.new_usertype<juce::File::NaturalFileComparator>("FileNaturalFileComparator",
