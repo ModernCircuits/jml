@@ -35,3 +35,21 @@ auto to_string(T const& val) -> decltype(val.toStdString())
     return val.toStdString();
 }
 } // namespace juce
+
+// template <>
+// struct sol::stack::unqualified_getter<juce::String> {
+//     static auto get(lua_State* L, int index, sol::stack::record& tracking) -> juce::String
+//     {
+//         tracking.use(1);
+//         return juce::String { stack::get<const char*>(L, index) };
+//     }
+// };
+
+// template <>
+// struct sol::stack::unqualified_pusher<juce::String> {
+//     static auto push(lua_State* L, juce::String const& str) -> int { return stack::push(L, str.getCharPointer()); }
+// };
+
+// template <>
+// struct sol::lua_type_of<juce::String> : std::integral_constant<sol::type, sol::type::string> {
+// };
