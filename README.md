@@ -5,6 +5,8 @@
 [![Windows](https://github.com/tobanteAudio/lua-juce/actions/workflows/windows.yml/badge.svg)](https://github.com/tobanteAudio/lua-juce/actions/workflows/windows.yml)
 [![Pre-Commit Hooks](https://github.com/tobanteAudio/lua-juce/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/tobanteAudio/lua-juce/actions/workflows/pre-commit.yml)
 
+**WORK IN PROGRESS**: For license information please refer to [juce.com/get-juce](https://juce.com/get-juce)
+
 ## Issues
 
 - Adding callbacks to "types" defined in Lua. [runtime functions](https://sol2.readthedocs.io/en/latest/api/usertype.html) are only allowed for types not instances.
