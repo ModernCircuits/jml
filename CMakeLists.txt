@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.15)
 project(GUI_APP_EXAMPLE VERSION 0.0.1)
 
+enable_testing()
+include(CTest)
+
 find_program(CCACHE ccache)
 if (CCACHE)
     set(CMAKE_CXX_COMPILER_LAUNCHER ${CCACHE})
