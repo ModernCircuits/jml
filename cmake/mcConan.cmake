@@ -16,7 +16,7 @@ else()
     endif()
 
     include(${CMAKE_BINARY_DIR}/conan.cmake)
-    conan_add_remote(NAME conancenter       INDEX 0 URL https://center.conan.io)
+    conan_add_remote(NAME conancenter INDEX 0 URL https://center.conan.io)
     conan_cmake_autodetect(settings)
     conan_cmake_install(
         CONANFILE

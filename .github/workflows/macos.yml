@@ -1,0 +1,36 @@
+name: macOS
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: macos-12
+    strategy:
+      matrix:
+        cxx: [17, 20]
+        build_mode: ["Debug", "Release"]
+      fail-fast: false
+    name: ${{ matrix.cxx }} - ${{ matrix.build_mode }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          brew install ninja conan
+          conan config set general.revisions_enabled=1
+
+      - name: CMake configure
+        run: >
+          cmake
+          -S .
+          -G Ninja
+          -B build
+          -D CMAKE_BUILD_TYPE=${{ matrix.build_mode }}
+          -D CMAKE_CXX_STANDARD="${{ matrix.cxx }}"
+
+      - name: CMake build
+        run: cmake --build build --config ${{ matrix.build_mode }}
+
+      - name: CTest
+        run: ctest --test-dir build -C ${{ matrix.build_mode }} --output-on-failure

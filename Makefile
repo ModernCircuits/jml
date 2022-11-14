@@ -9,4 +9,6 @@ format-lua:
 .PHONY: format
 format: format-cpp format-lua
 
-
+.PHONY: check
+check:
+	@pre-commit run --all-files

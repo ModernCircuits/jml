@@ -1,2 +1,3 @@
-clang
 autopep8
+clang
+pre-commit
