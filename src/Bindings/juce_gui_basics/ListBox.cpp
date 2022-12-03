@@ -1,12 +1,28 @@
 #include "ListBox.hpp"
 
-#include <juce_gui_basics/juce_gui_basics.h>
+#include "ListBoxModel.hpp"
+
+struct LuaListBox final : juce::ListBox {
+    LuaListBox() : juce::ListBox({}, nullptr) { }
+    ~LuaListBox() override { setModel(nullptr); }
+
+    auto internal_setModel(std::shared_ptr<LuaListBoxModel> m) -> void
+    {
+        if (m == _model) { return; }
+        if (m == nullptr) { return; }
+        setModel(m.get());
+        _model = std::move(m);
+    }
+
+private:
+    std::shared_ptr<LuaListBoxModel> _model;
+};
 
 auto juce_ListBox(sol::table& state) -> void
 {
     // clang-format off
-    auto listBox = state.new_usertype<juce::ListBox>("ListBox",
-        sol::constructors<juce::ListBox(juce::String const&, juce::ListBoxModel*)>(),
+    auto listBox = state.new_usertype<juce::ListBox>("InternalListBox",
+        sol::no_construction{},
         sol::base_classes,
         sol::bases<
             juce::MouseListener,
@@ -17,7 +33,6 @@ auto juce_ListBox(sol::table& state) -> void
     );
     // clang-format on
 
-    listBox["setModel"]                       = &juce::ListBox::setModel;
     listBox["getModel"]                       = &juce::ListBox::getModel;
     listBox["updateContent"]                  = &juce::ListBox::updateContent;
     listBox["setMultipleSelectionEnabled"]    = &juce::ListBox::setMultipleSelectionEnabled;
@@ -62,4 +77,20 @@ auto juce_ListBox(sol::table& state) -> void
     listBox["setSelectedRows"]    = sol::overload(
         [](juce::ListBox* lb, juce::SparseSet<int> const& rows) { lb->setSelectedRows(rows, juce::NotificationType::sendNotification); },
         [](juce::ListBox* lb, juce::SparseSet<int> const& rows, juce::NotificationType n) { lb->setSelectedRows(rows, n); });
+
+    // clang-format off
+    auto luaListBox = state.new_usertype<LuaListBox>("ListBox",
+        sol::constructors<LuaListBox()>{},
+        sol::base_classes,
+        sol::bases<
+            juce::MouseListener,
+            juce::Component,
+            juce::TooltipClient,
+            juce::SettableTooltipClient,
+            juce::ListBox
+        >()
+    );
+    // clang-format on
+
+    luaListBox["setModel"] = &LuaListBox::internal_setModel;
 }

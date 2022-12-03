@@ -25,7 +25,7 @@ MainComponent::MainComponent()
 
 MainComponent::~MainComponent()
 {
-    _preview.script(juce::File {});
+    // _preview.script(juce::File {});
     setLookAndFeel(nullptr);
 }
 
