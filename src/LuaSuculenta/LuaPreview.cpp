@@ -16,10 +16,7 @@ LuaPreview::LuaPreview() : _currentScript(defaultScriptPath)
     addAndMakeVisible(_componentTree);
 }
 
-LuaPreview::~LuaPreview()
-{
-    // if (_comp != nullptr) { _comp->setLookAndFeel(nullptr); }
-}
+LuaPreview::~LuaPreview() = default;
 
 auto LuaPreview::script(juce::File const& path) -> void
 {
@@ -27,7 +24,6 @@ auto LuaPreview::script(juce::File const& path) -> void
 
     if (_comp != nullptr) {
         _fileListener.reset(nullptr);
-        // _comp->setLookAndFeel(nullptr);
         _viewport.component(nullptr);
     }
 
