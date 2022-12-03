@@ -23,11 +23,12 @@ LuaPreview::~LuaPreview()
 
 auto LuaPreview::script(juce::File const& path) -> void
 {
+    DBG("Reload");
+
     if (_comp != nullptr) {
         _fileListener.reset(nullptr);
-
-        _comp->setLookAndFeel(nullptr);
         _viewport.component(nullptr);
+        _comp->setLookAndFeel(nullptr);
     }
 
     _lua.collect_garbage();
