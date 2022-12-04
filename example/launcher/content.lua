@@ -69,8 +69,6 @@ function content.new()
     g:fillRect(juce.RectangleInt.new(0, 0, width, height):reduced(2))
   end
 
-  print(listModel:getNumRows())
-
   local list = juce.ListBox.new()
   list:setModel(listModel)
 

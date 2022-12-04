@@ -90,7 +90,7 @@ auto juce_LuaComponent(sol::table& state) -> void
     // clang-format off
     auto comp = state.new_usertype<LuaComponent>("Component",
 	    sol::factories([] { return std::make_shared<LuaComponent>(); }),
-        sol::base_classes, sol::bases<juce::Component>(),
+        sol::base_classes, sol::bases<juce::Component, juce::MouseListener>(),
         "paint",
             &LuaComponent::lua_paint,
         "resized",

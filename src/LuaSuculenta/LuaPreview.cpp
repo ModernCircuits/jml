@@ -4,7 +4,7 @@
 
 namespace mc {
 namespace {
-auto const* defaultScriptPath = R"(C:\Developer\moderncircuits\tests\juce-lua\example\demo_Components.lua)";
+auto const* defaultScriptPath = R"(C:\Developer\moderncircuits\tests\juce-lua\example\launcher\main.lua)";
 }
 
 LuaPreview::LuaPreview() : _currentScript(defaultScriptPath)
@@ -33,18 +33,17 @@ auto LuaPreview::script(juce::File const& path) -> void
     path.getParentDirectory().setAsCurrentWorkingDirectory();
 
     auto luaScript = _lua.load_file(path.getFullPathName().toStdString());
-    if (juce::Component* c = luaScript(); c != nullptr) {
-        _comp = c;
-        _comp->resized();
+    _compObj       = luaScript();
+    _comp          = _compObj.as<juce::Component*>();
+    _comp->resized();
 
-        _viewport.component(_comp);
-        _componentTree.setRootComponent(_comp);
+    _viewport.component(_comp);
+    _componentTree.setRootComponent(_comp);
 
-        _fileListener           = std::make_unique<FileChangeListener>(path);
-        _fileListener->onChange = [this] { script(_currentScript); };
+    _fileListener           = std::make_unique<FileChangeListener>(path);
+    _fileListener->onChange = [this] { script(_currentScript); };
 
-        resized();
-    }
+    resized();
 }
 
 auto LuaPreview::paint(juce::Graphics& g) -> void { g.fillAll(juce::Colours::white); }

@@ -22,6 +22,7 @@ struct LuaPreview : juce::Component {
 
 private:
     sol::state _lua;
+    sol::object _compObj;
     juce::Component::SafePointer<juce::Component> _comp { nullptr };
 
     ComponentContainer _viewport;

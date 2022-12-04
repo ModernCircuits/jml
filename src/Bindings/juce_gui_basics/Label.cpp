@@ -2,11 +2,7 @@
 
 #include <juce_gui_basics/juce_gui_basics.h>
 
-SOL_BASE_CLASSES(juce::ComboBox,
-    juce::Component,
-    juce::MouseListener,
-    juce::SettableTooltipClient,
-    juce::TooltipClient);
+SOL_BASE_CLASSES(juce::Label, juce::Component, juce::MouseListener, juce::SettableTooltipClient, juce::TooltipClient);
 
 auto juce_Label(sol::table& state) -> void
 {
