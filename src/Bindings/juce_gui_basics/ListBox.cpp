@@ -18,6 +18,13 @@ private:
     std::shared_ptr<LuaListBoxModel> _model;
 };
 
+SOL_BASE_CLASSES(LuaListBox,
+    juce::ListBox,
+    juce::Component,
+    juce::MouseListener,
+    juce::SettableTooltipClient,
+    juce::TooltipClient);
+
 auto juce_ListBox(sol::table& state) -> void
 {
     // clang-format off

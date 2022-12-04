@@ -2,6 +2,12 @@
 
 #include <juce_gui_basics/juce_gui_basics.h>
 
+SOL_BASE_CLASSES(juce::ComboBox,
+    juce::Component,
+    juce::MouseListener,
+    juce::SettableTooltipClient,
+    juce::TooltipClient);
+
 auto juce_Label(sol::table& state) -> void
 {
     // clang-format off
