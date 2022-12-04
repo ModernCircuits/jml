@@ -21,6 +21,12 @@ struct LuaComponent final : juce::Component {
     sol::safe_function lua_mouseWheelMove;
     sol::safe_function lua_mouseMagnify;
 
+    auto internal_addAndMakeVisible(std::shared_ptr<juce::Component> child) -> void
+    {
+        _children.push_back(child);
+        addAndMakeVisible(child.get());
+    }
+
 private:
     auto self() -> std::reference_wrapper<LuaComponent> { return std::ref(*this); }
 
@@ -72,13 +78,18 @@ private:
     {
         if (lua_mouseMagnify.valid()) { lua_mouseMagnify(self(), std::cref(event), scaleFactor); }
     }
+
+    std::vector<std::shared_ptr<juce::Component>> _children;
 };
+
+SOL_BASE_CLASSES(LuaComponent, juce::Component, juce::MouseListener);
+SOL_DERIVED_CLASSES(juce::Component, LuaComponent);
 
 auto juce_LuaComponent(sol::table& state) -> void
 {
     // clang-format off
-    state.new_usertype<LuaComponent>("Component",
-	    sol::constructors<LuaComponent()>(),
+    auto comp = state.new_usertype<LuaComponent>("Component",
+	    sol::factories([] { return std::make_shared<LuaComponent>(); }),
         sol::base_classes, sol::bases<juce::Component>(),
         "paint",
             &LuaComponent::lua_paint,
@@ -104,4 +115,6 @@ auto juce_LuaComponent(sol::table& state) -> void
             &LuaComponent::lua_mouseMagnify
     );
     // clang-format on
+
+    comp["addAndMakeVisible"] = &LuaComponent::internal_addAndMakeVisible;
 }
