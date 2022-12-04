@@ -6,11 +6,11 @@ auto juce_TextButton(sol::table& state) -> void
 {
     // clang-format off
     auto button = state.new_usertype<juce::TextButton>("TextButton",
-        sol::constructors<
-            juce::TextButton(),
-            juce::TextButton(juce::String const&),
-            juce::TextButton(juce::String const&, juce::String const&)
-        >(),
+        sol::factories(
+            [] { return std::make_shared<juce::TextButton>(); },
+            [](juce::String const& txt) { return std::make_shared<juce::TextButton>(txt); },
+            [](juce::String const& txt,juce::String const& tool) { return std::make_shared<juce::TextButton>(txt,tool); }
+        ),
         sol::base_classes,
         sol::bases<
             juce::MouseListener,
