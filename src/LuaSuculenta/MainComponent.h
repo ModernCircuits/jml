@@ -10,7 +10,6 @@
 #include "LuaSuculentaColors.hpp"
 #include "LuaSuculentaLookAndFeel.hpp"
 #include "MenuBar.hpp"
-#include "Sol3.hpp"
 
 namespace mc {
 

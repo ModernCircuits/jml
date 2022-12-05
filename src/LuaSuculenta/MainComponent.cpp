@@ -2,8 +2,6 @@
 
 #include "CommandIDs.hpp"
 
-#include "Bindings/Juce.hpp"
-
 namespace mc {
 
 MainComponent::MainComponent()

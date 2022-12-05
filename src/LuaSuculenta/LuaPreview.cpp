@@ -1,6 +1,6 @@
 #include "LuaPreview.hpp"
 
-#include "Bindings/Juce.hpp"
+#include "Juce.hpp"
 
 namespace mc {
 namespace {

@@ -1,12 +1,12 @@
 #pragma once
 
 #include <juce_gui_extra/juce_gui_extra.h>
+#include <lua_juce_sol2/lua_juce_sol2.hpp>
 
 #include "ComponentContainer.hpp"
 #include "ComponentTree.hpp"
 #include "FileChangeListener.hpp"
 #include "MenuBar.hpp"
-#include "Sol3.hpp"
 
 namespace mc {
 struct LuaPreview : juce::Component {

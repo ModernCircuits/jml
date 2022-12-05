@@ -1,0 +1,15 @@
+#include <lua_juce_events/lua_juce_events.hpp>
+
+#include "colour/Colour.cpp"
+#include "colour/ColourGradient.cpp"
+#include "colour/Colours.cpp"
+#include "contexts/Graphics.cpp"
+#include "font/Font.cpp"
+#include "geometry/AffineTransform.cpp"
+#include "geometry/Line.cpp"
+#include "geometry/Path.cpp"
+#include "geometry/Point.cpp"
+#include "geometry/Rectangle.cpp"
+#include "images/Image.cpp"
+#include "images/ImageCache.cpp"
+#include "placement/Justification.cpp"
