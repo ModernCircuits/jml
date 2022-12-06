@@ -21,12 +21,6 @@ struct LuaComponent final : juce::Component {
     sol::safe_function lua_mouseWheelMove;
     sol::safe_function lua_mouseMagnify;
 
-    auto internal_addAndMakeVisible(std::shared_ptr<juce::Component> child) -> void
-    {
-        _children.push_back(child);
-        addAndMakeVisible(child.get());
-    }
-
 private:
     auto self() -> std::reference_wrapper<LuaComponent> { return std::ref(*this); }
 
@@ -78,8 +72,6 @@ private:
     {
         if (lua_mouseMagnify.valid()) { lua_mouseMagnify(self(), std::cref(event), scaleFactor); }
     }
-
-    std::vector<std::shared_ptr<juce::Component>> _children;
 };
 
 SOL_BASE_CLASSES(LuaComponent, juce::Component, juce::MouseListener);
@@ -89,32 +81,20 @@ auto juce_LuaComponent(sol::table& state) -> void
 {
     // clang-format off
     auto comp = state.new_usertype<LuaComponent>("Component",
-	    sol::factories([] { return std::make_shared<LuaComponent>(); }),
-        sol::base_classes, sol::bases<juce::Component, juce::MouseListener>(),
-        "paint",
-            &LuaComponent::lua_paint,
-        "resized",
-            &LuaComponent::lua_resized,
-        "mouseMove",
-            &LuaComponent::lua_mouseMove,
-        "mouseEnter",
-            &LuaComponent::lua_mouseEnter,
-        "mouseExit",
-            &LuaComponent::lua_mouseExit,
-        "mouseDown",
-            &LuaComponent::lua_mouseDown,
-        "mouseDrag",
-            &LuaComponent::lua_mouseDrag,
-        "mouseUp",
-            &LuaComponent::lua_mouseUp,
-        "mouseDoubleClick",
-            &LuaComponent::lua_mouseDoubleClick,
-        "mouseWheelMove",
-            &LuaComponent::lua_mouseWheelMove,
-        "mouseMagnify",
-            &LuaComponent::lua_mouseMagnify
+        sol::constructors<LuaComponent()>(),
+        sol::base_classes, sol::bases<juce::Component, juce::MouseListener>()
     );
     // clang-format on
 
-    comp["addAndMakeVisible"] = &LuaComponent::internal_addAndMakeVisible;
+    comp["paint"]            = &LuaComponent::lua_paint;
+    comp["resized"]          = &LuaComponent::lua_resized;
+    comp["mouseMove"]        = &LuaComponent::lua_mouseMove;
+    comp["mouseEnter"]       = &LuaComponent::lua_mouseEnter;
+    comp["mouseExit"]        = &LuaComponent::lua_mouseExit;
+    comp["mouseDown"]        = &LuaComponent::lua_mouseDown;
+    comp["mouseDrag"]        = &LuaComponent::lua_mouseDrag;
+    comp["mouseUp"]          = &LuaComponent::lua_mouseUp;
+    comp["mouseDoubleClick"] = &LuaComponent::lua_mouseDoubleClick;
+    comp["mouseWheelMove"]   = &LuaComponent::lua_mouseWheelMove;
+    comp["mouseMagnify"]     = &LuaComponent::lua_mouseMagnify;
 }

@@ -83,4 +83,11 @@ auto juce_Component(sol::table& state) -> void
         auto* lnf = obj.as<juce::LookAndFeel*>();
         self->setLookAndFeel(lnf);
     };
+    comp["addAndMakeVisible"] = [](juce::Component* self, sol::object obj) -> void {
+        auto& objects = getSolObjectSet(self->getProperties());
+        objects.add(obj);
+
+        auto* component = obj.as<juce::Component*>();
+        self->addAndMakeVisible(component);
+    };
 }

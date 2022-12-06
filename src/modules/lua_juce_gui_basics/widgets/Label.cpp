@@ -8,9 +8,7 @@ auto juce_Label(sol::table& state) -> void
 {
     // clang-format off
     auto label = state.new_usertype<juce::Label>("Label",
-        sol::factories(
-            [](juce::String const& id, juce::String const& txt) { return std::make_shared<juce::Label>(id, txt); }
-        ),
+        sol::constructors<juce::Label(juce::String const&, juce::String const&)>(),
         sol::base_classes,
         sol::bases<
             juce::MouseListener,

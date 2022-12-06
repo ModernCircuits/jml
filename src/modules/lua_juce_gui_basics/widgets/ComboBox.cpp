@@ -28,9 +28,7 @@ auto juce_ComboBox(sol::table& state) -> void
     );
 
     auto combo = state.new_usertype<juce::ComboBox>("ComboBox",
-        sol::factories(
-            [](juce::String const& id) { return std::make_shared<juce::ComboBox>(id); }
-        ),
+        sol::constructors<juce::ComboBox(juce::String const&)>(),
         sol::base_classes,
         sol::bases<
             juce::MouseListener,

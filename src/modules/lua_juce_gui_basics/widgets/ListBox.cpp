@@ -82,7 +82,7 @@ auto juce_ListBox(sol::table& state) -> void
 
     // clang-format off
     auto luaListBox = state.new_usertype<LuaListBox>("ListBox",
-        sol::factories([] { return std::make_shared<LuaListBox>(); }),
+        sol::constructors<LuaListBox()>(),
         sol::base_classes,
         sol::bases<
             juce::MouseListener,

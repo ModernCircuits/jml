@@ -86,11 +86,11 @@ auto juce_Slider(sol::table& state) -> void
     );
 
     auto slider = state.new_usertype<juce::Slider>("Slider",
-        sol::factories(
-            [] { return std::make_shared<juce::Slider>(); },
-            [](juce::String const& id) { return std::make_shared<juce::Slider>(id); },
-            [](juce::Slider::SliderStyle style, juce::Slider::TextEntryBoxPosition pos) { return std::make_shared<juce::Slider>(style, pos); }
-        ),
+        sol::constructors<
+            juce::Slider(),
+            juce::Slider(juce::String const&),
+            juce::Slider(juce::Slider::SliderStyle, juce::Slider::TextEntryBoxPosition)
+        >(),
         sol::base_classes,
         sol::bases<
             juce::MouseListener,
