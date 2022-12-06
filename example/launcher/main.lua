@@ -3,12 +3,12 @@ Content = require("content")
 Sidebar = require("sidebar")
 
 local function MainWindow()
-  -- local lnf = juce.LookAndFeel_V4.new()
-  -- function lnf:drawButtonBackground(g, btn, c, isHighlighted, isDown)
-  --   g:setColour(isHighlighted and Theme.lightGreen or Theme.lightBlue)
-  --   g:fillRoundedRectangle(btn:getLocalBounds(), 8.0)
+  local lnf = juce.LookAndFeel_V4.new()
+  function lnf:drawButtonBackground(g, btn, c, isHighlighted, isDown)
+    g:setColour(isHighlighted and Theme.lightGreen or Theme.lightBlue)
+    g:fillRoundedRectangle(btn:getLocalBounds(), 8.0)
 
-  -- end
+  end
 
   local component = juce.Component.new()
   component:setComponentID(juce.String.new("Zentrale"))
@@ -19,7 +19,7 @@ local function MainWindow()
   local content = Content.new()
   component:addAndMakeVisible(content)
 
-  -- component:setLookAndFeel(lnf)
+  component:setLookAndFeel(lnf)
   component:setSize(1152, 648)
 
   function component:paint(g)

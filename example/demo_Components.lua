@@ -1,14 +1,14 @@
 color = require("color")
 
 local function makeMainComponent()
-  -- local lnf = juce.LookAndFeel_V4.new()
-  -- function lnf:drawButtonBackground(g, btn, color, highlighted, down)
-  --   local b = btn:getBounds()
-  --   local bf = juce.RectangleInt.new(b:getX(), b:getY(), b:getWidth(), b:getHeight())
-  --   local c = highlighted and juce.Colours.red or juce.Colours.blue
-  --   g:setColour(c)
-  --   g:fillAll()
-  -- end
+  local lnf = juce.LookAndFeel_V4.new()
+  function lnf:drawButtonBackground(g, btn, color, highlighted, down)
+    local b = btn:getBounds()
+    local bf = juce.RectangleInt.new(b:getX(), b:getY(), b:getWidth(), b:getHeight())
+    local c = highlighted and juce.Colours.red or juce.Colours.blue
+    g:setColour(c)
+    g:fillAll()
+  end
 
   local mainComponent = juce.Component.new()
   local btn_1 = juce.TextButton.new(juce.String.new("Foo"))
@@ -17,7 +17,7 @@ local function makeMainComponent()
   local topColor = juce.Colours.red
   local bottomColor = juce.Colours.black
 
-  -- mainComponent:setLookAndFeel(lnf)
+  mainComponent:setLookAndFeel(lnf)
 
   mainComponent:setComponentID(juce.String.new("Main Window"))
   btn_1:setComponentID(juce.String.new("Foo"))
@@ -58,13 +58,13 @@ local function makeMainComponent()
     mainComponent:repaint()
   end
 
-  -- local timer = juce.Timer.new()
-  -- function timer:timerCallback()
-  --   topColor = juce.Colours.pink
-  --   bottomColor = color.random()
-  --   mainComponent:repaint()
-  -- end
-  -- timer:startTimer(2000)
+  local timer = juce.Timer.new()
+  function timer:timerCallback()
+    topColor = juce.Colours.pink
+    bottomColor = color.random()
+    mainComponent:repaint()
+  end
+  timer:startTimer(2000)
 
   mainComponent:setSize(1024, 576)
   return mainComponent
