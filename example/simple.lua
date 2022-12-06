@@ -18,7 +18,7 @@ local function MainComponent()
   mainComponent:addAndMakeVisible(content)
 
   function mainComponent:paint(g)
-    g:setColour(juce.Colours.red)
+    g:setColour(juce.Colours.pink)
     g:fillAll()
   end
 

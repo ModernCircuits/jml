@@ -40,7 +40,8 @@ auto LuaPreview::script(juce::File const& path) -> void
     _viewport.component(_comp);
     _componentTree.setRootComponent(_comp);
 
-    _fileListener           = std::make_unique<FileChangeListener>(path);
+    _currentScript          = path;
+    _fileListener           = std::make_unique<FileChangeListener>(_currentScript);
     _fileListener->onChange = [this] { script(_currentScript); };
 
     resized();
