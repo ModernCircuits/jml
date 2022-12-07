@@ -23,19 +23,27 @@ local function max(lhs, rhs)
     return rhs
 end
 
-local function setEmptyPropertiesToDefaults(spec)
-    local defaults = {
+local function setEmptyPropertiesToDefaults(spec, defaults)
+    local common = {
         {"id", ""},
         {"padding", 0},
         {"margin", 0}
     }
 
-    for k, v in pairs(defaults) do
+    local addProperty = function(k, v)
         local id = v[1]
         local value = v[2]
         if spec[id] == nil then
             spec[id] = value
         end
+    end
+
+    for k, v in pairs(common) do
+        addProperty(k, v)
+    end
+
+    for k, v in pairs(defaults) do
+        addProperty(k, v)
     end
 
     return spec
@@ -78,17 +86,30 @@ local function buildComponent(spec)
     return c
 end
 
+local function buildTextButton(spec)
+    local btn = juce.TextButton.new(juce.String.new(spec["text"]))
+    btn:setComponentID(juce.String.new(spec["id"]))
+    return btn
+end
+
+local function buildSlider(spec)
+    local s = juce.Slider.new()
+    s:setComponentID(juce.String.new(spec["id"]))
+
+    if spec["range"] ~= nil then
+        s:setRange(spec.range["start"], spec.range["stop"], spec.range["interval"])
+    end
+
+    return s
+end
+
 function jml.Component(spec)
-    spec = setEmptyPropertiesToDefaults(spec)
+    local defaults = {
+        {"fill", juce.Colour.new()},
+        {"children", {}}
+    }
 
-    if spec["fill"] == nil then
-        spec["fill"] = juce.Colours.new()
-    end
-
-    if spec["children"] == nil then
-        spec["children"] = {}
-    end
-
+    spec = setEmptyPropertiesToDefaults(spec, defaults)
     spec["build"] = function()
         return buildComponent(spec)
     end
@@ -97,37 +118,24 @@ function jml.Component(spec)
 end
 
 function jml.TextButton(spec)
-    spec = setEmptyPropertiesToDefaults(spec)
-    if spec["text"] == nil then
-        spec["text"] = ""
-    end
+    local defaults = {
+        {"text", ""}
+    }
 
+    spec = setEmptyPropertiesToDefaults(spec, defaults)
     spec["build"] = function()
-        local btn = juce.TextButton.new(juce.String.new(spec["text"]))
-        btn:setComponentID(juce.String.new(spec["id"]))
-        return btn
+        return buildTextButton(spec)
     end
 
     return spec
 end
 
 function jml.Slider(spec)
-    spec = setEmptyPropertiesToDefaults(spec)
-    if spec["range"] == nil then
-        spec["range"] = {
-            ["start"] = 0.0,
-            ["stop"] = 1.0,
-            ["interval"] = 0.0
-        }
-    end
-
+    local defaults = {}
+    spec = setEmptyPropertiesToDefaults(spec, defaults)
     spec["build"] = function()
-        local s = juce.Slider.new()
-        s:setComponentID(juce.String.new(spec["id"]))
-        s:setRange(spec.range["start"], spec.range["stop"], spec.range["interval"])
-        return s
+        return buildSlider(spec)
     end
-
     return spec
 end
 
