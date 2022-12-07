@@ -33,8 +33,16 @@ auto LuaPreview::script(juce::File const& path) -> void
     path.getParentDirectory().setAsCurrentWorkingDirectory();
 
     auto luaScript = _lua.load_file(path.getFullPathName().toStdString());
-    _compObj       = luaScript();
-    _comp          = _compObj.as<juce::Component*>();
+    jassert(luaScript.valid());
+    if (not luaScript.valid()) { return; }
+
+    auto factory = luaScript.get<sol::protected_function>();
+    auto result  = factory();
+    jassert(result.valid());
+    if (not result.valid()) { return; }
+
+    _compObj = result;
+    _comp    = _compObj.as<juce::Component*>();
     _comp->resized();
 
     _viewport.component(_comp);
