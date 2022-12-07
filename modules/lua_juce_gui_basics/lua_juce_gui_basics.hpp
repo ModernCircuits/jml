@@ -6,7 +6,7 @@ BEGIN_JUCE_MODULE_DECLARATION
     version:            0.1.0
     name:               Lua bindings for juce_gui_basics
     description:        Lua/Sol2 bindings for juce_gui_basics
-    dependencies:       lua_juce_sol2, juce_gui_basics
+    dependencies:       lua_juce_graphics, juce_gui_basics
     website:            http://github.com/ModernCircuits/juce-lua-bindings
     license:            BSL-1.0
     minimumCppStandard: 17
@@ -21,7 +21,7 @@ END_JUCE_MODULE_DECLARATION
 #endif
 
 #include <juce_gui_basics/juce_gui_basics.h>
-#include <lua_juce_sol2/lua_juce_sol2.hpp>
+#include <lua_juce_graphics/lua_juce_graphics.hpp>
 
 #include "buttons/Button.hpp"
 #include "buttons/TextButton.hpp"
