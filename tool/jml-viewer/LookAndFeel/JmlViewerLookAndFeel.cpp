@@ -8,7 +8,7 @@ JmlViewerLookAndFeel::JmlViewerLookAndFeel()
         JmlViewerColors::whiteDirt,      // windowBackground
         JmlViewerColors::white,          // widgetBackground
         JmlViewerColors::white,          // menuBackground
-        juce::Colours::transparentBlack,    // outline
+        juce::Colours::transparentBlack, // outline
         JmlViewerColors::black,          // defaultText
         JmlViewerColors::white.darker(), // defaultFill
         JmlViewerColors::black,          // highlightedText
