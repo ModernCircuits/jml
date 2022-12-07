@@ -4,7 +4,8 @@
 
 namespace mc {
 
-struct ComponentContainer final : juce::Component {
+struct ComponentContainer final : juce::Component
+{
     ComponentContainer()           = default;
     ~ComponentContainer() override = default;
 
@@ -24,12 +25,12 @@ struct ComponentContainer final : juce::Component {
         if (_component == nullptr) { return; }
 
         auto const area = getLocalBounds();
-        auto const size = juce::Rectangle<int> { 0, 0, _component->getWidth(), _component->getHeight() };
+        auto const size = juce::Rectangle<int>{0, 0, _component->getWidth(), _component->getHeight()};
         _component->setBounds(size.withCentre(area.getCentre()));
     }
 
 private:
-    juce::Component* _component { nullptr };
+    juce::Component* _component{nullptr};
 };
 
 } // namespace mc

@@ -2,7 +2,7 @@
 
 #include <juce_core/juce_core.h>
 
-template <typename T>
+template<typename T>
 auto juce_NormalisableRangeImpl(sol::table& state, char const* name) -> void
 {
     // clang-format off

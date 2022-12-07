@@ -9,7 +9,8 @@
 #include "Preview/FileChangeListener.hpp"
 
 namespace mc {
-struct LuaPreview : juce::Component {
+struct LuaPreview : juce::Component
+{
     LuaPreview();
     ~LuaPreview() override;
 
@@ -23,7 +24,7 @@ struct LuaPreview : juce::Component {
 private:
     sol::state _lua;
     sol::object _compObj;
-    juce::Component::SafePointer<juce::Component> _comp { nullptr };
+    juce::Component::SafePointer<juce::Component> _comp{nullptr};
 
     ComponentContainer _viewport;
     ComponentTree _componentTree;

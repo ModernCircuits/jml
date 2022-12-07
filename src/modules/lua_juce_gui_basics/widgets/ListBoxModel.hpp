@@ -2,7 +2,8 @@
 
 #include <juce_gui_basics/juce_gui_basics.h>
 
-struct LuaListBoxModel final : juce::ListBoxModel {
+struct LuaListBoxModel final : juce::ListBoxModel
+{
     LuaListBoxModel()           = default;
     ~LuaListBoxModel() override = default;
 
@@ -29,19 +30,19 @@ struct LuaListBoxModel final : juce::ListBoxModel {
         return juce::ListBoxModel::getNameForRow(rowNumber);
     }
 
-    auto listBoxItemClicked(int row, const juce::MouseEvent& event) -> void override
+    auto listBoxItemClicked(int row, juce::MouseEvent const& event) -> void override
     {
         if (lua_listBoxItemClicked.valid()) { lua_listBoxItemClicked(self(), row, std::cref(event)); }
         return juce::ListBoxModel::listBoxItemClicked(row, event);
     }
 
-    auto listBoxItemDoubleClicked(int row, const juce::MouseEvent& event) -> void override
+    auto listBoxItemDoubleClicked(int row, juce::MouseEvent const& event) -> void override
     {
         if (lua_listBoxItemDoubleClicked.valid()) { lua_listBoxItemDoubleClicked(self(), row, std::cref(event)); }
         return juce::ListBoxModel::listBoxItemDoubleClicked(row, event);
     }
 
-    auto backgroundClicked(const juce::MouseEvent& event) -> void override
+    auto backgroundClicked(juce::MouseEvent const& event) -> void override
     {
         if (lua_backgroundClicked.valid()) { lua_backgroundClicked(self(), std::cref(event)); }
         return juce::ListBoxModel::backgroundClicked(event);
@@ -71,7 +72,7 @@ struct LuaListBoxModel final : juce::ListBoxModel {
         return juce::ListBoxModel::listWasScrolled();
     }
 
-    auto getDragSourceDescription(const juce::SparseSet<int>& rowsToDescribe) -> juce::var override
+    auto getDragSourceDescription(juce::SparseSet<int> const& rowsToDescribe) -> juce::var override
     {
         if (lua_getDragSourceDescription.valid()) { return lua_getDragSourceDescription(self(), std::cref(rowsToDescribe)); }
         return juce::ListBoxModel::getDragSourceDescription(rowsToDescribe);

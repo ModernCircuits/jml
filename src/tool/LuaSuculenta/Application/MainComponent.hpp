@@ -13,7 +13,10 @@
 
 namespace mc {
 
-struct MainComponent : juce::Component, juce::ApplicationCommandTarget {
+struct MainComponent
+    : juce::Component
+    , juce::ApplicationCommandTarget
+{
     MainComponent();
     ~MainComponent() override;
 
@@ -30,12 +33,12 @@ private:
 
     auto loadScriptPath() -> void;
 
-    juce::ApplicationCommandManager _commandManager {};
+    juce::ApplicationCommandManager _commandManager{};
     juce::UndoManager _undoManager;
     LuaSuculentaLookAndFeel _lnf;
 
-    MenuBar _menuBar { _commandManager };
-    juce::TabbedComponent _tabs { juce::TabbedButtonBar::TabsAtLeft };
+    MenuBar _menuBar{_commandManager};
+    juce::TabbedComponent _tabs{juce::TabbedButtonBar::TabsAtLeft};
     LuaPreview _preview;
     CodeEditor _editor;
     std::unique_ptr<juce::FileChooser> _fileChooser;

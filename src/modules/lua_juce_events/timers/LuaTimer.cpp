@@ -2,7 +2,8 @@
 
 #include <juce_events/juce_events.h>
 
-struct LuaTimer final : juce::Timer {
+struct LuaTimer final : juce::Timer
+{
     sol::safe_function lua_timerCallback;
 
     LuaTimer()           = default;

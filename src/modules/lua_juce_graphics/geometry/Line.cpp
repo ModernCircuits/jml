@@ -2,7 +2,7 @@
 
 #include <juce_graphics/juce_graphics.h>
 
-template <typename T>
+template<typename T>
 auto juce_LineImpl(sol::table& state, char const* name) -> void
 {
     // clang-format off

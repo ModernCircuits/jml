@@ -2,8 +2,9 @@
 
 #include "ListBoxModel.hpp"
 
-struct LuaListBox final : juce::ListBox {
-    LuaListBox() : juce::ListBox({}, nullptr) { }
+struct LuaListBox final : juce::ListBox
+{
+    LuaListBox() : juce::ListBox({}, nullptr) {}
     ~LuaListBox() override { setModel(nullptr); }
 
     auto internal_setModel(std::shared_ptr<LuaListBoxModel> m) -> void

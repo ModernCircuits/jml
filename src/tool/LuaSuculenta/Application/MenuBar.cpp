@@ -4,7 +4,7 @@
 #include "Application/CommandIDs.hpp"
 
 namespace mc {
-MenuBar::MenuBar(juce::ApplicationCommandManager& commandManager) : _commandManager { commandManager }
+MenuBar::MenuBar(juce::ApplicationCommandManager& commandManager) : _commandManager{commandManager}
 {
     setApplicationCommandManagerToWatch(&_commandManager);
     addAndMakeVisible(_menu);
@@ -24,7 +24,7 @@ auto MenuBar::getMenuForIndex(int menuIndex, juce::String const& /*menuName*/) -
 {
 
     if (menuIndex == 0) {
-        auto menu = juce::PopupMenu {};
+        auto menu = juce::PopupMenu{};
         // auto openIcon = juce::Drawable::createFromImageData(mcbd::folder_open_svg, mcbd::folder_open_svgSize);
         // // auto saveIcon = juce::Drawable::createFromImageData(mcbd::save_svg, mcbd::save_svgSize);
         menu.addCommandItem(&_commandManager, CommandIDs::open, "Open", {} /*openIcon->createCopy()*/);
@@ -36,7 +36,7 @@ auto MenuBar::getMenuForIndex(int menuIndex, juce::String const& /*menuName*/) -
     }
 
     if (menuIndex == 1) {
-        auto menu = juce::PopupMenu {};
+        auto menu = juce::PopupMenu{};
         // // auto undoIcon     = juce::Drawable::createFromImageData(mcbd::undo_svg, mcbd::undo_svgSize);
         // // auto redoIcon     = juce::Drawable::createFromImageData(mcbd::redo_svg, mcbd::redo_svgSize);
         menu.addCommandItem(&_commandManager, CommandIDs::undo, "Undo", {} /*undoIcon->createCopy()*/);
@@ -48,6 +48,6 @@ auto MenuBar::getMenuForIndex(int menuIndex, juce::String const& /*menuName*/) -
     return {};
 }
 
-auto MenuBar::menuItemSelected(int /*menuItemID*/, int /*topLevelMenuIndex*/) -> void { }
+auto MenuBar::menuItemSelected(int /*menuItemID*/, int /*topLevelMenuIndex*/) -> void {}
 
 } // namespace mc

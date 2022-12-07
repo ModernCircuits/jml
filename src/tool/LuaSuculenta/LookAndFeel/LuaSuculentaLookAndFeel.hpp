@@ -4,7 +4,8 @@
 
 namespace mc {
 
-struct LuaSuculentaLookAndFeel final : juce::LookAndFeel_V4 {
+struct LuaSuculentaLookAndFeel final : juce::LookAndFeel_V4
+{
     LuaSuculentaLookAndFeel();
     ~LuaSuculentaLookAndFeel() override = default;
 };

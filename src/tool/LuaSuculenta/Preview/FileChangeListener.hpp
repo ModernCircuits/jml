@@ -3,13 +3,14 @@
 #include <juce_gui_basics/juce_gui_basics.h>
 
 namespace mc {
-struct FileChangeListener final : juce::Timer {
-    explicit FileChangeListener(juce::File file) : _file { std::move(file) }, _writeTime { _file.getLastModificationTime() }
+struct FileChangeListener final : juce::Timer
+{
+    explicit FileChangeListener(juce::File file) : _file{std::move(file)}, _writeTime{_file.getLastModificationTime()}
     {
         startTimer(500);
     }
 
-    std::function<void()> onChange {};
+    std::function<void()> onChange{};
 
 private:
     auto timerCallback() -> void override

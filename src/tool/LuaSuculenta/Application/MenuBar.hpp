@@ -4,7 +4,10 @@
 
 namespace mc {
 
-struct MenuBar final : juce::Component, juce::MenuBarModel {
+struct MenuBar final
+    : juce::Component
+    , juce::MenuBarModel
+{
     explicit MenuBar(juce::ApplicationCommandManager& commandManager);
     ~MenuBar() override = default;
 
@@ -16,7 +19,7 @@ struct MenuBar final : juce::Component, juce::MenuBarModel {
 
 private:
     juce::ApplicationCommandManager& _commandManager;
-    juce::MenuBarComponent _menu { this };
+    juce::MenuBarComponent _menu{this};
 };
 
 } // namespace mc

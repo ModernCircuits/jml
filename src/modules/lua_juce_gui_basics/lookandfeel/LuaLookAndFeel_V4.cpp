@@ -2,7 +2,8 @@
 
 #include <juce_gui_basics/juce_gui_basics.h>
 
-struct LuaLookAndFeel_V4 final : juce::LookAndFeel_V4 {
+struct LuaLookAndFeel_V4 final : juce::LookAndFeel_V4
+{
     LuaLookAndFeel_V4()           = default;
     ~LuaLookAndFeel_V4() override = default;
 

@@ -4,7 +4,7 @@
 
 namespace mc {
 LuaSuculentaLookAndFeel::LuaSuculentaLookAndFeel()
-    : juce::LookAndFeel_V4 { {
+    : juce::LookAndFeel_V4{{
         LuaSuculentaColors::whiteDirt,      // windowBackground
         LuaSuculentaColors::white,          // widgetBackground
         LuaSuculentaColors::white,          // menuBackground
@@ -14,7 +14,7 @@ LuaSuculentaLookAndFeel::LuaSuculentaLookAndFeel()
         LuaSuculentaColors::black,          // highlightedText
         LuaSuculentaColors::whiteDirt,      // highlightedFill
         LuaSuculentaColors::black,          // menuText
-    } }
+    }}
 {
     setColour(juce::CodeEditorComponent::backgroundColourId, OneLightColors::editorBackground);
     setColour(juce::CodeEditorComponent::highlightColourId, OneLightColors::editorHighlight);

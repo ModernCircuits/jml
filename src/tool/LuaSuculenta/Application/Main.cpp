@@ -1,14 +1,15 @@
 #include "Application/MainComponent.hpp"
 
-struct GuiAppApplication final : juce::JUCEApplication {
+struct GuiAppApplication final : juce::JUCEApplication
+{
 
-    GuiAppApplication() { }
+    GuiAppApplication() {}
 
     const juce::String getApplicationName() override { return JUCE_APPLICATION_NAME_STRING; }
     const juce::String getApplicationVersion() override { return JUCE_APPLICATION_VERSION_STRING; }
     bool moreThanOneInstanceAllowed() override { return true; }
 
-    void initialise(const juce::String& commandLine) override
+    void initialise(juce::String const& commandLine) override
     {
         juce::ignoreUnused(commandLine);
         mainWindow.reset(new MainWindow(getApplicationName()));
@@ -18,12 +19,14 @@ struct GuiAppApplication final : juce::JUCEApplication {
 
     void systemRequestedQuit() override { quit(); }
 
-    void anotherInstanceStarted(const juce::String& commandLine) override { juce::ignoreUnused(commandLine); }
+    void anotherInstanceStarted(juce::String const& commandLine) override { juce::ignoreUnused(commandLine); }
 
-    struct MainWindow : juce::DocumentWindow {
+    struct MainWindow : juce::DocumentWindow
+    {
 
         explicit MainWindow(juce::String name)
-            : DocumentWindow(name,
+            : DocumentWindow(
+                name,
                 juce::Desktop::getInstance().getDefaultLookAndFeel().findColour(ResizableWindow::backgroundColourId),
                 DocumentWindow::allButtons)
         {

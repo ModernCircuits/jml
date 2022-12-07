@@ -3,14 +3,16 @@
 #include <juce_graphics/juce_graphics.h>
 
 namespace mc {
-struct LuaSuculentaColors {
+struct LuaSuculentaColors
+{
     inline static juce::Colour const black       = juce::Colours::black;
     inline static juce::Colour const transparent = juce::Colours::transparentBlack;
     inline static juce::Colour const white       = juce::Colours::white;
     inline static juce::Colour const whiteDirt   = juce::Colour::fromRGB(240, 240, 240);
 };
 
-struct OneLightColors {
+struct OneLightColors
+{
     inline static juce::Colour const editorBackground = juce::Colour(0xFFFAFAFA);
     inline static juce::Colour const editorForeground = juce::Colour(0xFF383A42);
     inline static juce::Colour const editorHighlight  = juce::Colour(0xFFE5E5E6);

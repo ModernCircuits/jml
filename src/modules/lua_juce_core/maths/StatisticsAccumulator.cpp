@@ -2,7 +2,7 @@
 
 #include <juce_core/juce_core.h>
 
-template <typename T>
+template<typename T>
 auto juce_StatisticsAccumulatorImpl(sol::table& state, char const* name) -> void
 {
     using Accumulator            = juce::StatisticsAccumulator<T>;

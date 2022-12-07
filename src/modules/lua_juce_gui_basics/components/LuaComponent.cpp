@@ -2,7 +2,8 @@
 
 #include <juce_gui_basics/juce_gui_basics.h>
 
-struct LuaComponent final : juce::Component {
+struct LuaComponent final : juce::Component
+{
     LuaComponent()           = default;
     ~LuaComponent() override = default;
 

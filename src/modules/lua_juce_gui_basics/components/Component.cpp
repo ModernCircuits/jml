@@ -2,7 +2,8 @@
 
 #include <juce_gui_basics/juce_gui_basics.h>
 
-struct SolObjectSet final : juce::ReferenceCountedObject {
+struct SolObjectSet final : juce::ReferenceCountedObject
+{
     using Ptr = juce::ReferenceCountedObjectPtr<SolObjectSet>;
 
     SolObjectSet()           = default;
@@ -34,7 +35,7 @@ auto getSolObjectSet(juce::NamedValueSet& properties) -> SolObjectSet&
         return *objects;
     }
 
-    auto* objects = new SolObjectSet {};
+    auto* objects = new SolObjectSet{};
     properties.set("lua-objects", objects);
     return *objects;
 }

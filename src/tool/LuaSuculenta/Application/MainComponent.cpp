@@ -36,7 +36,10 @@ void MainComponent::resized()
     _tabs.setBounds(area);
 }
 
-auto MainComponent::getNextCommandTarget() -> juce::ApplicationCommandTarget* { return findFirstTargetParentComponent(); }
+auto MainComponent::getNextCommandTarget() -> juce::ApplicationCommandTarget*
+{
+    return findFirstTargetParentComponent();
+}
 
 auto MainComponent::getAllCommands(juce::Array<juce::CommandID>& c) -> void
 {
@@ -56,44 +59,44 @@ auto MainComponent::getCommandInfo(juce::CommandID commandID, juce::ApplicationC
     using juce::ModifierKeys;
 
     switch (commandID) {
-    case CommandIDs::open:
-        result.setInfo("Open", "Opens a script file", "File", 0);
-        result.addDefaultKeypress('o', ModifierKeys::commandModifier);
-        break;
-    case CommandIDs::reload:
-        result.setInfo("Reload", "Reload script file", "File", 0);
-        result.addDefaultKeypress('r', ModifierKeys::commandModifier);
-        break;
-    case CommandIDs::save:
-        result.setInfo("Save", "Saves a script file", "File", 0);
-        result.addDefaultKeypress('s', ModifierKeys::commandModifier);
-        break;
-    case CommandIDs::saveAs:
-        result.setInfo("Save As", "Saves a script file to a new location", "File", 0);
-        result.addDefaultKeypress('s', ModifierKeys::commandModifier | ModifierKeys::shiftModifier);
-        break;
-    case CommandIDs::undo:
-        result.setInfo("Undo", "Undo one step", "Edit", 0);
-        result.addDefaultKeypress('z', ModifierKeys::commandModifier);
-        break;
-    case CommandIDs::redo:
-        result.setInfo("Redo", "Redo one step", "Edit", 0);
-        result.addDefaultKeypress('z', ModifierKeys::commandModifier | ModifierKeys::shiftModifier);
-        break;
-    default: break;
+        case CommandIDs::open:
+            result.setInfo("Open", "Opens a script file", "File", 0);
+            result.addDefaultKeypress('o', ModifierKeys::commandModifier);
+            break;
+        case CommandIDs::reload:
+            result.setInfo("Reload", "Reload script file", "File", 0);
+            result.addDefaultKeypress('r', ModifierKeys::commandModifier);
+            break;
+        case CommandIDs::save:
+            result.setInfo("Save", "Saves a script file", "File", 0);
+            result.addDefaultKeypress('s', ModifierKeys::commandModifier);
+            break;
+        case CommandIDs::saveAs:
+            result.setInfo("Save As", "Saves a script file to a new location", "File", 0);
+            result.addDefaultKeypress('s', ModifierKeys::commandModifier | ModifierKeys::shiftModifier);
+            break;
+        case CommandIDs::undo:
+            result.setInfo("Undo", "Undo one step", "Edit", 0);
+            result.addDefaultKeypress('z', ModifierKeys::commandModifier);
+            break;
+        case CommandIDs::redo:
+            result.setInfo("Redo", "Redo one step", "Edit", 0);
+            result.addDefaultKeypress('z', ModifierKeys::commandModifier | ModifierKeys::shiftModifier);
+            break;
+        default: break;
     }
 }
 
 auto MainComponent::perform(juce::ApplicationCommandTarget::InvocationInfo const& info) -> bool
 {
     switch (info.commandID) {
-    case CommandIDs::open: loadScriptPath(); break;
-    case CommandIDs::reload: doReload(_preview.script()); break;
-    case CommandIDs::save:
-    case CommandIDs::saveAs: /*saveProject();*/ break;
-    case CommandIDs::undo: _undoManager.undo(); break;
-    case CommandIDs::redo: _undoManager.redo(); break;
-    default: return false;
+        case CommandIDs::open: loadScriptPath(); break;
+        case CommandIDs::reload: doReload(_preview.script()); break;
+        case CommandIDs::save:
+        case CommandIDs::saveAs: /*saveProject();*/ break;
+        case CommandIDs::undo: _undoManager.undo(); break;
+        case CommandIDs::redo: _undoManager.redo(); break;
+        default: return false;
     }
 
     return true;

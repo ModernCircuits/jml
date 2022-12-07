@@ -7,19 +7,14 @@ namespace mc {
 static auto makeCodeEditorColorScheme() -> juce::CodeEditorComponent::ColourScheme
 {
     static juce::CodeEditorComponent::ColourScheme::TokenType const types[] = {
-        { "Error", juce::Colour(0xffcc0000) },
-        { "Comment", OneLightColors::codeComment },
-        { "Keyword", OneLightColors::codeKeyword },
-        { "Operator", OneLightColors::codeOperator },
-        { "Identifier", juce::Colour(0xff000000) },
-        { "Integer", OneLightColors::codeInteger },
-        { "Float", OneLightColors::codeFloat },
-        { "String", OneLightColors::codeString },
-        { "Bracket", OneLightColors::codeBracket },
-        { "Punctuation", juce::Colour(0xff004400) },
+        {"Error", juce::Colour(0xffcc0000)},      {"Comment", OneLightColors::codeComment},
+        {"Keyword", OneLightColors::codeKeyword}, {"Operator", OneLightColors::codeOperator},
+        {"Identifier", juce::Colour(0xff000000)}, {"Integer", OneLightColors::codeInteger},
+        {"Float", OneLightColors::codeFloat},     {"String", OneLightColors::codeString},
+        {"Bracket", OneLightColors::codeBracket}, {"Punctuation", juce::Colour(0xff004400)},
     };
 
-    auto cs = juce::CodeEditorComponent::ColourScheme {};
+    auto cs = juce::CodeEditorComponent::ColourScheme{};
     for (auto const& t : types) { cs.set(t.name, t.colour); }
     return cs;
 }

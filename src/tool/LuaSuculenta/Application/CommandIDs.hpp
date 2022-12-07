@@ -1,8 +1,10 @@
 #pragma once
 
 namespace mc {
-struct CommandIDs {
-    enum Values {
+struct CommandIDs
+{
+    enum Values
+    {
         unknown,
         open,
         reload,

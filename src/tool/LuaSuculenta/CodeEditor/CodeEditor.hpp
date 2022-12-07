@@ -4,7 +4,8 @@
 
 namespace mc {
 
-struct CodeEditor : juce::Component {
+struct CodeEditor : juce::Component
+{
     CodeEditor();
     ~CodeEditor() override = default;
 
@@ -17,7 +18,7 @@ private:
     juce::File _file;
     juce::CodeDocument _document;
     juce::LuaTokeniser _tokenizer;
-    juce::CodeEditorComponent _editor { _document, &_tokenizer };
+    juce::CodeEditorComponent _editor{_document, &_tokenizer};
 };
 
 } // namespace mc
