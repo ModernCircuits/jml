@@ -30,5 +30,5 @@ FetchContent_Declare(JUCE GIT_REPOSITORY "https://github.com/juce-framework/JUCE
 FetchContent_MakeAvailable(JUCE)
 juce_disable_default_flags()
 
-add_subdirectory(src/modules)
-add_subdirectory(src/tool)
+add_subdirectory(modules)
+add_subdirectory(tool)
