@@ -23,16 +23,32 @@ local function max(lhs, rhs)
     return rhs
 end
 
+local function setDefaultProperties(spec, t)
+    spec["type"] = t
+
+    if spec["id"] == nil then
+        spec["id"] = ""
+    end
+
+    if spec["padding"] == nil then
+        spec["padding"] = ""
+    end
+
+    if spec["margin"] == nil then
+        spec["margin"] = 0
+    end
+
+    return spec
+end
+
 local function buildComponent(spec)
     local c = juce.Component.new()
-    c:setComponentID(juce.String.new(spec["name"]))
+    c:setComponentID(juce.String.new(spec["id"]))
 
-    local children = {}
     -- add children
     for k, v in ipairs(spec.children) do
-        local child = v.build()
-        children[#children + 1] = child
-        c:addAndMakeVisible(child)
+        v.component = v.build()
+        c:addAndMakeVisible(v.component)
     end
 
     -- set size
@@ -42,50 +58,66 @@ local function buildComponent(spec)
 
     -- paint
     function c:paint(g)
-        local area = c:getLocalBounds():reduced(spec.padding)
-        g:setColour(spec.color)
+        local area = c:getLocalBounds()
+        g:setColour(spec.fill)
         g:fillRect(area)
     end
 
     -- resized
     function c:resized()
         local area = c:getLocalBounds():reduced(spec.padding)
-        local height = area:getHeight() / max(1, tableSize(children))
-        for k in pairs(children) do
-            children[k]:setBounds(area:removeFromTop(height))
-            print("resize child")
+        local height = area:getHeight() / max(1, tableSize(spec.children))
+        for k in pairs(spec.children) do
+            local c = spec.children[k].component
+            local margin = spec.children[k].margin
+            local childArea = area:removeFromTop(height):reduced(margin)
+            c:setBounds(childArea)
         end
     end
 
     return c
 end
 
-local function fillComponentDefaults(spec)
-    if spec["name"] == nil then
-        spec["name"] = ""
-    end
+function jml.Component(spec)
+    spec = setDefaultProperties(spec, "Component")
 
-    if spec["color"] == nil then
-        spec["color"] = juce.Colours.new()
-    end
-
-    if spec["padding"] == nil then
-        spec["padding"] = 0
+    if spec["fill"] == nil then
+        spec["fill"] = juce.Colours.new()
     end
 
     if spec["children"] == nil then
         spec["children"] = {}
     end
 
+    spec["build"] = function()
+        return buildComponent(spec)
+    end
+
     return spec
 end
 
-function jml.Component(spec)
-    spec["type"] = "Component"
-    spec = fillComponentDefaults(spec)
+function jml.TextButton(spec)
+    spec = setDefaultProperties(spec, "TextButton")
+    if spec["text"] == nil then
+        spec["text"] = ""
+    end
 
     spec["build"] = function()
-        return buildComponent(spec)
+        local btn = juce.TextButton.new(juce.String.new(spec["text"]))
+        btn:setComponentID(juce.String.new(spec["id"]))
+        return btn
+    end
+
+    return spec
+end
+
+function jml.Slider(spec)
+    spec = setDefaultProperties(spec, "Slider")
+
+    spec["build"] = function()
+        local slider = juce.Slider.new()
+        slider:setComponentID(juce.String.new(spec["id"]))
+        return slider
     end
 
     return spec
@@ -97,29 +129,33 @@ end
 
 -- EXAMPLE
 
-return jml.build(
+local ui =
     jml.Component {
-        ["name"] = "Main Window",
-        ["color"] = juce.Colours.black,
-        ["width"] = 500,
-        ["height"] = 500,
-        ["padding"] = 0,
-        ["children"] = {
-            jml.Component {
-                ["name"] = "C1",
-                ["padding"] = 4,
-                ["color"] = juce.Colours.red
-            },
-            jml.Component {
-                ["name"] = "C2",
-                ["padding"] = 4,
-                ["color"] = juce.Colours.green
-            },
-            jml.Component {
-                ["name"] = "C2",
-                ["padding"] = 4,
-                ["color"] = juce.Colours.blue
-            }
+    ["id"] = "Main Window",
+    ["fill"] = juce.Colours.black,
+    ["width"] = 500,
+    ["height"] = 500,
+    ["padding"] = 8,
+    ["children"] = {
+        jml.TextButton {
+            ["id"] = "C1",
+            ["text"] = "Button",
+            ["margin"] = 4
+        },
+        jml.Component {
+            ["id"] = "C2",
+            ["margin"] = 4,
+            ["fill"] = juce.Colours.green
+        },
+        jml.Slider {
+            ["id"] = "C2"
+        },
+        jml.Component {
+            ["id"] = "C2",
+            ["margin"] = 4,
+            ["fill"] = juce.Colours.blue
         }
     }
-)
+}
+
+return jml.build(ui)
