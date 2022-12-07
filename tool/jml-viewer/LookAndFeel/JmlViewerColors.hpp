@@ -3,7 +3,8 @@
 #include <juce_graphics/juce_graphics.h>
 
 namespace mc {
-struct LuaSuculentaColors
+
+struct JmlViewerColors
 {
     inline static juce::Colour const black       = juce::Colours::black;
     inline static juce::Colour const transparent = juce::Colours::transparentBlack;

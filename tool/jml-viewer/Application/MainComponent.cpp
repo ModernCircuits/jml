@@ -11,8 +11,8 @@ MainComponent::MainComponent()
     setWantsKeyboardFocus(true);
 
     _tabs.setTabBarDepth(50);
-    _tabs.addTab("Viewer", LuaSuculentaColors::black, &_preview, false);
-    _tabs.addTab("Code", LuaSuculentaColors::black, &_editor, false);
+    _tabs.addTab("Viewer", JmlViewerColors::black, &_preview, false);
+    _tabs.addTab("Code", JmlViewerColors::black, &_editor, false);
 
     addAndMakeVisible(_menuBar);
     addAndMakeVisible(_tabs);

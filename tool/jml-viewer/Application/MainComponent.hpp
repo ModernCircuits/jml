@@ -4,8 +4,8 @@
 
 #include "Application/MenuBar.hpp"
 #include "CodeEditor/CodeEditor.hpp"
-#include "LookAndFeel/LuaSuculentaColors.hpp"
-#include "LookAndFeel/LuaSuculentaLookAndFeel.hpp"
+#include "LookAndFeel/JmlViewerColors.hpp"
+#include "LookAndFeel/JmlViewerLookAndFeel.hpp"
 #include "Preview/ComponentContainer.hpp"
 #include "Preview/ComponentTree.hpp"
 #include "Preview/FileChangeListener.hpp"
@@ -35,7 +35,7 @@ private:
 
     juce::ApplicationCommandManager _commandManager{};
     juce::UndoManager _undoManager;
-    LuaSuculentaLookAndFeel _lnf;
+    JmlViewerLookAndFeel _lnf;
 
     MenuBar _menuBar{_commandManager};
     juce::TabbedComponent _tabs{juce::TabbedButtonBar::TabsAtLeft};

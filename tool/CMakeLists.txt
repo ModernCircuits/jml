@@ -1,57 +1,57 @@
-project(LuaSuculenta VERSION 0.1.0)
+project(jml-viewer VERSION 0.1.0)
 
 find_package(sol2 REQUIRED)
 
-juce_add_gui_app(LuaSuculenta
+juce_add_gui_app(jml-viewer
     # VERSION ...                       # Set this if the app version is different to the project version
     # ICON_BIG ...                      # ICON_* arguments specify a path to an image file to use as an icon
     # ICON_SMALL ...
     # DOCUMENT_EXTENSIONS ...           # Specify file extensions that should be associated with this app
     # COMPANY_NAME ...                  # Specify the name of the app's author
-    PRODUCT_NAME "Lua Suculenta"        # The name of the final executable, which can differ from the target name
+    PRODUCT_NAME "JML Viewer"           # The name of the final executable, which can differ from the target name
 )
 
-target_sources(LuaSuculenta
+target_sources(jml-viewer
     PRIVATE
-        "LuaSuculenta/Application/CommandIDs.hpp"
-        "LuaSuculenta/Application/Main.cpp"
-        "LuaSuculenta/Application/MainComponent.hpp"
-        "LuaSuculenta/Application/MainComponent.cpp"
-        "LuaSuculenta/Application/MenuBar.hpp"
-        "LuaSuculenta/Application/MenuBar.cpp"
+        "jml-viewer/Application/CommandIDs.hpp"
+        "jml-viewer/Application/Main.cpp"
+        "jml-viewer/Application/MainComponent.hpp"
+        "jml-viewer/Application/MainComponent.cpp"
+        "jml-viewer/Application/MenuBar.hpp"
+        "jml-viewer/Application/MenuBar.cpp"
 
-        "LuaSuculenta/CodeEditor/CodeEditor.cpp"
-        "LuaSuculenta/CodeEditor/CodeEditor.hpp"
+        "jml-viewer/CodeEditor/CodeEditor.cpp"
+        "jml-viewer/CodeEditor/CodeEditor.hpp"
 
-        "LuaSuculenta/LookAndFeel/LuaSuculentaColors.hpp"
-        "LuaSuculenta/LookAndFeel/LuaSuculentaLookAndFeel.cpp"
-        "LuaSuculenta/LookAndFeel/LuaSuculentaLookAndFeel.hpp"
+        "jml-viewer/LookAndFeel/JmlViewerColors.hpp"
+        "jml-viewer/LookAndFeel/JmlViewerLookAndFeel.cpp"
+        "jml-viewer/LookAndFeel/JmlViewerLookAndFeel.hpp"
 
-        "LuaSuculenta/Lua/Juce.cpp"
-        "LuaSuculenta/Lua/Juce.hpp"
+        "jml-viewer/Lua/Juce.cpp"
+        "jml-viewer/Lua/Juce.hpp"
 
-        "LuaSuculenta/Preview/ComponentContainer.hpp"
-        "LuaSuculenta/Preview/ComponentTree.hpp"
-        "LuaSuculenta/Preview/FileChangeListener.hpp"
-        "LuaSuculenta/Preview/LuaPreview.cpp"
-        "LuaSuculenta/Preview/LuaPreview.hpp"
+        "jml-viewer/Preview/ComponentContainer.hpp"
+        "jml-viewer/Preview/ComponentTree.hpp"
+        "jml-viewer/Preview/FileChangeListener.hpp"
+        "jml-viewer/Preview/LuaPreview.cpp"
+        "jml-viewer/Preview/LuaPreview.hpp"
 )
 
-target_include_directories(LuaSuculenta
+target_include_directories(jml-viewer
     PUBLIC
-        ${PROJECT_SOURCE_DIR}/LuaSuculenta
+        ${PROJECT_SOURCE_DIR}/jml-viewer
 )
 
-target_compile_definitions(LuaSuculenta
+target_compile_definitions(jml-viewer
     PRIVATE
         SOL_ALL_SAFETIES_ON=1
         JUCE_WEB_BROWSER=0
         JUCE_USE_CURL=0
-        JUCE_APPLICATION_NAME_STRING="$<TARGET_PROPERTY:LuaSuculenta,JUCE_PRODUCT_NAME>"
-        JUCE_APPLICATION_VERSION_STRING="$<TARGET_PROPERTY:LuaSuculenta,JUCE_VERSION>"
+        JUCE_APPLICATION_NAME_STRING="$<TARGET_PROPERTY:jml-viewer,JUCE_PRODUCT_NAME>"
+        JUCE_APPLICATION_VERSION_STRING="$<TARGET_PROPERTY:jml-viewer,JUCE_VERSION>"
 )
 
-target_link_libraries(LuaSuculenta
+target_link_libraries(jml-viewer
     PRIVATE
         mc::lua_juce_core
         mc::lua_juce_events

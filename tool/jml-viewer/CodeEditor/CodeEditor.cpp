@@ -1,6 +1,6 @@
 #include "CodeEditor.hpp"
 
-#include "LookAndFeel/LuaSuculentaColors.hpp"
+#include "LookAndFeel/JmlViewerColors.hpp"
 
 namespace mc {
 
@@ -32,7 +32,7 @@ auto CodeEditor::file(juce::File file) -> void
     if (auto stream = _file.createInputStream(); stream) { _document.loadFromStream(*stream); }
 }
 
-auto CodeEditor::paint(juce::Graphics& g) -> void { g.fillAll(LuaSuculentaColors::whiteDirt); }
+auto CodeEditor::paint(juce::Graphics& g) -> void { g.fillAll(JmlViewerColors::whiteDirt); }
 auto CodeEditor::resized() -> void { _editor.setBounds(getLocalBounds().reduced(16)); }
 
 } // namespace mc
