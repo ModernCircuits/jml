@@ -25,7 +25,8 @@ END_JUCE_MODULE_DECLARATION
 
 template<>
 struct sol::is_container<juce::String> : std::false_type
-{};
+{
+};
 
 #include "containers/Array.hpp"
 #include "files/File.hpp"
@@ -41,3 +42,4 @@ struct sol::is_container<juce::String> : std::false_type
 #include "network/IPAddress.hpp"
 #include "text/String.hpp"
 #include "text/StringArray.hpp"
+#include "time/Time.hpp"

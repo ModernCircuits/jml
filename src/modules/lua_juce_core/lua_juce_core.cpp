@@ -14,3 +14,4 @@
 #include "network/IPAddress.cpp"           // NOLINT
 #include "text/String.cpp"                 // NOLINT
 #include "text/StringArray.cpp"            // NOLINT
+#include "time/Time.cpp"                   // NOLINT
