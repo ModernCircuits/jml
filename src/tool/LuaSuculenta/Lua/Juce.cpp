@@ -24,6 +24,8 @@ auto add_juce_module(sol::state& lua) -> void
     juce_String(juceModule);
     juce_StringArray(juceModule);
     juce_Uuid(juceModule);
+    juce_RelativeTime(juceModule);
+    juce_Time(juceModule);
 
     // juce_events
     juce_Timer(juceModule);

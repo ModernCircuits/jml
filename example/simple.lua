@@ -1,9 +1,9 @@
-local function Content()
+local function Content(name)
   local content = juce.Component.new()
-  content:setComponentID(juce.String.new("Content"))
+  content:setComponentID(juce.String.new(name))
 
   function content:paint(g)
-    g:setColour(juce.Colours.blue)
+    g:setColour(juce.Colours.red)
     g:fillAll()
   end
 
@@ -12,21 +12,27 @@ end
 
 local function MainComponent()
   local mainComponent = juce.Component.new()
-  mainComponent:setComponentID(juce.String.new("Main Window"))
+  local c1 = Content("C1")
+  local c2 = Content("C2")
+  local c3 = Content("C3")
 
-  local content = Content()
-  mainComponent:addAndMakeVisible(content)
+  mainComponent:setComponentID(juce.String.new("Main Window"))
+  mainComponent:addAndMakeVisible(c1)
+  mainComponent:addAndMakeVisible(c2)
+  mainComponent:addAndMakeVisible(c3)
 
   function mainComponent:paint(g)
-    g:setColour(juce.Colours.pink)
+    g:setColour(juce.Colours.blue)
     g:fillAll()
   end
 
   function mainComponent:resized()
-    content:setBounds(25, 25, 25, 25)
+    c1:setBounds(25, 25, 25, 25)
+    c2:setBounds(50, 50, 25, 25)
+    c3:setBounds(75, 75, 25, 25)
   end
 
-  mainComponent:setSize(1024, 576)
+  mainComponent:setSize(640, 480)
   return mainComponent
 end
 

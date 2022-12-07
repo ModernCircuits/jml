@@ -42,4 +42,5 @@ struct sol::is_container<juce::String> : std::false_type
 #include "network/IPAddress.hpp"
 #include "text/String.hpp"
 #include "text/StringArray.hpp"
+#include "time/RelativeTime.hpp"
 #include "time/Time.hpp"
