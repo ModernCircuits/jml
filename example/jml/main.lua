@@ -25,6 +25,7 @@ local ui =
         },
         jml.Slider {
             id = "Slider",
+            style = juce.SliderStyle.LinearHorizontal,
             margin = 4,
             range = {
                 start = 0.0,

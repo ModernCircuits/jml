@@ -124,14 +124,18 @@ function jml.Slider(spec)
 
     -- BUILD
     function spec.build()
-        local s = juce.Slider.new()
-        s:setComponentID(juce.String.new(spec.id))
+        local slider = juce.Slider.new()
+        slider:setComponentID(juce.String.new(spec.id))
 
-        if spec["range"] ~= nil then
-            s:setRange(spec.range["start"], spec.range["stop"], spec.range["interval"])
+        if spec["style"] ~= nil then
+            slider:setSliderStyle(spec["style"])
         end
 
-        return s
+        if spec["range"] ~= nil then
+            slider:setRange(spec.range["start"], spec.range["stop"], spec.range["interval"])
+        end
+
+        return slider
     end
     return spec
 end
