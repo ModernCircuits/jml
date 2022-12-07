@@ -7,6 +7,7 @@ return jml.build(
         width = 500,
         height = 500,
         padding = 8,
+        layout = "vertical",
         children = {
             jml.TextButton {
                 id = "TextButton",
@@ -24,7 +25,20 @@ return jml.build(
             jml.Component {
                 id = "Canvas",
                 margin = 4,
-                fill = juce.Colours.green
+                fill = juce.Colours.green,
+                layout = "horizontal",
+                children = {
+                    jml.Component {
+                        id = "Canvas",
+                        margin = 4,
+                        fill = juce.Colours.blue
+                    },
+                    jml.Component {
+                        id = "Canvas",
+                        margin = 4,
+                        fill = juce.Colours.red
+                    }
+                }
             }
         }
     }

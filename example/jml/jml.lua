@@ -1,4 +1,3 @@
--- JML
 local jml = {}
 
 local function tableSize(t)
@@ -74,12 +73,25 @@ local function buildComponent(spec)
     -- resized
     function c:resized()
         local area = c:getLocalBounds():reduced(spec.padding)
-        local height = area:getHeight() / max(1, tableSize(spec.children))
+
+        local size = 0
+        local numChildren = max(1, tableSize(spec.children))
+        if spec["layout"] == "vertical" then
+            size = area:getHeight() / numChildren
+        else
+            size = area:getWidth() / numChildren
+        end
+
         for k in pairs(spec.children) do
             local c = spec.children[k].component
             local margin = spec.children[k].margin
-            local childArea = area:removeFromTop(height):reduced(margin)
-            c:setBounds(childArea)
+
+            if spec["layout"] == "vertical" then
+                c:setBounds(area:removeFromTop(size):reduced(margin))
+            else
+                c:setBounds(area:removeFromLeft(size):reduced(margin))
+            end
+
         end
     end
 
@@ -106,9 +118,9 @@ end
 function jml.Component(spec)
     local defaults = {
         {"fill", juce.Colour.new()},
-        {"children", {}}
+        {"children", {}},
+        {"layout", "vertical"}
     }
-
     spec = setEmptyPropertiesToDefaults(spec, defaults)
     spec["build"] = function()
         return buildComponent(spec)
@@ -118,10 +130,7 @@ function jml.Component(spec)
 end
 
 function jml.TextButton(spec)
-    local defaults = {
-        {"text", ""}
-    }
-
+    local defaults = {{"text", ""}}
     spec = setEmptyPropertiesToDefaults(spec, defaults)
     spec["build"] = function()
         return buildTextButton(spec)
