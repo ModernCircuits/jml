@@ -23,6 +23,11 @@ END_JUCE_MODULE_DECLARATION
 #include <juce_core/juce_core.h>
 #include <lua_juce_sol2/lua_juce_sol2.hpp>
 
+template<>
+struct sol::is_container<juce::String> : std::false_type
+{};
+
+#include "containers/Array.hpp"
 #include "files/File.hpp"
 #include "maths/BigInteger.hpp"
 #include "maths/Int.hpp"
@@ -35,3 +40,4 @@ END_JUCE_MODULE_DECLARATION
 #include "misc/Uuid.hpp"
 #include "network/IPAddress.hpp"
 #include "text/String.hpp"
+#include "text/StringArray.hpp"

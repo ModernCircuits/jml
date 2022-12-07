@@ -10,6 +10,7 @@ auto add_juce_module(sol::state& lua) -> void
     sol::table juceModule = lua["juce"].get_or_create<sol::table>();
 
     // juce_core
+    juce_Array(juceModule);
     juce_BigInteger(juceModule);
     juce_File(juceModule);
     juce_IPAddress(juceModule);
@@ -21,6 +22,7 @@ auto add_juce_module(sol::state& lua) -> void
     juce_Result(juceModule);
     juce_StatisticsAccumulator(juceModule);
     juce_String(juceModule);
+    juce_StringArray(juceModule);
     juce_Uuid(juceModule);
 
     // juce_events
