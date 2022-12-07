@@ -16,11 +16,16 @@ return jml.build(
             },
             jml.Slider {
                 id = "Slider",
+                margin = 4,
                 range = {
                     start = 0.0,
                     stop = 500.0,
                     interval = 10.0
                 }
+            },
+            jml.ComboBox {
+                id = "ComboBox",
+                margin = 4
             },
             jml.Component {
                 id = "Canvas",
