@@ -1,6 +1,6 @@
 #include "CodeEditor.hpp"
 
-#include "LuaSuculentaColors.hpp"
+#include "LookAndFeel/LuaSuculentaColors.hpp"
 
 namespace mc {
 

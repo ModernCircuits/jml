@@ -1,6 +1,6 @@
 #include "LuaSuculentaLookAndFeel.hpp"
 
-#include "LuaSuculentaColors.hpp"
+#include "LookAndFeel/LuaSuculentaColors.hpp"
 
 namespace mc {
 LuaSuculentaLookAndFeel::LuaSuculentaLookAndFeel()

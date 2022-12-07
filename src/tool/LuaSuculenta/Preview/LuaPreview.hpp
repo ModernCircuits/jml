@@ -3,10 +3,10 @@
 #include <juce_gui_extra/juce_gui_extra.h>
 #include <lua_juce_sol2/lua_juce_sol2.hpp>
 
-#include "ComponentContainer.hpp"
-#include "ComponentTree.hpp"
-#include "FileChangeListener.hpp"
-#include "MenuBar.hpp"
+#include "Application/MenuBar.hpp"
+#include "Preview/ComponentContainer.hpp"
+#include "Preview/ComponentTree.hpp"
+#include "Preview/FileChangeListener.hpp"
 
 namespace mc {
 struct LuaPreview : juce::Component {

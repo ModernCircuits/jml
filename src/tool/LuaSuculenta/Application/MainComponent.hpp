@@ -2,14 +2,14 @@
 
 #include <juce_gui_extra/juce_gui_extra.h>
 
-#include "CodeEditor.hpp"
-#include "ComponentContainer.hpp"
-#include "ComponentTree.hpp"
-#include "FileChangeListener.hpp"
-#include "LuaPreview.hpp"
-#include "LuaSuculentaColors.hpp"
-#include "LuaSuculentaLookAndFeel.hpp"
-#include "MenuBar.hpp"
+#include "Application/MenuBar.hpp"
+#include "CodeEditor/CodeEditor.hpp"
+#include "LookAndFeel/LuaSuculentaColors.hpp"
+#include "LookAndFeel/LuaSuculentaLookAndFeel.hpp"
+#include "Preview/ComponentContainer.hpp"
+#include "Preview/ComponentTree.hpp"
+#include "Preview/FileChangeListener.hpp"
+#include "Preview/LuaPreview.hpp"
 
 namespace mc {
 

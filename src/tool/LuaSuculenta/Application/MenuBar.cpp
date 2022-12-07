@@ -1,7 +1,7 @@
 #include "MenuBar.hpp"
 
 // #include "BinaryData.hpp"
-#include "CommandIDs.hpp"
+#include "Application/CommandIDs.hpp"
 
 namespace mc {
 MenuBar::MenuBar(juce::ApplicationCommandManager& commandManager) : _commandManager { commandManager }

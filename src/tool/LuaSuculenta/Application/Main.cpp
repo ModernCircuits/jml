@@ -1,4 +1,4 @@
-#include "MainComponent.h"
+#include "Application/MainComponent.hpp"
 
 struct GuiAppApplication final : juce::JUCEApplication {
 

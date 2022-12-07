@@ -12,25 +12,29 @@ juce_add_gui_app(LuaSuculenta
 )
 
 target_sources(LuaSuculenta
-PRIVATE
-    "LuaSuculenta/Main.cpp"
-    "LuaSuculenta/MainComponent.h"
-    "LuaSuculenta/MainComponent.cpp"
+    PRIVATE
+        "LuaSuculenta/Application/CommandIDs.hpp"
+        "LuaSuculenta/Application/Main.cpp"
+        "LuaSuculenta/Application/MainComponent.hpp"
+        "LuaSuculenta/Application/MainComponent.cpp"
+        "LuaSuculenta/Application/MenuBar.hpp"
+        "LuaSuculenta/Application/MenuBar.cpp"
 
-    "LuaSuculenta/CodeEditor.cpp"
-    "LuaSuculenta/CodeEditor.hpp"
-    "LuaSuculenta/ComponentContainer.hpp"
-    "LuaSuculenta/ComponentTree.hpp"
-    "LuaSuculenta/FileChangeListener.hpp"
-    "LuaSuculenta/Juce.cpp"
-    "LuaSuculenta/Juce.hpp"
-    "LuaSuculenta/LuaPreview.cpp"
-    "LuaSuculenta/LuaPreview.hpp"
-    "LuaSuculenta/LuaSuculentaColors.hpp"
-    "LuaSuculenta/LuaSuculentaLookAndFeel.cpp"
-    "LuaSuculenta/LuaSuculentaLookAndFeel.hpp"
-    "LuaSuculenta/MenuBar.hpp"
-    "LuaSuculenta/MenuBar.cpp"
+        "LuaSuculenta/CodeEditor/CodeEditor.cpp"
+        "LuaSuculenta/CodeEditor/CodeEditor.hpp"
+
+        "LuaSuculenta/LookAndFeel/LuaSuculentaColors.hpp"
+        "LuaSuculenta/LookAndFeel/LuaSuculentaLookAndFeel.cpp"
+        "LuaSuculenta/LookAndFeel/LuaSuculentaLookAndFeel.hpp"
+
+        "LuaSuculenta/Lua/Juce.cpp"
+        "LuaSuculenta/Lua/Juce.hpp"
+
+        "LuaSuculenta/Preview/ComponentContainer.hpp"
+        "LuaSuculenta/Preview/ComponentTree.hpp"
+        "LuaSuculenta/Preview/FileChangeListener.hpp"
+        "LuaSuculenta/Preview/LuaPreview.cpp"
+        "LuaSuculenta/Preview/LuaPreview.hpp"
 )
 
 target_include_directories(LuaSuculenta

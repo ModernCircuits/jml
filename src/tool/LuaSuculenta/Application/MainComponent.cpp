@@ -1,6 +1,6 @@
-#include "MainComponent.h"
+#include "MainComponent.hpp"
 
-#include "CommandIDs.hpp"
+#include "Application/CommandIDs.hpp"
 
 namespace mc {
 

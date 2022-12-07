@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LuaSuculentaColors.hpp"
+#include "LookAndFeel/LuaSuculentaColors.hpp"
 
 #include <juce_gui_basics/juce_gui_basics.h>
 
