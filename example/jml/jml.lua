@@ -135,35 +135,4 @@ function jml.build(ui)
     return ui.build(ui)
 end
 
--- EXAMPLE
-
-local ui =
-    jml.Component {
-    id = "Main Window",
-    fill = juce.Colours.black,
-    width = 500,
-    height = 500,
-    padding = 8,
-    children = {
-        jml.TextButton {
-            id = "TextButton",
-            text = "Button",
-            margin = 4
-        },
-        jml.Slider {
-            id = "Slider",
-            range = {
-                start = 0.0,
-                stop = 500.0,
-                interval = 10.0
-            }
-        },
-        jml.Component {
-            id = "Canvas",
-            margin = 4,
-            fill = juce.Colours.green
-        }
-    }
-}
-
-return jml.build(ui)
+return jml
