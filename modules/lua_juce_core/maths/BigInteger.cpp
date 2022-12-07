@@ -14,8 +14,8 @@ auto juce_BigInteger(sol::table& state) -> void
         >()
     );
     bigInt.set_function("setBit", sol::overload(
-            static_cast<void (juce::BigInteger::*)(int)>(&juce::BigInteger::setBit),
-            static_cast<void (juce::BigInteger::*)(int, bool)>(&juce::BigInteger::setBit)
+            static_cast<juce::BigInteger& (juce::BigInteger::*)(int)>(&juce::BigInteger::setBit),
+            static_cast<juce::BigInteger& (juce::BigInteger::*)(int, bool)>(&juce::BigInteger::setBit)
         )
     );
     // clang-format on
