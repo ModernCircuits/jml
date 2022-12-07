@@ -43,39 +43,42 @@ local function setEmptyProperties(spec, properties)
 end
 
 function jml.Component(spec)
-    local properties = {
-        {"fill", juce.Colour.new()},
-        {"children", {}},
-        {"layout", "vertical"}
-    }
-    spec = setEmptyProperties(spec, properties)
+    spec =
+        setEmptyProperties(
+        spec,
+        {
+            {"fill", juce.Colour.new()},
+            {"children", {}},
+            {"layout", "vertical"}
+        }
+    )
 
     -- BUILD
-    spec.build = function()
-        local c = juce.Component.new()
-        c:setComponentID(juce.String.new(spec.id))
+    function spec.build()
+        local component = juce.Component.new()
+        component:setComponentID(juce.String.new(spec.id))
 
-        -- add children
-        for k, v in ipairs(spec.children) do
-            v.component = v.build()
-            c:addAndMakeVisible(v.component)
+        -- CHILDREN
+        for k, child in ipairs(spec.children) do
+            child.component = child.build()
+            component:addAndMakeVisible(child.component)
         end
 
-        -- set size
+        -- SIZE
         if spec["width"] ~= nil and spec["height"] ~= nil then
-            c:setSize(spec["width"], spec["height"])
+            component:setSize(spec["width"], spec["height"])
         end
 
-        -- paint
-        function c:paint(g)
-            local area = c:getLocalBounds()
+        -- PAINT
+        function component:paint(g)
+            local area = component:getLocalBounds()
             g:setColour(spec.fill)
             g:fillRect(area)
         end
 
-        -- resized
-        function c:resized()
-            local area = c:getLocalBounds():reduced(spec.padding)
+        -- RESIZED
+        function component:resized()
+            local area = component:getLocalBounds():reduced(spec.padding)
 
             local size = 0
             local numChildren = max(1, tableSize(spec.children))
@@ -86,29 +89,28 @@ function jml.Component(spec)
             end
 
             for k in pairs(spec.children) do
-                local c = spec.children[k].component
+                local child = spec.children[k].component
                 local margin = spec.children[k].margin
 
                 if spec["layout"] == "vertical" then
-                    c:setBounds(area:removeFromTop(size):reduced(margin))
+                    child:setBounds(area:removeFromTop(size):reduced(margin))
                 else
-                    c:setBounds(area:removeFromLeft(size):reduced(margin))
+                    child:setBounds(area:removeFromLeft(size):reduced(margin))
                 end
             end
         end
 
-        return c
+        return component
     end
 
     return spec
 end
 
 function jml.TextButton(spec)
-    local properties = {{"text", ""}}
-    spec = setEmptyProperties(spec, properties)
+    spec = setEmptyProperties(spec, {{"text", ""}})
 
     -- BUILD
-    spec.build = function()
+    function spec.build()
         local btn = juce.TextButton.new(juce.String.new(spec.text))
         btn:setComponentID(juce.String.new(spec.id))
         return btn
@@ -118,11 +120,10 @@ function jml.TextButton(spec)
 end
 
 function jml.Slider(spec)
-    local properties = {}
-    spec = setEmptyProperties(spec, properties)
+    spec = setEmptyProperties(spec, {})
 
     -- BUILD
-    spec.build = function()
+    function spec.build()
         local s = juce.Slider.new()
         s:setComponentID(juce.String.new(spec.id))
 
@@ -136,13 +137,18 @@ function jml.Slider(spec)
 end
 
 function jml.ComboBox(spec)
-    local properties = {}
-    spec = setEmptyProperties(spec, properties)
+    spec = setEmptyProperties(spec, {{"choices", {}}})
 
     -- BUILD
-    spec.build = function()
+    function spec.build()
         local cb = juce.ComboBox.new(juce.String.new(spec["name"]))
         cb:setComponentID(juce.String.new(spec.id))
+
+        -- ADD CHOICES
+        for k, v in ipairs(spec.choices) do
+            cb:addItem(juce.String.new(v), k)
+        end
+
         return cb
     end
 
