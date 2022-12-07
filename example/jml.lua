@@ -23,19 +23,19 @@ local function max(lhs, rhs)
     return rhs
 end
 
-local function setDefaultProperties(spec, t)
-    spec["type"] = t
+local function setEmptyPropertiesToDefaults(spec)
+    local defaults = {
+        {"id", ""},
+        {"padding", 0},
+        {"margin", 0}
+    }
 
-    if spec["id"] == nil then
-        spec["id"] = ""
-    end
-
-    if spec["padding"] == nil then
-        spec["padding"] = ""
-    end
-
-    if spec["margin"] == nil then
-        spec["margin"] = 0
+    for k, v in pairs(defaults) do
+        local id = v[1]
+        local value = v[2]
+        if spec[id] == nil then
+            spec[id] = value
+        end
     end
 
     return spec
@@ -79,7 +79,7 @@ local function buildComponent(spec)
 end
 
 function jml.Component(spec)
-    spec = setDefaultProperties(spec, "Component")
+    spec = setEmptyPropertiesToDefaults(spec)
 
     if spec["fill"] == nil then
         spec["fill"] = juce.Colours.new()
@@ -97,7 +97,7 @@ function jml.Component(spec)
 end
 
 function jml.TextButton(spec)
-    spec = setDefaultProperties(spec, "TextButton")
+    spec = setEmptyPropertiesToDefaults(spec)
     if spec["text"] == nil then
         spec["text"] = ""
     end
@@ -112,12 +112,20 @@ function jml.TextButton(spec)
 end
 
 function jml.Slider(spec)
-    spec = setDefaultProperties(spec, "Slider")
+    spec = setEmptyPropertiesToDefaults(spec)
+    if spec["range"] == nil then
+        spec["range"] = {
+            ["start"] = 0.0,
+            ["stop"] = 1.0,
+            ["interval"] = 0.0
+        }
+    end
 
     spec["build"] = function()
-        local slider = juce.Slider.new()
-        slider:setComponentID(juce.String.new(spec["id"]))
-        return slider
+        local s = juce.Slider.new()
+        s:setComponentID(juce.String.new(spec["id"]))
+        s:setRange(spec.range["start"], spec.range["stop"], spec.range["interval"])
+        return s
     end
 
     return spec
@@ -131,29 +139,29 @@ end
 
 local ui =
     jml.Component {
-    ["id"] = "Main Window",
-    ["fill"] = juce.Colours.black,
-    ["width"] = 500,
-    ["height"] = 500,
-    ["padding"] = 8,
-    ["children"] = {
+    id = "Main Window",
+    fill = juce.Colours.black,
+    width = 500,
+    height = 500,
+    padding = 8,
+    children = {
         jml.TextButton {
-            ["id"] = "C1",
-            ["text"] = "Button",
-            ["margin"] = 4
-        },
-        jml.Component {
-            ["id"] = "C2",
-            ["margin"] = 4,
-            ["fill"] = juce.Colours.green
+            id = "TextButton",
+            text = "Button",
+            margin = 4
         },
         jml.Slider {
-            ["id"] = "C2"
+            id = "Slider",
+            range = {
+                start = 0.0,
+                stop = 500.0,
+                interval = 10.0
+            }
         },
         jml.Component {
-            ["id"] = "C2",
-            ["margin"] = 4,
-            ["fill"] = juce.Colours.blue
+            id = "Canvas",
+            margin = 4,
+            fill = juce.Colours.green
         }
     }
 }
