@@ -7,7 +7,7 @@ local ui =
     width = 500,
     height = 500,
     padding = 8,
-    layout = "vertical",
+    layout = jml.VerticalLayout {},
     children = {
         jml.TextButton {
             id = "TextButton",
@@ -37,7 +37,7 @@ local ui =
             id = "Yellow",
             margin = 4,
             fill = juce.Colours.yellow,
-            layout = "horizontal",
+            layout = jml.HorizontalLayout {},
             children = {
                 jml.Component {
                     id = "Blue",

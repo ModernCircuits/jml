@@ -42,16 +42,38 @@ local function setEmptyProperties(spec, properties)
     return spec
 end
 
+function jml.VerticalLayout(spec)
+    function spec.perform(area, children)
+        local size = area:getHeight() / max(1, tableSize(children))
+        for k in pairs(children) do
+            local child = children[k].component
+            local margin = children[k].margin
+            child:setBounds(area:removeFromTop(size):reduced(margin))
+        end
+    end
+    return spec
+end
+
+function jml.HorizontalLayout(spec)
+    function spec.perform(area, children)
+        local size = area:getWidth() / max(1, tableSize(children))
+        for k in pairs(children) do
+            local child = children[k].component
+            local margin = children[k].margin
+            child:setBounds(area:removeFromLeft(size):reduced(margin))
+        end
+    end
+    return spec
+end
+
 function jml.Component(spec)
-    spec =
-        setEmptyProperties(
-        spec,
-        {
-            {"fill", juce.Colour.new()},
-            {"children", {}},
-            {"layout", "vertical"}
-        }
-    )
+    -- DEFAULT PROPERTIES
+    local properties = {
+        {"fill", juce.Colour.new()},
+        {"children", {}},
+        {"layout", jml.VerticalLayout {}}
+    }
+    spec = setEmptyProperties(spec, properties)
 
     -- BUILD
     function spec.build()
@@ -79,25 +101,7 @@ function jml.Component(spec)
         -- RESIZED
         function component:resized()
             local area = component:getLocalBounds():reduced(spec.padding)
-
-            local size = 0
-            local numChildren = max(1, tableSize(spec.children))
-            if spec["layout"] == "vertical" then
-                size = area:getHeight() / numChildren
-            else
-                size = area:getWidth() / numChildren
-            end
-
-            for k in pairs(spec.children) do
-                local child = spec.children[k].component
-                local margin = spec.children[k].margin
-
-                if spec["layout"] == "vertical" then
-                    child:setBounds(area:removeFromTop(size):reduced(margin))
-                else
-                    child:setBounds(area:removeFromLeft(size):reduced(margin))
-                end
-            end
+            spec["layout"].perform(area, spec.children)
         end
 
         return component
@@ -107,6 +111,7 @@ function jml.Component(spec)
 end
 
 function jml.TextButton(spec)
+    -- DEFAULT PROPERTIES
     spec = setEmptyProperties(spec, {{"text", ""}})
 
     -- BUILD
@@ -120,6 +125,7 @@ function jml.TextButton(spec)
 end
 
 function jml.Slider(spec)
+    -- DEFAULT PROPERTIES
     spec = setEmptyProperties(spec, {})
 
     -- BUILD
@@ -127,20 +133,24 @@ function jml.Slider(spec)
         local slider = juce.Slider.new()
         slider:setComponentID(juce.String.new(spec.id))
 
+        -- STYLE
         if spec["style"] ~= nil then
             slider:setSliderStyle(spec["style"])
         end
 
+        -- RANGE
         if spec["range"] ~= nil then
             slider:setRange(spec.range["start"], spec.range["stop"], spec.range["interval"])
         end
 
         return slider
     end
+
     return spec
 end
 
 function jml.ComboBox(spec)
+    -- DEFAULT PROPERTIES
     spec = setEmptyProperties(spec, {{"choices", {}}})
 
     -- BUILD
@@ -148,7 +158,7 @@ function jml.ComboBox(spec)
         local cb = juce.ComboBox.new(juce.String.new(spec["name"]))
         cb:setComponentID(juce.String.new(spec.id))
 
-        -- ADD CHOICES
+        -- CHOICES
         for k, v in ipairs(spec.choices) do
             cb:addItem(juce.String.new(v), k)
         end
