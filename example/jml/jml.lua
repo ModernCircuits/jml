@@ -19,6 +19,8 @@ local function setEmptyProperties(spec, properties)
     local common = {
         {"id", ""},
         {"name", ""},
+        {"width", "auto"},
+        {"height", "auto"},
         {"padding", 0},
         {"margin", 0}
     }
@@ -42,13 +44,49 @@ local function setEmptyProperties(spec, properties)
     return spec
 end
 
+function isPercentageString(str)
+    if type(str) == "string" then
+        return str:sub(-1) == "%"
+    end
+    return false
+end
+
+function parsePercentageToFraction(str)
+    return tonumber(str:sub(1, -2)) / 100.0
+end
+
 function jml.VerticalLayout(spec)
     function spec.perform(area, children)
-        local size = area:getHeight() / max(1, tableSize(children))
+        local numChildren = tableSize(children)
+        local parentHeight = area:getHeight()
+        local explicitHeightUsed = 0
+        local numExplicitHeight = 0
+
+        local heights = {}
         for k in pairs(children) do
-            local child = children[k].component
-            local margin = children[k].margin
-            child:setBounds(area:removeFromTop(size):reduced(margin))
+            local child = children[k]
+            local height = child.height
+            if isPercentageString(height) then
+                local w = parentHeight * parsePercentageToFraction(height)
+                heights[k] = w
+                explicitHeightUsed = explicitHeightUsed + w
+                numExplicitHeight = numExplicitHeight + 1
+            end
+        end
+
+        local availableHeight = parentHeight - explicitHeightUsed
+        for k in pairs(children) do
+            if heights[k] == nil then
+                heights[k] = availableHeight / (numChildren - numExplicitHeight)
+            end
+        end
+
+        for k in pairs(children) do
+            assert(heights[k] ~= nil)
+            local child = children[k]
+            local component = child.component
+            local margin = child.margin
+            component:setBounds(area:removeFromTop(heights[k]):reduced(margin))
         end
     end
     return spec
@@ -56,11 +94,36 @@ end
 
 function jml.HorizontalLayout(spec)
     function spec.perform(area, children)
-        local size = area:getWidth() / max(1, tableSize(children))
+        local numChildren = tableSize(children)
+        local parentWidth = area:getWidth()
+        local explicitWidthUsed = 0
+        local numExplicitWidth = 0
+
+        local widths = {}
         for k in pairs(children) do
-            local child = children[k].component
-            local margin = children[k].margin
-            child:setBounds(area:removeFromLeft(size):reduced(margin))
+            local child = children[k]
+            local width = child.width
+            if type(width) == "string" and isPercentageString(width) then
+                local w = parentWidth * parsePercentageToFraction(width)
+                widths[k] = w
+                explicitWidthUsed = explicitWidthUsed + w
+                numExplicitWidth = numExplicitWidth + 1
+            end
+        end
+
+        local availableWidth = parentWidth - explicitWidthUsed
+        for k in pairs(children) do
+            if widths[k] == nil then
+                widths[k] = availableWidth / numChildren - numExplicitWidth
+            end
+        end
+
+        for k in pairs(children) do
+            assert(widths[k] ~= nil)
+            local child = children[k]
+            local component = child.component
+            local margin = child.margin
+            component:setBounds(area:removeFromLeft(widths[k]):reduced(margin))
         end
     end
     return spec
@@ -87,7 +150,7 @@ function jml.Component(spec)
         end
 
         -- SIZE
-        if spec["width"] ~= nil and spec["height"] ~= nil then
+        if type(spec["width"]) == "number" and type(spec["width"]) == "number" then
             component:setSize(spec["width"], spec["height"])
         end
 

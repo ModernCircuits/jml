@@ -12,6 +12,7 @@ local ui =
         jml.TextButton {
             id = "TextButton",
             text = "Button",
+            height = "10%",
             margin = 4
         },
         jml.ComboBox {

@@ -3,23 +3,35 @@ jml = require("jml")
 local eq = {}
 
 function eq.Rotary(spec)
-    return jml.Slider {
-        id = spec.id,
+    local custom = {}
+    local root =
+        jml.Slider {
         style = juce.SliderStyle.RotaryHorizontalVerticalDrag,
         textbox = juce.SliderTextEntryBoxPosition.NoTextBox,
         margin = 4
     }
+
+    for k, v in pairs(spec) do
+        if custom[k] == nil then
+            root[k] = v
+        end
+    end
+
+    return root
 end
 
 function eq.Band(spec)
-    return jml.Component {
-        id = spec.id,
+    local custom = {}
+
+    local root =
+        jml.Component {
         margin = 4,
         fill = juce.Colours.black,
         layout = jml.VerticalLayout {},
         children = {
             jml.ComboBox {
                 id = "Filter Types",
+                height = "25%",
                 margin = 4,
                 choices = {
                     "Low Cut",
@@ -46,11 +58,21 @@ function eq.Band(spec)
             }
         }
     }
+
+    for k, v in pairs(spec) do
+        if custom[k] == nil then
+            root[k] = v
+        end
+    end
+
+    return root
 end
 
 function eq.Analyzer(spec)
-    return jml.Component {
-        id = spec.id,
+    local custom = {}
+
+    local root =
+        jml.Component {
         margin = 4,
         fill = juce.Colours.black,
         children = {
@@ -61,6 +83,14 @@ function eq.Analyzer(spec)
             }
         }
     }
+
+    for k, v in pairs(spec) do
+        if custom[k] == nil then
+            root[k] = v
+        end
+    end
+
+    return root
 end
 
 local ui =
@@ -73,7 +103,8 @@ local ui =
     layout = jml.VerticalLayout {},
     children = {
         eq.Analyzer {
-            id = "Analyzer"
+            id = "Analyzer",
+            height = "45%"
         },
         jml.Component {
             id = "Bands",
