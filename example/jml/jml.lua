@@ -138,6 +138,14 @@ function jml.Slider(spec)
             slider:setSliderStyle(spec["style"])
         end
 
+        -- TEXTBOX POSITION
+        if spec["textbox"] ~= nil then
+            local isEditable = slider:isTextBoxEditable()
+            local width = slider:getTextBoxWidth()
+            local height = slider:getTextBoxHeight()
+            slider:setTextBoxStyle(spec["textbox"], isEditable, width, height)
+        end
+
         -- RANGE
         if spec["range"] ~= nil then
             slider:setRange(spec.range["start"], spec.range["stop"], spec.range["interval"])
