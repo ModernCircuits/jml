@@ -19,8 +19,6 @@ auto juce_Grid(sol::table& state) -> void
     juce_ArrayImpl<juce::GridItem>(state, "Array_GridItem");
     juce_ArrayImpl<juce::Grid::TrackInfo>(state, "Array_GridTrackInfo");
 
-    auto grid = state.new_usertype<juce::Grid>("Grid");
-
     // juce::Grid::JustifyItems
     state.new_enum(                       //
         "GridJustifyItems",               //
@@ -104,7 +102,16 @@ auto juce_Grid(sol::table& state) -> void
     auto px      = state.new_usertype<juce::Grid::Px>("GridPx", sol::constructors<juce::Grid::Px(float)>());
     px["pixels"] = &juce::Grid::Px::pixels;
 
-    auto ti = state.new_usertype<juce::Grid::TrackInfo>("GridTrackInfo");
+    // clang-format off
+    auto ti = state.new_usertype<juce::Grid::TrackInfo>(
+        "GridTrackInfo",
+        sol::constructors<
+            juce::Grid::TrackInfo(),
+            juce::Grid::TrackInfo(juce::Grid::Fr),
+            juce::Grid::TrackInfo(juce::Grid::Px)
+        >()
+    );
+    // clang-format on
 
     ti["isAuto"]           = &juce::Grid::TrackInfo::isAuto;
     ti["isFractional"]     = &juce::Grid::TrackInfo::isFractional;
@@ -113,6 +120,7 @@ auto juce_Grid(sol::table& state) -> void
     ti["getEndLineName"]   = &juce::Grid::TrackInfo::getEndLineName;
     ti["getSize"]          = &juce::Grid::TrackInfo::getSize;
 
+    auto grid                  = state.new_usertype<juce::Grid>("Grid");
     grid["setGap"]             = &juce::Grid::setGap;
     grid["performLayout"]      = &juce::Grid::performLayout;
     grid["getNumberOfColumns"] = &juce::Grid::getNumberOfColumns;
@@ -130,4 +138,21 @@ auto juce_Grid(sol::table& state) -> void
     grid["columnGap"]          = &juce::Grid::columnGap;
     grid["rowGap"]             = &juce::Grid::rowGap;
     grid["items"]              = &juce::Grid::items;
+
+    auto gridItem = state.new_usertype<juce::GridItem>("GridItem", sol::constructors<juce::GridItem(), juce::GridItem(juce::Component*)>());
+    gridItem["associatedComponent"] = &juce::GridItem::associatedComponent;
+    gridItem["order"]               = &juce::GridItem::order;
+    gridItem["justifySelf"]         = &juce::GridItem::justifySelf;
+    gridItem["alignSelf"]           = &juce::GridItem::alignSelf;
+    gridItem["column"]              = &juce::GridItem::column;
+    gridItem["row"]                 = &juce::GridItem::row;
+    gridItem["area"]                = &juce::GridItem::area;
+    gridItem["width"]               = &juce::GridItem::width;
+    gridItem["minWidth"]            = &juce::GridItem::minWidth;
+    gridItem["maxWidth"]            = &juce::GridItem::maxWidth;
+    gridItem["height"]              = &juce::GridItem::height;
+    gridItem["minHeight"]           = &juce::GridItem::minHeight;
+    gridItem["maxHeight"]           = &juce::GridItem::maxHeight;
+    gridItem["margin"]              = &juce::GridItem::margin;
+    gridItem["currentBounds"]       = &juce::GridItem::currentBounds;
 }

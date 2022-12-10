@@ -4,7 +4,7 @@
 
 namespace mc {
 namespace {
-auto const* defaultScriptPath = R"(C:\Developer\moderncircuits\tests\juce-lua\example\jml\equalizer.lua)";
+auto const* defaultScriptPath = R"(C:\Developer\moderncircuits\tests\juce-lua\example\layout_grid.lua)";
 }
 
 LuaPreview::LuaPreview() : _currentScript(defaultScriptPath)
