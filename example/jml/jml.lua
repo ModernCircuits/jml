@@ -1,6 +1,7 @@
 local jml = {}
 
 local function tableSize(t)
+    assert(type(t) == "table")
     local count = 0
     for k in pairs(t) do
         count = count + 1
@@ -9,13 +10,20 @@ local function tableSize(t)
 end
 
 local function max(lhs, rhs)
+    assert(type(lhs) == "number")
+    assert(type(rhs) == "number")
+
     if lhs > rhs then
         return lhs
     end
+
     return rhs
 end
 
 local function setEmptyProperties(spec, properties)
+    assert(type(spec) == "table")
+    assert(type(properties) == "table")
+
     local common = {
         {"id", ""},
         {"name", ""},
@@ -52,35 +60,49 @@ function isPercentageString(str)
 end
 
 function parsePercentageToFraction(str)
+    assert(type(str) == "string")
     return tonumber(str:sub(1, -2)) / 100.0
+end
+
+function calculatePercentageBasedSize(parentSize, children, property)
+    assert(type(parentSize) == "number")
+    assert(type(children) == "table")
+    assert(type(property) == "string")
+
+    local explicitSizeUsed = 0
+    local numExplicit = 0
+
+    -- Calculate sizes, if explicitly set
+    local sizes = {}
+    for k in pairs(children) do
+        local child = children[k]
+        local size = child[property]
+        if isPercentageString(size) then
+            sizes[k] = parentSize * parsePercentageToFraction(size)
+            explicitSizeUsed = explicitSizeUsed + sizes[k]
+            numExplicit = numExplicit + 1
+        end
+    end
+
+    -- Split available space to components without explicit size property
+    local available = parentSize - explicitSizeUsed
+    local size = available / max(1, tableSize(children) - numExplicit)
+    for k in pairs(children) do
+        if sizes[k] == nil then
+            sizes[k] = size
+        end
+    end
+
+    for k in pairs(sizes) do
+        print(sizes[k])
+    end
+
+    return sizes
 end
 
 function jml.VerticalLayout(spec)
     function spec.perform(area, children)
-        local numChildren = tableSize(children)
-        local parentHeight = area:getHeight()
-        local explicitHeightUsed = 0
-        local numExplicitHeight = 0
-
-        local heights = {}
-        for k in pairs(children) do
-            local child = children[k]
-            local height = child.height
-            if isPercentageString(height) then
-                local w = parentHeight * parsePercentageToFraction(height)
-                heights[k] = w
-                explicitHeightUsed = explicitHeightUsed + w
-                numExplicitHeight = numExplicitHeight + 1
-            end
-        end
-
-        local availableHeight = parentHeight - explicitHeightUsed
-        for k in pairs(children) do
-            if heights[k] == nil then
-                heights[k] = availableHeight / (numChildren - numExplicitHeight)
-            end
-        end
-
+        local heights = calculatePercentageBasedSize(area:getHeight(), children, "height")
         for k in pairs(children) do
             assert(heights[k] ~= nil)
             local child = children[k]
@@ -94,30 +116,7 @@ end
 
 function jml.HorizontalLayout(spec)
     function spec.perform(area, children)
-        local numChildren = tableSize(children)
-        local parentWidth = area:getWidth()
-        local explicitWidthUsed = 0
-        local numExplicitWidth = 0
-
-        local widths = {}
-        for k in pairs(children) do
-            local child = children[k]
-            local width = child.width
-            if type(width) == "string" and isPercentageString(width) then
-                local w = parentWidth * parsePercentageToFraction(width)
-                widths[k] = w
-                explicitWidthUsed = explicitWidthUsed + w
-                numExplicitWidth = numExplicitWidth + 1
-            end
-        end
-
-        local availableWidth = parentWidth - explicitWidthUsed
-        for k in pairs(children) do
-            if widths[k] == nil then
-                widths[k] = availableWidth / numChildren - numExplicitWidth
-            end
-        end
-
+        local widths = calculatePercentageBasedSize(area:getWidth(), children, "width")
         for k in pairs(children) do
             assert(widths[k] ~= nil)
             local child = children[k]
