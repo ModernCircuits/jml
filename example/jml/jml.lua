@@ -1,7 +1,19 @@
 local jml = {}
 
-local function tableSize(t)
-    assert(type(t) == "table")
+local function isNumber(v)
+    return type(v) == "number"
+end
+
+local function isString(v)
+    return type(v) == "string"
+end
+
+local function isTable(v)
+    return type(v) == "table"
+end
+
+local function getTableSize(t)
+    assert(isTable(t))
     local count = 0
     for k in pairs(t) do
         count = count + 1
@@ -10,8 +22,8 @@ local function tableSize(t)
 end
 
 local function max(lhs, rhs)
-    assert(type(lhs) == "number")
-    assert(type(rhs) == "number")
+    assert(isNumber(lhs))
+    assert(isNumber(rhs))
 
     if lhs > rhs then
         return lhs
@@ -21,8 +33,8 @@ local function max(lhs, rhs)
 end
 
 local function setEmptyProperties(spec, properties)
-    assert(type(spec) == "table")
-    assert(type(properties) == "table")
+    assert(isTable(spec))
+    assert(isTable(properties))
 
     local common = {
         {"id", ""},
@@ -60,14 +72,14 @@ function isPercentageString(str)
 end
 
 function parsePercentageToFraction(str)
-    assert(type(str) == "string")
+    assert(isString(str))
     return tonumber(str:sub(1, -2)) / 100.0
 end
 
 function calculatePercentageBasedSize(parentSize, children, property)
-    assert(type(parentSize) == "number")
-    assert(type(children) == "table")
-    assert(type(property) == "string")
+    assert(isNumber(parentSize))
+    assert(isTable(children))
+    assert(isString(property))
 
     local explicitSizeUsed = 0
     local numExplicit = 0
@@ -85,16 +97,15 @@ function calculatePercentageBasedSize(parentSize, children, property)
     end
 
     -- Split available space to components without explicit size property
-    local available = parentSize - explicitSizeUsed
-    local size = available / max(1, tableSize(children) - numExplicit)
-    for k in pairs(children) do
-        if sizes[k] == nil then
-            sizes[k] = size
+    local withoutExplicitSize = getTableSize(children) - numExplicit
+    if withoutExplicitSize > 0 then
+        local available = parentSize - explicitSizeUsed
+        local size = available / withoutExplicitSize
+        for k in pairs(children) do
+            if sizes[k] == nil then
+                sizes[k] = size
+            end
         end
-    end
-
-    for k in pairs(sizes) do
-        print(sizes[k])
     end
 
     return sizes
@@ -148,11 +159,6 @@ function jml.Component(spec)
             component:addAndMakeVisible(child.component)
         end
 
-        -- SIZE
-        if type(spec["width"]) == "number" and type(spec["width"]) == "number" then
-            component:setSize(spec["width"], spec["height"])
-        end
-
         -- PAINT
         function component:paint(g)
             local area = component:getLocalBounds()
@@ -164,6 +170,11 @@ function jml.Component(spec)
         function component:resized()
             local area = component:getLocalBounds():reduced(spec.padding)
             spec["layout"].perform(area, spec.children)
+        end
+
+        -- EXPLICIT SIZE
+        if isNumber(spec["width"]) and isNumber(spec["height"]) then
+            component:setSize(spec["width"], spec["height"])
         end
 
         return component

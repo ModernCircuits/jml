@@ -57,9 +57,16 @@ auto to_string(T const& val) -> decltype(val.toStdString())
 }
 } // namespace juce
 
-
 template<>
 struct sol::is_container<juce::String> : std::false_type
+{};
+
+template<>
+struct sol::is_container<juce::StringArray> : std::false_type
+{};
+
+template<typename T>
+struct sol::is_container<juce::Array<T>> : std::false_type
 {};
 
 #include "containers/Array.hpp"

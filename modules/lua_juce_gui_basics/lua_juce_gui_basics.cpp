@@ -4,6 +4,7 @@
 #include "buttons/TextButton.cpp"
 #include "components/Component.cpp"
 #include "components/LuaComponent.cpp"
+#include "layout/Grid.cpp"
 #include "lookandfeel/LookAndFeel.cpp"
 #include "lookandfeel/LookAndFeel_V4.cpp"
 #include "lookandfeel/LuaLookAndFeel_V4.cpp"

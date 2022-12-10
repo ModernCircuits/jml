@@ -7,60 +7,61 @@
 
 auto add_juce_module(sol::state& lua) -> void
 {
-    sol::table juceModule = lua["juce"].get_or_create<sol::table>();
+    auto table = lua["juce"].get_or_create<sol::table>();
 
     // juce_core
-    juce_Array(juceModule);
-    juce_BigInteger(juceModule);
-    juce_File(juceModule);
-    juce_IPAddress(juceModule);
-    juce_Int(juceModule);
-    juce_MathConstants(juceModule);
-    juce_NormalisableRange(juceModule);
-    juce_Random(juceModule);
-    juce_Range(juceModule);
-    juce_Result(juceModule);
-    juce_StatisticsAccumulator(juceModule);
-    juce_String(juceModule);
-    juce_StringArray(juceModule);
-    juce_Uuid(juceModule);
-    juce_PerformanceCounter(juceModule);
-    juce_RelativeTime(juceModule);
-    juce_Time(juceModule);
+    juce_Array(table);
+    juce_BigInteger(table);
+    juce_File(table);
+    juce_IPAddress(table);
+    juce_Int(table);
+    juce_MathConstants(table);
+    juce_NormalisableRange(table);
+    juce_Random(table);
+    juce_Range(table);
+    juce_Result(table);
+    juce_StatisticsAccumulator(table);
+    juce_String(table);
+    juce_StringArray(table);
+    juce_Uuid(table);
+    juce_PerformanceCounter(table);
+    juce_RelativeTime(table);
+    juce_Time(table);
 
     // juce_events
-    juce_Timer(juceModule);
+    juce_Timer(table);
 
     // juce_graphics
-    juce_AffineTransform(juceModule);
-    juce_Colour(juceModule);
-    juce_ColourGradient(juceModule);
-    juce_Colours(juceModule);
-    juce_Font(juceModule);
-    juce_Graphics(juceModule);
-    juce_Image(juceModule);
-    juce_ImageCache(juceModule);
-    juce_Justification(juceModule);
-    juce_Line(juceModule);
-    juce_Path(juceModule);
-    juce_Point(juceModule);
-    juce_Rectangle(juceModule);
+    juce_AffineTransform(table);
+    juce_Colour(table);
+    juce_ColourGradient(table);
+    juce_Colours(table);
+    juce_Font(table);
+    juce_Graphics(table);
+    juce_Image(table);
+    juce_ImageCache(table);
+    juce_Justification(table);
+    juce_Line(table);
+    juce_Path(table);
+    juce_Point(table);
+    juce_Rectangle(table);
 
     // juce_gui_basics
-    juce_Button(juceModule);
-    juce_ComboBox(juceModule);
-    juce_Component(juceModule);
-    juce_Label(juceModule);
-    juce_ListBox(juceModule);
-    juce_ListBoxModel(juceModule);
-    juce_LookAndFeel(juceModule);
-    juce_LookAndFeel_V4(juceModule);
-    juce_MouseEvent(juceModule);
-    juce_TextButton(juceModule);
-    juce_Slider(juceModule);
+    juce_Button(table);
+    juce_ComboBox(table);
+    juce_Component(table);
+    juce_Grid(table);
+    juce_Label(table);
+    juce_ListBox(table);
+    juce_ListBoxModel(table);
+    juce_LookAndFeel(table);
+    juce_LookAndFeel_V4(table);
+    juce_MouseEvent(table);
+    juce_TextButton(table);
+    juce_Slider(table);
 
     // xtensions
-    juce_LuaComponent(juceModule);
-    juce_LuaLookAndFeel_V4(juceModule);
-    juce_LuaTimer(juceModule);
+    juce_LuaComponent(table);
+    juce_LuaLookAndFeel_V4(table);
+    juce_LuaTimer(table);
 }

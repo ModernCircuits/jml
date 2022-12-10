@@ -29,17 +29,17 @@ auto LuaPreview::script(juce::File const& path) -> void
 
     _lua.collect_garbage();
 
-    if (not path.existsAsFile()) { return; }
+    if (!path.existsAsFile()) { return; }
     path.getParentDirectory().setAsCurrentWorkingDirectory();
 
     auto luaScript = _lua.load_file(path.getFullPathName().toStdString());
     jassert(luaScript.valid());
-    if (not luaScript.valid()) { return; }
+    if (!luaScript.valid()) { return; }
 
     auto factory = luaScript.get<sol::protected_function>();
     auto result  = factory();
     jassert(result.valid());
-    if (not result.valid()) { return; }
+    if (!result.valid()) { return; }
 
     _compObj = result;
     _comp    = _compObj.as<juce::Component*>();
