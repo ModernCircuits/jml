@@ -11,17 +11,14 @@ auto operator!=(Grid::TrackInfo const&, Grid::TrackInfo const&) -> bool { return
 
 auto juce_Grid(sol::table& state) -> void
 {
-    // auto noOperators                           = sol::automagic_enrollments{};
-    // noOperators.less_than_operator             = false;
-    // noOperators.less_than_or_equal_to_operator = false;
-    // noOperators.equal_to_operator              = false;
+    auto table = state["Grid"].get_or_create<sol::table>();
 
     juce_ArrayImpl<juce::GridItem>(state, "Array_GridItem");
     juce_ArrayImpl<juce::Grid::TrackInfo>(state, "Array_GridTrackInfo");
 
     // juce::Grid::JustifyItems
-    state.new_enum(                       //
-        "GridJustifyItems",               //
+    table.new_enum(                       //
+        "JustifyItems",                   //
         "start",                          //
         juce::Grid::JustifyItems::start,  //
         "end",                            //
@@ -33,8 +30,8 @@ auto juce_Grid(sol::table& state) -> void
     );
 
     // juce::Grid::AlignItems
-    state.new_enum(                     //
-        "GridAlignItems",               //
+    table.new_enum(                     //
+        "AlignItems",                   //
         "start",                        //
         juce::Grid::AlignItems::start,  //
         "end",                          //
@@ -46,8 +43,8 @@ auto juce_Grid(sol::table& state) -> void
     );
 
     // juce::Grid::JustifyContent
-    state.new_enum(                               //
-        "GridJustifyContent",                     //
+    table.new_enum(                               //
+        "JustifyContent",                         //
         "start",                                  //
         juce::Grid::JustifyContent::start,        //
         "end",                                    //
@@ -65,8 +62,8 @@ auto juce_Grid(sol::table& state) -> void
     );
 
     // juce::Grid::AlignContent
-    state.new_enum(                             //
-        "GridAlignContent",                     //
+    table.new_enum(                             //
+        "AlignContent",                         //
         "start",                                //
         juce::Grid::AlignContent::start,        //
         "end",                                  //
@@ -84,8 +81,8 @@ auto juce_Grid(sol::table& state) -> void
     );
 
     // juce::Grid::AutoFlow
-    state.new_enum(                       //
-        "GridAutoFlow",                   //
+    table.new_enum(                       //
+        "AutoFlow",                       //
         "row",                            //
         juce::Grid::AutoFlow::row,        //
         "column",                         //
@@ -96,15 +93,15 @@ auto juce_Grid(sol::table& state) -> void
         juce::Grid::AutoFlow::columnDense //
     );
 
-    auto fr        = state.new_usertype<juce::Grid::Fr>("GridFr", sol::constructors<juce::Grid::Fr(int)>());
+    auto fr        = table.new_usertype<juce::Grid::Fr>("Fr", sol::constructors<juce::Grid::Fr(int)>());
     fr["fraction"] = &juce::Grid::Fr::fraction;
 
-    auto px      = state.new_usertype<juce::Grid::Px>("GridPx", sol::constructors<juce::Grid::Px(float)>());
+    auto px      = table.new_usertype<juce::Grid::Px>("Px", sol::constructors<juce::Grid::Px(float)>());
     px["pixels"] = &juce::Grid::Px::pixels;
 
     // clang-format off
-    auto ti = state.new_usertype<juce::Grid::TrackInfo>(
-        "GridTrackInfo",
+    auto ti = table.new_usertype<juce::Grid::TrackInfo>(
+        "TrackInfo",
         sol::constructors<
             juce::Grid::TrackInfo(),
             juce::Grid::TrackInfo(juce::Grid::Fr),
@@ -120,7 +117,8 @@ auto juce_Grid(sol::table& state) -> void
     ti["getEndLineName"]   = &juce::Grid::TrackInfo::getEndLineName;
     ti["getSize"]          = &juce::Grid::TrackInfo::getSize;
 
-    auto grid                  = state.new_usertype<juce::Grid>("Grid");
+    table["new"]               = []() { return juce::Grid{}; };
+    auto grid                  = table.new_usertype<juce::Grid>("Grid");
     grid["setGap"]             = &juce::Grid::setGap;
     grid["performLayout"]      = &juce::Grid::performLayout;
     grid["getNumberOfColumns"] = &juce::Grid::getNumberOfColumns;
@@ -139,20 +137,143 @@ auto juce_Grid(sol::table& state) -> void
     grid["rowGap"]             = &juce::Grid::rowGap;
     grid["items"]              = &juce::Grid::items;
 
-    auto gridItem = state.new_usertype<juce::GridItem>("GridItem", sol::constructors<juce::GridItem(), juce::GridItem(juce::Component*)>());
-    gridItem["associatedComponent"] = &juce::GridItem::associatedComponent;
-    gridItem["order"]               = &juce::GridItem::order;
-    gridItem["justifySelf"]         = &juce::GridItem::justifySelf;
-    gridItem["alignSelf"]           = &juce::GridItem::alignSelf;
-    gridItem["column"]              = &juce::GridItem::column;
-    gridItem["row"]                 = &juce::GridItem::row;
-    gridItem["area"]                = &juce::GridItem::area;
-    gridItem["width"]               = &juce::GridItem::width;
-    gridItem["minWidth"]            = &juce::GridItem::minWidth;
-    gridItem["maxWidth"]            = &juce::GridItem::maxWidth;
-    gridItem["height"]              = &juce::GridItem::height;
-    gridItem["minHeight"]           = &juce::GridItem::minHeight;
-    gridItem["maxHeight"]           = &juce::GridItem::maxHeight;
-    gridItem["margin"]              = &juce::GridItem::margin;
-    gridItem["currentBounds"]       = &juce::GridItem::currentBounds;
+    using GI  = juce::GridItem;
+    using GIP = GI::Property;
+
+    auto giTable   = state["GridItem"].get_or_create<sol::table>();
+    giTable["new"] = [](juce::Component* comp) { return juce::GridItem{comp}; };
+
+    auto gi = giTable.new_usertype<GI>("GridItem", sol::constructors<GI(), GI(juce::Component*)>());
+
+    gi["setArea"] = sol::overload(                                   //
+        static_cast<void (GI::*)(GIP, GIP)>(&GI::setArea),           //
+        static_cast<void (GI::*)(GIP, GIP, GIP, GIP)>(&GI::setArea), //
+        static_cast<void (GI::*)(juce::String const&)>(&GI::setArea) //
+    );
+
+    gi["withArea"] = sol::overload(                                                //
+        static_cast<GI (GI::*)(GIP, GIP) const noexcept>(&GI::withArea),           //
+        static_cast<GI (GI::*)(GIP, GIP, GIP, GIP) const noexcept>(&GI::withArea), //
+        static_cast<GI (GI::*)(juce::String const&) const noexcept>(&GI::withArea) //
+    );
+
+    gi["withRow"]         = &GI::withRow;
+    gi["withColumn"]      = &GI::withColumn;
+    gi["withAlignSelf"]   = &GI::withAlignSelf;
+    gi["withJustifySelf"] = &GI::withJustifySelf;
+    gi["withWidth"]       = &GI::withWidth;
+    gi["withHeight"]      = &GI::withHeight;
+    gi["withSize"]        = &GI::withSize;
+    gi["withMargin"]      = &GI::withMargin;
+    gi["withOrder"]       = &GI::withOrder;
+
+    gi["associatedComponent"] = &GI::associatedComponent;
+    gi["order"]               = &GI::order;
+    gi["justifySelf"]         = &GI::justifySelf;
+    gi["alignSelf"]           = &GI::alignSelf;
+    gi["column"]              = &GI::column;
+    gi["row"]                 = &GI::row;
+    gi["area"]                = &GI::area;
+    gi["width"]               = &GI::width;
+    gi["minWidth"]            = &GI::minWidth;
+    gi["maxWidth"]            = &GI::maxWidth;
+    gi["height"]              = &GI::height;
+    gi["minHeight"]           = &GI::minHeight;
+    gi["maxHeight"]           = &GI::maxHeight;
+    gi["margin"]              = &GI::margin;
+    gi["currentBounds"]       = &GI::currentBounds;
+
+    // juce::GridItem::Keyword
+    giTable.new_enum(          //
+        "Keyword",             //
+        "autoValue",           //
+        GI::Keyword::autoValue //
+    );
+
+    // GI::JustifySelf
+    giTable.new_enum(              //
+        "JustifySelf",             //
+        "start",                   //
+        GI::JustifySelf::start,    //
+        "end",                     //
+        GI::JustifySelf::end,      //
+        "center",                  //
+        GI::JustifySelf::center,   //
+        "stretch",                 //
+        GI::JustifySelf::stretch,  //
+        "autoValue",               //
+        GI::JustifySelf::autoValue //
+    );
+
+    // GI::AlignSelf
+    giTable.new_enum(            //
+        "AlignSelf",             //
+        "start",                 //
+        GI::AlignSelf::start,    //
+        "end",                   //
+        GI::AlignSelf::end,      //
+        "center",                //
+        GI::AlignSelf::center,   //
+        "stretch",               //
+        GI::AlignSelf::stretch,  //
+        "autoValue",             //
+        GI::AlignSelf::autoValue //
+    );
+
+    // clang-format off
+    auto gridItemMargin = giTable.new_usertype<GI::Margin>(
+        "Margin",
+        sol::constructors<
+            GI::Margin() noexcept,
+            GI::Margin(int) noexcept,
+            GI::Margin(float) noexcept,
+            GI::Margin(float, float, float, float) noexcept
+        >()
+    );
+    // clang-format on
+
+    gridItemMargin["left"]   = &GI::Margin::left;
+    gridItemMargin["right"]  = &GI::Margin::right;
+    gridItemMargin["top"]    = &GI::Margin::top;
+    gridItemMargin["bottom"] = &GI::Margin::bottom;
+
+    // clang-format off
+    auto gridItemProperty = giTable.new_usertype<GI::Property>(
+        "Property",
+        sol::constructors<
+            GI::Property() noexcept,
+            GI::Property(GI::Keyword) noexcept,
+            GI::Property(char const*) noexcept,
+            GI::Property(juce::String const&) noexcept,
+            GI::Property(int) noexcept,
+            GI::Property(int, juce::String const&) noexcept,
+            GI::Property(GI::Span) noexcept
+        >()
+    );
+    // clang-format on
+
+    gridItemProperty["hasSpan"]     = &GI::Property::hasSpan;
+    gridItemProperty["hasAbsolute"] = &GI::Property::hasAbsolute;
+    gridItemProperty["hasAuto"]     = &GI::Property::hasAuto;
+    gridItemProperty["hasName"]     = &GI::Property::hasName;
+    gridItemProperty["getName"]     = &GI::Property::getName;
+    gridItemProperty["getNumber"]   = &GI::Property::getNumber;
+
+    // clang-format off
+    auto gridItemSpan = giTable.new_usertype<GI::Span>(
+        "Span",
+        sol::constructors<
+            GI::Span(int) noexcept,
+            GI::Span(int, juce::String const&) noexcept,
+            GI::Span(juce::String const&) noexcept
+        >()
+    );
+    // clang-format on
+
+    gridItemSpan["number"] = &GI::Span::number;
+    gridItemSpan["name"]   = &GI::Span::name;
+
+    auto gridItemStartAndEndProperty     = giTable.new_usertype<GI::StartAndEndProperty>("StartAndEndProperty");
+    gridItemStartAndEndProperty["start"] = &GI::StartAndEndProperty::start;
+    gridItemStartAndEndProperty["end"]   = &GI::StartAndEndProperty::end;
 }

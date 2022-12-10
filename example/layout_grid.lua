@@ -29,12 +29,12 @@ local function MainComponent()
 
   function mainComponent:resized()
     local grid = juce.Grid.new()
-    grid:setGap(juce.GridPx.new(8.0))
+    grid:setGap(juce.Grid.Px.new(8.0))
 
-    grid.templateRows:add(juce.GridTrackInfo.new(juce.GridFr.new(1)))
-    grid.templateRows:add(juce.GridTrackInfo.new(juce.GridFr.new(2)))
-    grid.templateRows:add(juce.GridTrackInfo.new(juce.GridFr.new(1)))
-    grid.templateColumns:add(juce.GridTrackInfo.new(juce.GridFr.new(1)))
+    grid.templateRows:add(juce.Grid.TrackInfo.new(juce.Grid.Fr.new(1)))
+    grid.templateRows:add(juce.Grid.TrackInfo.new(juce.Grid.Fr.new(2)))
+    grid.templateRows:add(juce.Grid.TrackInfo.new(juce.Grid.Fr.new(1)))
+    grid.templateColumns:add(juce.Grid.TrackInfo.new(juce.Grid.Fr.new(1)))
 
     grid.items:add(juce.GridItem.new(red))
     grid.items:add(juce.GridItem.new(green))
