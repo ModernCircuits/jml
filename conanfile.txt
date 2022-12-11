@@ -2,6 +2,7 @@
 sol2/3.2.3
 
 [options]
+lua:compile_as_cpp=True
 
 [generators]
 cmake_find_package
