@@ -6,10 +6,10 @@
 #include "CodeEditor/CodeEditor.hpp"
 #include "LookAndFeel/JmlViewerColors.hpp"
 #include "LookAndFeel/JmlViewerLookAndFeel.hpp"
-#include "Preview/ComponentContainer.hpp"
-#include "Preview/ComponentTree.hpp"
-#include "Preview/FileChangeListener.hpp"
-#include "Preview/LuaScriptViewer.hpp"
+#include "Viewer/ComponentContainer.hpp"
+#include "Viewer/ComponentTree.hpp"
+#include "Viewer/FileChangeListener.hpp"
+#include "Viewer/LuaScriptViewer.hpp"
 
 namespace mc {
 

@@ -4,9 +4,9 @@
 #include <lua_juce_core/lua_juce_core.hpp>
 
 #include "Application/MenuBar.hpp"
-#include "Preview/ComponentContainer.hpp"
-#include "Preview/ComponentTree.hpp"
-#include "Preview/FileChangeListener.hpp"
+#include "Viewer/ComponentContainer.hpp"
+#include "Viewer/ComponentTree.hpp"
+#include "Viewer/FileChangeListener.hpp"
 
 namespace mc {
 struct LuaScriptViewer : juce::Component

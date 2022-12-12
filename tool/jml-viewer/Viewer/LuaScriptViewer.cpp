@@ -1,6 +1,6 @@
 #include "LuaScriptViewer.hpp"
 
-#include "Lua/Juce.hpp"
+#include "Bindings/Juce.hpp"
 
 namespace mc {
 namespace {
@@ -16,7 +16,7 @@ LuaScriptViewer::LuaScriptViewer() : _scriptFile(defaultScriptPath)
     addAndMakeVisible(_componentTree);
 }
 
-auto LuaScriptViewer::setScriptFile(juce::File const& path) -> void
+auto LuaScriptViewer::setScriptFile(juce::File const& file) -> void
 {
     DBG("Reload");
 
@@ -25,16 +25,16 @@ auto LuaScriptViewer::setScriptFile(juce::File const& path) -> void
         _viewport.component(nullptr);
     }
 
-    if (!path.existsAsFile()) { return; }
-    path.getParentDirectory().setAsCurrentWorkingDirectory();
+    if (not file.existsAsFile()) { return; }
+    file.getParentDirectory().setAsCurrentWorkingDirectory();
 
     _lua.collect_garbage();
-    auto script = _lua.load_file(path.getFullPathName().toStdString());
-    if (!script.valid()) { return handleLuaError(script); }
+    auto script = _lua.load_file(file.getFullPathName().toStdString());
+    if (not script.valid()) { return handleLuaError(script); }
 
     auto factory = script.get<sol::protected_function>();
     auto result  = factory();
-    if (!result.valid()) { return handleLuaError(result); }
+    if (not result.valid()) { return handleLuaError(result); }
 
     _compObj = result;
     _comp    = _compObj.as<juce::Component*>();
@@ -43,7 +43,7 @@ auto LuaScriptViewer::setScriptFile(juce::File const& path) -> void
     _viewport.component(_comp);
     _componentTree.setRootComponent(_comp);
 
-    _scriptFile             = path;
+    _scriptFile             = file;
     _fileListener           = std::make_unique<FileChangeListener>(_scriptFile);
     _fileListener->onChange = [this] { setScriptFile(_scriptFile); };
 

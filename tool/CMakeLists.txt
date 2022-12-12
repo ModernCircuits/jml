@@ -20,6 +20,9 @@ target_sources(jml-viewer
         "jml-viewer/Application/MenuBar.hpp"
         "jml-viewer/Application/MenuBar.cpp"
 
+        "jml-viewer/Bindings/Juce.cpp"
+        "jml-viewer/Bindings/Juce.hpp"
+
         "jml-viewer/CodeEditor/CodeEditor.cpp"
         "jml-viewer/CodeEditor/CodeEditor.hpp"
 
@@ -27,17 +30,14 @@ target_sources(jml-viewer
         "jml-viewer/LookAndFeel/JmlViewerLookAndFeel.cpp"
         "jml-viewer/LookAndFeel/JmlViewerLookAndFeel.hpp"
 
-        "jml-viewer/Lua/Juce.cpp"
-        "jml-viewer/Lua/Juce.hpp"
-
-        "jml-viewer/Preview/ComponentContainer.cpp"
-        "jml-viewer/Preview/ComponentContainer.hpp"
-        "jml-viewer/Preview/ComponentTree.cpp"
-        "jml-viewer/Preview/ComponentTree.hpp"
-        "jml-viewer/Preview/FileChangeListener.cpp"
-        "jml-viewer/Preview/FileChangeListener.hpp"
-        "jml-viewer/Preview/LuaScriptViewer.cpp"
-        "jml-viewer/Preview/LuaScriptViewer.hpp"
+        "jml-viewer/Viewer/ComponentContainer.cpp"
+        "jml-viewer/Viewer/ComponentContainer.hpp"
+        "jml-viewer/Viewer/ComponentTree.cpp"
+        "jml-viewer/Viewer/ComponentTree.hpp"
+        "jml-viewer/Viewer/FileChangeListener.cpp"
+        "jml-viewer/Viewer/FileChangeListener.hpp"
+        "jml-viewer/Viewer/LuaScriptViewer.cpp"
+        "jml-viewer/Viewer/LuaScriptViewer.hpp"
 )
 
 target_include_directories(jml-viewer
