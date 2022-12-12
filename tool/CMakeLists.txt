@@ -30,8 +30,11 @@ target_sources(jml-viewer
         "jml-viewer/Lua/Juce.cpp"
         "jml-viewer/Lua/Juce.hpp"
 
+        "jml-viewer/Preview/ComponentContainer.cpp"
         "jml-viewer/Preview/ComponentContainer.hpp"
+        "jml-viewer/Preview/ComponentTree.cpp"
         "jml-viewer/Preview/ComponentTree.hpp"
+        "jml-viewer/Preview/FileChangeListener.cpp"
         "jml-viewer/Preview/FileChangeListener.hpp"
         "jml-viewer/Preview/LuaScriptViewer.cpp"
         "jml-viewer/Preview/LuaScriptViewer.hpp"

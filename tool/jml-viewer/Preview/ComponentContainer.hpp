@@ -9,25 +9,10 @@ struct ComponentContainer final : juce::Component
     ComponentContainer()           = default;
     ~ComponentContainer() override = default;
 
-    auto component(juce::Component* component) -> void
-    {
-        if (_component != nullptr) { removeChildComponent(_component); }
-        if (_component = component; _component != nullptr) {
-            addAndMakeVisible(_component);
-            resized();
-        }
-    }
+    auto component(juce::Component* component) -> void;
 
-    auto paint(juce::Graphics& g) -> void override { g.fillAll(juce::Colour::fromRGB(240, 240, 240)); }
-
-    auto resized() -> void override
-    {
-        if (_component == nullptr) { return; }
-
-        auto const area = getLocalBounds();
-        auto const size = juce::Rectangle<int>{0, 0, _component->getWidth(), _component->getHeight()};
-        _component->setBounds(size.withCentre(area.getCentre()));
-    }
+    auto paint(juce::Graphics& g) -> void override;
+    auto resized() -> void override;
 
 private:
     juce::Component* _component{nullptr};
