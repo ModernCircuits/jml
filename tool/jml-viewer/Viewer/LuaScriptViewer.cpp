@@ -9,39 +9,34 @@ auto const* defaultScriptPath = R"(C:\Developer\moderncircuits\tests\juce-lua\ex
 
 LuaScriptViewer::LuaScriptViewer() : _scriptFile(defaultScriptPath)
 {
-    _lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string);
-    add_juce_module(_lua);
-
     addAndMakeVisible(_viewport);
     addAndMakeVisible(_componentTree);
+    startTimer(2000);
 }
 
 auto LuaScriptViewer::setScriptFile(juce::File const& file) -> void
 {
     DBG("Reload");
-
-    if (_comp != nullptr) {
-        _fileListener.reset(nullptr);
-        _viewport.component(nullptr);
-    }
+    _fileListener.reset(nullptr);
+    _viewport.setContentComponent(nullptr);
 
     if (not file.existsAsFile()) { return; }
     file.getParentDirectory().setAsCurrentWorkingDirectory();
 
-    _lua.collect_garbage();
-    auto script = _lua.load_file(file.getFullPathName().toStdString());
+    reloadLuaState();
+    auto script = _lua->state.load_file(file.getFullPathName().toStdString());
     if (not script.valid()) { return handleLuaError(script); }
 
     auto factory = script.get<sol::protected_function>();
     auto result  = factory();
     if (not result.valid()) { return handleLuaError(result); }
 
-    _compObj = result;
-    _comp    = _compObj.as<juce::Component*>();
-    _comp->resized();
+    _lua->obj       = result;
+    _lua->component = _lua->obj.as<juce::Component*>();
+    _lua->component->resized();
 
-    _viewport.component(_comp);
-    _componentTree.setRootComponent(_comp);
+    _viewport.setContentComponent(_lua->component);
+    _componentTree.setRootComponent(_lua->component);
 
     _scriptFile             = file;
     _fileListener           = std::make_unique<FileChangeListener>(_scriptFile);
@@ -52,17 +47,24 @@ auto LuaScriptViewer::setScriptFile(juce::File const& file) -> void
 
 auto LuaScriptViewer::paint(juce::Graphics& g) -> void { g.fillAll(juce::Colours::white); }
 
-auto LuaScriptViewer::paintOverChildren(juce::Graphics& g) -> void
-{
-    g.setColour(juce::Colours::black.withAlpha(0.75F));
-    // g.drawRect(_viewport.getBounds());
-}
-
-void LuaScriptViewer::resized()
+auto LuaScriptViewer::resized() -> void
 {
     auto area = getLocalBounds();
     _componentTree.setBounds(area.removeFromRight(area.proportionOfWidth(0.2)));
     _viewport.setBounds(area);
+}
+
+auto LuaScriptViewer::timerCallback() -> void
+{
+    if (_lua == nullptr) { return; }
+    _lua->state.collect_garbage();
+}
+
+auto LuaScriptViewer::reloadLuaState() -> void
+{
+    _lua = std::make_unique<LuaState>();
+    _lua->state.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string);
+    add_juce_module(_lua->state);
 }
 
 auto LuaScriptViewer::handleLuaError(sol::error const& error) -> void { DBG(error.what()); }

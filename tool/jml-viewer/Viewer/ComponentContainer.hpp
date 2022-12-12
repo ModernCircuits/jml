@@ -9,7 +9,7 @@ struct ComponentContainer final : juce::Component
     ComponentContainer()           = default;
     ~ComponentContainer() override = default;
 
-    auto component(juce::Component* component) -> void;
+    auto setContentComponent(juce::Component* component) -> void;
 
     auto paint(juce::Graphics& g) -> void override;
     auto resized() -> void override;

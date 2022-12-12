@@ -2,7 +2,7 @@
 
 namespace mc {
 
-auto ComponentContainer::component(juce::Component* component) -> void
+auto ComponentContainer::setContentComponent(juce::Component* component) -> void
 {
     if (_component != nullptr) { removeChildComponent(_component); }
     if (_component = component; _component != nullptr) {

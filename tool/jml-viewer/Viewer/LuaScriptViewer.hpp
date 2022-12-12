@@ -9,7 +9,10 @@
 #include "Viewer/FileChangeListener.hpp"
 
 namespace mc {
-struct LuaScriptViewer : juce::Component
+
+struct LuaScriptViewer final
+    : juce::Component
+    , juce::Timer
 {
     LuaScriptViewer();
     ~LuaScriptViewer() override = default;
@@ -18,16 +21,21 @@ struct LuaScriptViewer : juce::Component
     auto setScriptFile(juce::File const& path) -> void;
 
     auto paint(juce::Graphics& g) -> void override;
-    auto paintOverChildren(juce::Graphics& g) -> void override;
     auto resized() -> void override;
+    auto timerCallback() -> void override;
 
 private:
+    struct LuaState
+    {
+        sol::state state;
+        sol::object obj;
+        juce::Component::SafePointer<juce::Component> component{nullptr};
+    };
+
+    auto reloadLuaState() -> void;
     auto handleLuaError(sol::error const& error) -> void;
 
-    sol::state _lua;
-    sol::object _compObj;
-    juce::Component::SafePointer<juce::Component> _comp{nullptr};
-
+    std::unique_ptr<LuaState> _lua;
     ComponentContainer _viewport;
     ComponentTree _componentTree;
 
