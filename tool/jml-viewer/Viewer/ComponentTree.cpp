@@ -2,19 +2,16 @@
 
 namespace mc {
 
-ComponentTree::ComponentTree() { addAndMakeVisible(_tree); }
+ComponentTree::~ComponentTree() { setRootComponent(nullptr); }
 
 auto ComponentTree::setRootComponent(juce::Component* root) -> void
 {
-    if (_rootItem != nullptr) { _tree.setRootItem(nullptr); }
+    setRootItem(nullptr);
+    if (root == nullptr) { return; }
 
-    if (_rootComponent = root; _rootComponent != nullptr) {
-        _rootItem = std::make_unique<Item>(_rootComponent);
-        _tree.setRootItem(_rootItem.get());
-    }
+    _rootItem = std::make_unique<Item>(root);
+    setRootItem(_rootItem.get());
 }
-
-auto ComponentTree::resized() -> void { _tree.setBounds(getLocalBounds()); }
 
 ComponentTree::Item::Item(juce::Component* root) : _root{root}
 {
@@ -22,10 +19,15 @@ ComponentTree::Item::Item(juce::Component* root) : _root{root}
     for (auto* child : children) { addSubItem(new ComponentTree::Item{child}); }
 }
 
-auto ComponentTree::Item::mightContainSubItems() -> bool { return _root->getNumChildComponents() > 0; }
+auto ComponentTree::Item::mightContainSubItems() -> bool
+{
+    if (_root == nullptr) { return false; }
+    return _root->getNumChildComponents() > 0;
+}
 
 auto ComponentTree::Item::getUniqueName() const -> juce::String
 {
+    if (_root == nullptr) { return {}; }
     if (_root->getComponentID().isEmpty()) { return "unknown"; }
     return _root->getComponentID();
 }

@@ -6,13 +6,12 @@
 
 namespace mc {
 
-struct ComponentTree final : juce::Component
+struct ComponentTree final : juce::TreeView
 {
-    ComponentTree();
-    ~ComponentTree() override = default;
+    ComponentTree() = default;
+    ~ComponentTree() override;
 
     auto setRootComponent(juce::Component* root) -> void;
-    auto resized() -> void override;
 
 private:
     struct Item final : juce::TreeViewItem
@@ -26,12 +25,10 @@ private:
         auto paintItem(juce::Graphics& g, int width, int height) -> void override;
 
     private:
-        juce::Component* _root;
+        juce::Component::SafePointer<juce::Component> _root;
     };
 
-    juce::Component* _rootComponent;
     std::unique_ptr<Item> _rootItem{nullptr};
-    juce::TreeView _tree;
 };
 
 } // namespace mc

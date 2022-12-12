@@ -16,7 +16,8 @@ LuaScriptViewer::LuaScriptViewer() : _scriptFile(defaultScriptPath)
 
 auto LuaScriptViewer::setScriptFile(juce::File const& file) -> void
 {
-    DBG("Reload");
+    auto componentTreeState = _componentTree.getOpennessState(true);
+
     _fileListener.reset(nullptr);
     _viewport.setContentComponent(nullptr);
 
@@ -43,6 +44,9 @@ auto LuaScriptViewer::setScriptFile(juce::File const& file) -> void
     _fileListener->onChange = [this] { setScriptFile(_scriptFile); };
 
     resized();
+
+    if (componentTreeState == nullptr) { return; }
+    _componentTree.restoreOpennessState(*componentTreeState, false);
 }
 
 auto LuaScriptViewer::paint(juce::Graphics& g) -> void { g.fillAll(juce::Colours::white); }
