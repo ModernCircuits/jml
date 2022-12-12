@@ -1,11 +1,8 @@
-#include "Juce.hpp"
+#include <lua_juce_bindings/lua_juce_bindings.hpp>
 
-#include <lua_juce_core/lua_juce_core.hpp>
-#include <lua_juce_events/lua_juce_events.hpp>
-#include <lua_juce_graphics/lua_juce_graphics.hpp>
-#include <lua_juce_gui_basics/lua_juce_gui_basics.hpp>
+namespace mc {
 
-auto add_juce_module(sol::state& lua) -> void
+auto addLuaJuceModules(sol::state& lua) -> void
 {
     auto table = lua["juce"].get_or_create<sol::table>();
 
@@ -65,3 +62,5 @@ auto add_juce_module(sol::state& lua) -> void
     juce_LuaLookAndFeel_V4(table);
     juce_LuaTimer(table);
 }
+
+} // namespace mc

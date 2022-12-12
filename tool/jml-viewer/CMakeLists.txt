@@ -13,36 +13,33 @@ juce_add_gui_app(jml-viewer
 
 target_sources(jml-viewer
     PRIVATE
-        "jml-viewer/Application/CommandIDs.hpp"
-        "jml-viewer/Application/Main.cpp"
-        "jml-viewer/Application/MainComponent.hpp"
-        "jml-viewer/Application/MainComponent.cpp"
-        "jml-viewer/Application/MenuBar.hpp"
-        "jml-viewer/Application/MenuBar.cpp"
+        "Application/CommandIDs.hpp"
+        "Application/Main.cpp"
+        "Application/MainComponent.hpp"
+        "Application/MainComponent.cpp"
+        "Application/MenuBar.hpp"
+        "Application/MenuBar.cpp"
 
-        "jml-viewer/Bindings/Juce.cpp"
-        "jml-viewer/Bindings/Juce.hpp"
+        "CodeEditor/CodeEditor.cpp"
+        "CodeEditor/CodeEditor.hpp"
 
-        "jml-viewer/CodeEditor/CodeEditor.cpp"
-        "jml-viewer/CodeEditor/CodeEditor.hpp"
+        "LookAndFeel/JmlViewerColors.hpp"
+        "LookAndFeel/JmlViewerLookAndFeel.cpp"
+        "LookAndFeel/JmlViewerLookAndFeel.hpp"
 
-        "jml-viewer/LookAndFeel/JmlViewerColors.hpp"
-        "jml-viewer/LookAndFeel/JmlViewerLookAndFeel.cpp"
-        "jml-viewer/LookAndFeel/JmlViewerLookAndFeel.hpp"
-
-        "jml-viewer/Viewer/ComponentContainer.cpp"
-        "jml-viewer/Viewer/ComponentContainer.hpp"
-        "jml-viewer/Viewer/ComponentTree.cpp"
-        "jml-viewer/Viewer/ComponentTree.hpp"
-        "jml-viewer/Viewer/FileChangeListener.cpp"
-        "jml-viewer/Viewer/FileChangeListener.hpp"
-        "jml-viewer/Viewer/LuaScriptViewer.cpp"
-        "jml-viewer/Viewer/LuaScriptViewer.hpp"
+        "Viewer/ComponentContainer.cpp"
+        "Viewer/ComponentContainer.hpp"
+        "Viewer/ComponentTree.cpp"
+        "Viewer/ComponentTree.hpp"
+        "Viewer/FileChangeListener.cpp"
+        "Viewer/FileChangeListener.hpp"
+        "Viewer/LuaScriptViewer.cpp"
+        "Viewer/LuaScriptViewer.hpp"
 )
 
 target_include_directories(jml-viewer
     PUBLIC
-        ${PROJECT_SOURCE_DIR}/jml-viewer
+        ${PROJECT_SOURCE_DIR}
 )
 
 target_compile_definitions(jml-viewer
@@ -56,11 +53,7 @@ target_compile_definitions(jml-viewer
 
 target_link_libraries(jml-viewer
     PRIVATE
-        mc::lua_juce_core
-        mc::lua_juce_events
-        mc::lua_juce_graphics
-        mc::lua_juce_gui_basics
-
+        mc::lua_juce_bindings
         juce::juce_gui_extra
 
     PUBLIC

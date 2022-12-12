@@ -7,4 +7,6 @@ juce_add_modules(ALIAS_NAMESPACE mc
     lua_juce_events
     lua_juce_graphics
     lua_juce_gui_basics
+
+    lua_juce_bindings
 )

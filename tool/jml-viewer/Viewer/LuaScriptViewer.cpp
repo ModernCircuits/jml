@@ -1,6 +1,6 @@
 #include "LuaScriptViewer.hpp"
 
-#include "Bindings/Juce.hpp"
+#include <lua_juce_bindings/lua_juce_bindings.hpp>
 
 namespace mc {
 namespace {
@@ -68,7 +68,7 @@ auto LuaScriptViewer::reloadLuaState() -> void
 {
     _lua = std::make_unique<LuaState>();
     _lua->state.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string);
-    add_juce_module(_lua->state);
+    addLuaJuceModules(_lua->state);
 }
 
 auto LuaScriptViewer::handleLuaError(sol::error const& error) -> void { DBG(error.what()); }

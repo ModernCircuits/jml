@@ -31,4 +31,5 @@ FetchContent_MakeAvailable(JUCE)
 juce_disable_default_flags()
 
 add_subdirectory(modules)
-add_subdirectory(tool)
+add_subdirectory(tool/jml-runner-cli)
+add_subdirectory(tool/jml-viewer)
