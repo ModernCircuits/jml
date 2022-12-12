@@ -14,14 +14,16 @@ struct LuaPreview : juce::Component
     LuaPreview();
     ~LuaPreview() override;
 
-    auto script(juce::File const& path) -> void;
-    auto script() const -> juce::File { return _currentScript; }
+    auto setScriptFile(juce::File const& path) -> void;
+    auto getScriptFile() const -> juce::File { return _scriptFile; }
 
     auto paint(juce::Graphics& g) -> void override;
     auto paintOverChildren(juce::Graphics& g) -> void override;
     auto resized() -> void override;
 
 private:
+    auto handleLuaError(sol::error const& error) -> void;
+
     sol::state _lua;
     sol::object _compObj;
     juce::Component::SafePointer<juce::Component> _comp{nullptr};
@@ -29,7 +31,7 @@ private:
     ComponentContainer _viewport;
     ComponentTree _componentTree;
 
-    juce::File _currentScript;
+    juce::File _scriptFile;
     std::unique_ptr<FileChangeListener> _fileListener;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LuaPreview)

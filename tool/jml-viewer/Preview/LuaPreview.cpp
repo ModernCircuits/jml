@@ -7,7 +7,7 @@ namespace {
 auto const* defaultScriptPath = R"(C:\Developer\moderncircuits\tests\juce-lua\example\layout_grid.lua)";
 }
 
-LuaPreview::LuaPreview() : _currentScript(defaultScriptPath)
+LuaPreview::LuaPreview() : _scriptFile(defaultScriptPath)
 {
     _lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string);
     add_juce_module(_lua);
@@ -18,7 +18,7 @@ LuaPreview::LuaPreview() : _currentScript(defaultScriptPath)
 
 LuaPreview::~LuaPreview() = default;
 
-auto LuaPreview::script(juce::File const& path) -> void
+auto LuaPreview::setScriptFile(juce::File const& path) -> void
 {
     DBG("Reload");
 
@@ -27,19 +27,16 @@ auto LuaPreview::script(juce::File const& path) -> void
         _viewport.component(nullptr);
     }
 
-    _lua.collect_garbage();
-
     if (!path.existsAsFile()) { return; }
     path.getParentDirectory().setAsCurrentWorkingDirectory();
 
-    auto luaScript = _lua.load_file(path.getFullPathName().toStdString());
-    jassert(luaScript.valid());
-    if (!luaScript.valid()) { return; }
+    _lua.collect_garbage();
+    auto script = _lua.load_file(path.getFullPathName().toStdString());
+    if (!script.valid()) { return handleLuaError(script); }
 
-    auto factory = luaScript.get<sol::protected_function>();
+    auto factory = script.get<sol::protected_function>();
     auto result  = factory();
-    jassert(result.valid());
-    if (!result.valid()) { return; }
+    if (!result.valid()) { return handleLuaError(result); }
 
     _compObj = result;
     _comp    = _compObj.as<juce::Component*>();
@@ -48,9 +45,9 @@ auto LuaPreview::script(juce::File const& path) -> void
     _viewport.component(_comp);
     _componentTree.setRootComponent(_comp);
 
-    _currentScript          = path;
-    _fileListener           = std::make_unique<FileChangeListener>(_currentScript);
-    _fileListener->onChange = [this] { script(_currentScript); };
+    _scriptFile          = path;
+    _fileListener           = std::make_unique<FileChangeListener>(_scriptFile);
+    _fileListener->onChange = [this] { setScriptFile(_scriptFile); };
 
     resized();
 }
@@ -69,5 +66,7 @@ void LuaPreview::resized()
     _componentTree.setBounds(area.removeFromRight(area.proportionOfWidth(0.2)));
     _viewport.setBounds(area);
 }
+
+auto LuaPreview::handleLuaError(sol::error const& error) -> void { DBG(error.what()); }
 
 } // namespace mc

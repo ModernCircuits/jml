@@ -23,7 +23,6 @@ MainComponent::MainComponent()
 
 MainComponent::~MainComponent()
 {
-    // _preview.script(juce::File {});
     setLookAndFeel(nullptr);
 }
 
@@ -91,7 +90,7 @@ auto MainComponent::perform(juce::ApplicationCommandTarget::InvocationInfo const
 {
     switch (info.commandID) {
         case CommandIDs::open: loadScriptPath(); break;
-        case CommandIDs::reload: doReload(_preview.script()); break;
+        case CommandIDs::reload: doReload(_preview.getScriptFile()); break;
         case CommandIDs::save:
         case CommandIDs::saveAs: /*saveProject();*/ break;
         case CommandIDs::undo: _undoManager.undo(); break;
@@ -104,7 +103,7 @@ auto MainComponent::perform(juce::ApplicationCommandTarget::InvocationInfo const
 
 auto MainComponent::doReload(juce::File const& file) -> void
 {
-    _preview.script(file);
+    _preview.setScriptFile(file);
     _editor.file(file);
 }
 
