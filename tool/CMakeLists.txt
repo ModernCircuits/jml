@@ -33,8 +33,8 @@ target_sources(jml-viewer
         "jml-viewer/Preview/ComponentContainer.hpp"
         "jml-viewer/Preview/ComponentTree.hpp"
         "jml-viewer/Preview/FileChangeListener.hpp"
-        "jml-viewer/Preview/LuaPreview.cpp"
-        "jml-viewer/Preview/LuaPreview.hpp"
+        "jml-viewer/Preview/LuaScriptViewer.cpp"
+        "jml-viewer/Preview/LuaScriptViewer.hpp"
 )
 
 target_include_directories(jml-viewer

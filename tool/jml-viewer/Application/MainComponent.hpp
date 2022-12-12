@@ -9,7 +9,7 @@
 #include "Preview/ComponentContainer.hpp"
 #include "Preview/ComponentTree.hpp"
 #include "Preview/FileChangeListener.hpp"
-#include "Preview/LuaPreview.hpp"
+#include "Preview/LuaScriptViewer.hpp"
 
 namespace mc {
 
@@ -39,7 +39,7 @@ private:
 
     MenuBar _menuBar{_commandManager};
     juce::TabbedComponent _tabs{juce::TabbedButtonBar::TabsAtLeft};
-    LuaPreview _preview;
+    LuaScriptViewer _preview;
     CodeEditor _editor;
     std::unique_ptr<juce::FileChooser> _fileChooser;
 

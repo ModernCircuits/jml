@@ -21,10 +21,7 @@ MainComponent::MainComponent()
     setSize(1280, 720);
 }
 
-MainComponent::~MainComponent()
-{
-    setLookAndFeel(nullptr);
-}
+MainComponent::~MainComponent() { setLookAndFeel(nullptr); }
 
 auto MainComponent::paint(juce::Graphics& g) -> void { g.fillAll(juce::Colours::white); }
 

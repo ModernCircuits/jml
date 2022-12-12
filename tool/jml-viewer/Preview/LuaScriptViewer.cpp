@@ -1,4 +1,4 @@
-#include "LuaPreview.hpp"
+#include "LuaScriptViewer.hpp"
 
 #include "Lua/Juce.hpp"
 
@@ -7,7 +7,7 @@ namespace {
 auto const* defaultScriptPath = R"(C:\Developer\moderncircuits\tests\juce-lua\example\layout_grid.lua)";
 }
 
-LuaPreview::LuaPreview() : _scriptFile(defaultScriptPath)
+LuaScriptViewer::LuaScriptViewer() : _scriptFile(defaultScriptPath)
 {
     _lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string);
     add_juce_module(_lua);
@@ -16,9 +16,7 @@ LuaPreview::LuaPreview() : _scriptFile(defaultScriptPath)
     addAndMakeVisible(_componentTree);
 }
 
-LuaPreview::~LuaPreview() = default;
-
-auto LuaPreview::setScriptFile(juce::File const& path) -> void
+auto LuaScriptViewer::setScriptFile(juce::File const& path) -> void
 {
     DBG("Reload");
 
@@ -45,28 +43,28 @@ auto LuaPreview::setScriptFile(juce::File const& path) -> void
     _viewport.component(_comp);
     _componentTree.setRootComponent(_comp);
 
-    _scriptFile          = path;
+    _scriptFile             = path;
     _fileListener           = std::make_unique<FileChangeListener>(_scriptFile);
     _fileListener->onChange = [this] { setScriptFile(_scriptFile); };
 
     resized();
 }
 
-auto LuaPreview::paint(juce::Graphics& g) -> void { g.fillAll(juce::Colours::white); }
+auto LuaScriptViewer::paint(juce::Graphics& g) -> void { g.fillAll(juce::Colours::white); }
 
-auto LuaPreview::paintOverChildren(juce::Graphics& g) -> void
+auto LuaScriptViewer::paintOverChildren(juce::Graphics& g) -> void
 {
     g.setColour(juce::Colours::black.withAlpha(0.75F));
     // g.drawRect(_viewport.getBounds());
 }
 
-void LuaPreview::resized()
+void LuaScriptViewer::resized()
 {
     auto area = getLocalBounds();
     _componentTree.setBounds(area.removeFromRight(area.proportionOfWidth(0.2)));
     _viewport.setBounds(area);
 }
 
-auto LuaPreview::handleLuaError(sol::error const& error) -> void { DBG(error.what()); }
+auto LuaScriptViewer::handleLuaError(sol::error const& error) -> void { DBG(error.what()); }
 
 } // namespace mc
