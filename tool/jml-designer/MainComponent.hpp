@@ -19,7 +19,7 @@ struct MainComponent final
     auto getCommandInfo(juce::CommandID commandID, juce::ApplicationCommandInfo& result) -> void override;
     auto perform(juce::ApplicationCommandTarget::InvocationInfo const& info) -> bool override;
 
-    auto paint(juce::Graphics&) -> void override;
+    auto paint(juce::Graphics& /*g*/) -> void override;
     auto resized() -> void override;
 
 private:

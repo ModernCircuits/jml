@@ -18,7 +18,7 @@ struct LuaScriptViewer final
     ~LuaScriptViewer() override = default;
 
     [[nodiscard]] auto getScriptFile() const -> juce::File { return _scriptFile; }
-    auto setScriptFile(juce::File const& path) -> void;
+    auto setScriptFile(juce::File const& file) -> void;
 
     auto paint(juce::Graphics& g) -> void override;
     auto resized() -> void override;
@@ -33,7 +33,7 @@ private:
     };
 
     auto reloadLuaState() -> void;
-    auto handleLuaError(sol::error const& error) -> void;
+    static auto handleLuaError(sol::error const& error) -> void;
 
     std::unique_ptr<LuaState> _lua;
     ComponentContainer _viewport;

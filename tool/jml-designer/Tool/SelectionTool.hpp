@@ -16,7 +16,7 @@ struct SelectionTool final
 
     auto paintTool(juce::Graphics& g) -> void override;
     auto mouseDown(juce::MouseEvent const& event) -> void override;
-    auto valueTreePropertyChanged(juce::ValueTree& tree, juce::Identifier const& property) -> void;
+    auto valueTreePropertyChanged(juce::ValueTree& tree, juce::Identifier const& property) -> void override;
 
 private:
     juce::WeakReference<Layer> _layer{nullptr};

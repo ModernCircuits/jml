@@ -15,14 +15,14 @@ inline auto runTestScript(JmlCommandline const& cli) -> juce::Result
 
     auto script = state.load_file(scriptFile.getFullPathName().toStdString());
     if (not script.valid()) {
-        sol::error error = script;
+        sol::error const error = script;
         return juce::Result::fail(error.what());
     }
 
     auto factory = script.get<sol::protected_function>();
     auto result  = factory();
     if (not result.valid()) {
-        sol::error error = result;
+        sol::error const error = result;
         return juce::Result::fail(error.what());
     }
 

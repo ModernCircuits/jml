@@ -1,3 +1,5 @@
+#include <memory>
+
 #include "MainComponent.hpp"
 
 #include "LookAndFeel.hpp"
@@ -6,27 +8,27 @@ namespace mc {
 struct JMLDesignerApplication final : juce::JUCEApplication
 {
 
-    JMLDesignerApplication() {}
+    JMLDesignerApplication() = default;
 
     // We inject these as compile definitions from the CMakeLists.txt
     // If you've enabled the juce header with `juce_generate_juce_header(<thisTarget>)`
     // you could `#include <JuceHeader.h>` and use `ProjectInfo::projectName` etc. instead.
-    const juce::String getApplicationName() override { return JUCE_APPLICATION_NAME_STRING; }
-    const juce::String getApplicationVersion() override { return JUCE_APPLICATION_VERSION_STRING; }
-    bool moreThanOneInstanceAllowed() override { return true; }
+    auto getApplicationName() -> const juce::String override { return JUCE_APPLICATION_NAME_STRING; }
+    auto getApplicationVersion() -> const juce::String override { return JUCE_APPLICATION_VERSION_STRING; }
+    auto moreThanOneInstanceAllowed() -> bool override { return true; }
 
     void initialise(juce::String const& commandLine) override
     {
         // This method is where you should put your application's initialisation code..
         juce::ignoreUnused(commandLine);
         juce::LookAndFeel::setDefaultLookAndFeel(&_lnf);
-        mainWindow.reset(new MainWindow(getApplicationName()));
+        _mainWindow = std::make_unique<MainWindow>(getApplicationName());
     }
 
     void shutdown() override
     {
         // Add your application's shutdown code here..
-        mainWindow = nullptr; // (deletes our window)
+        _mainWindow = nullptr; // (deletes our window)
         juce::LookAndFeel::setDefaultLookAndFeel(nullptr);
     }
 
@@ -52,7 +54,7 @@ struct JMLDesignerApplication final : juce::JUCEApplication
     class MainWindow : public juce::DocumentWindow
     {
     public:
-        explicit MainWindow(juce::String name)
+        explicit MainWindow(juce::String const& name)
             : DocumentWindow(
                 name,
                 juce::Desktop::getInstance().getDefaultLookAndFeel().findColour(ResizableWindow::backgroundColourId),
@@ -93,7 +95,7 @@ struct JMLDesignerApplication final : juce::JUCEApplication
 
 private:
     juce::LookAndFeel_V4 _lnf{makeColorScheme()};
-    UniquePtr<MainWindow> mainWindow;
+    UniquePtr<MainWindow> _mainWindow;
 };
 } // namespace mc
 

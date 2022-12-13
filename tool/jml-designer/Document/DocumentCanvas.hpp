@@ -16,8 +16,8 @@ struct DocumentCanvas final : juce::Component
     [[nodiscard]] auto document() -> Document&;
     [[nodiscard]] auto document() const -> Document const&;
 
-    auto paint(juce::Graphics&) -> void override;
-    auto paintOverChildren(juce::Graphics&) -> void override;
+    auto paint(juce::Graphics& /*g*/) -> void override;
+    auto paintOverChildren(juce::Graphics& /*g*/) -> void override;
     auto resized() -> void override;
 
 private:

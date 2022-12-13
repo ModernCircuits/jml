@@ -18,16 +18,16 @@ struct GroupLayer final
     GroupLayer(juce::ValueTree const& v, juce::UndoManager& undoManager);
     ~GroupLayer() override;
 
-    [[nodiscard]] auto makeCanvas() -> UniquePtr<LayerCanvas>;
+    [[nodiscard]] auto makeCanvas() -> UniquePtr<LayerCanvas> override;
 
     std::function<void(Layer* layer)> onNewObjectAdded;
     std::function<void(Layer* layer)> onObjectRemoved;
     std::function<void()> onObjectOrderChanged;
 
 private:
-    auto isSuitableType(juce::ValueTree const& v) const -> bool override;
+    [[nodiscard]] auto isSuitableType(juce::ValueTree const& v) const -> bool override;
     auto createNewObject(juce::ValueTree const& v) -> Layer* override;
-    auto deleteObject(Layer* layer) -> void override;
+    auto deleteObject(Layer* c) -> void override;
     auto newObjectAdded(Layer* layer) -> void override;
     auto objectRemoved(Layer* layer) -> void override;
     auto objectOrderChanged() -> void override;

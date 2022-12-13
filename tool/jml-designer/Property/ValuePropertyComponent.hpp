@@ -10,14 +10,14 @@ struct ValuePropertyComponent
     , private juce::Value::Listener
 {
 
-    ValuePropertyComponent(juce::Value const& value, juce::String const& name);
+    ValuePropertyComponent(juce::Value value, juce::String const& name);
     ~ValuePropertyComponent() override = default;
 
     [[nodiscard]] auto value() -> juce::Value&;
     [[nodiscard]] auto value() const -> juce::Value const&;
 
 private:
-    auto valueChanged(juce::Value&) -> void override;
+    auto valueChanged(juce::Value& /*value*/) -> void override;
 
     juce::Value _value;
 };

@@ -11,7 +11,7 @@ namespace mc {
 
 struct DocumentEditor final : juce::Component
 {
-    DocumentEditor(Document& document);
+    explicit DocumentEditor(Document& document);
     ~DocumentEditor() override = default;
 
     auto resized() -> void override;

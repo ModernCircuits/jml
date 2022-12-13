@@ -23,7 +23,7 @@ Layer::~Layer()
 
 auto Layer::name() const -> juce::String { return valueTree().getProperty(IDs::name).toString(); }
 
-auto Layer::name(juce::String newName) -> void { valueTree().setProperty(IDs::name, newName, undoManager()); }
+auto Layer::name(juce::String const& newName) -> void { valueTree().setProperty(IDs::name, newName, undoManager()); }
 
 auto Layer::background() const -> juce::Colour
 {
@@ -62,7 +62,8 @@ auto Layer::bounds(juce::Rectangle<float> newBounds) -> void
 auto Layer::addListener(Listener* listener) -> void { _listeners.add(listener); }
 auto Layer::removeListener(Listener* listener) -> void { _listeners.remove(listener); }
 
-auto Layer::valueTreePropertyChanged(juce::ValueTree&, juce::Identifier const& /*property*/) -> void
+auto Layer::valueTreePropertyChanged(juce::ValueTree& /*treeWhosePropertyHasChanged*/,
+                                     juce::Identifier const& /*property*/) -> void
 {
     _listeners.call(&Listener::layerPropertyChanged, *this);
 }

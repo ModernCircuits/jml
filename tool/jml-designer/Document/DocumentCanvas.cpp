@@ -8,7 +8,7 @@
 namespace mc {
 
 DocumentCanvas::DocumentCanvas(Document& doc, ToolBar& toolBar)
-    : _document{doc}, _tool{makeUnique<SelectionTool>(*this)}, _canvas{_document.rootLayer()->makeCanvas()}
+    : _document{doc}, _canvas{_document.rootLayer()->makeCanvas()}, _tool{makeUnique<SelectionTool>(*this)}
 {
     addAndMakeVisible(_canvas.get());
     toolBar.onToolChange = [this](ToolType type) { updateTool(type); };

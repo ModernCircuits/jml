@@ -28,6 +28,6 @@ private:
         bool alpha;
     };
 
-    Container container;
+    Container _container;
 };
 } // namespace mc

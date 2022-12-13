@@ -16,7 +16,7 @@ struct RectangleLayer final : Layer
     RectangleLayer(juce::ValueTree vt, juce::UndoManager& um);
     ~RectangleLayer() override = default;
 
-    [[nodiscard]] auto makeCanvas() -> UniquePtr<LayerCanvas>;
+    [[nodiscard]] auto makeCanvas() -> UniquePtr<LayerCanvas> override;
 };
 
 } // namespace mc

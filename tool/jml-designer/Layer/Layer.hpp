@@ -45,7 +45,7 @@ struct Layer
     [[nodiscard]] virtual auto makeCanvas() -> UniquePtr<LayerCanvas> = 0;
 
     [[nodiscard]] auto name() const -> juce::String;
-    auto name(juce::String newColor) -> void;
+    auto name(juce::String const& newName) -> void;
 
     [[nodiscard]] auto background() const -> juce::Colour;
     auto background(juce::Colour newColor) -> void;

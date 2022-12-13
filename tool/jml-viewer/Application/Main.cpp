@@ -1,21 +1,23 @@
+#include <memory>
+
 #include "Application/MainComponent.hpp"
 
 struct GuiAppApplication final : juce::JUCEApplication
 {
 
-    GuiAppApplication() {}
+    GuiAppApplication() = default;
 
-    const juce::String getApplicationName() override { return JUCE_APPLICATION_NAME_STRING; }
-    const juce::String getApplicationVersion() override { return JUCE_APPLICATION_VERSION_STRING; }
-    bool moreThanOneInstanceAllowed() override { return true; }
+    auto getApplicationName() -> const juce::String override { return JUCE_APPLICATION_NAME_STRING; }
+    auto getApplicationVersion() -> const juce::String override { return JUCE_APPLICATION_VERSION_STRING; }
+    auto moreThanOneInstanceAllowed() -> bool override { return true; }
 
     void initialise(juce::String const& commandLine) override
     {
         juce::ignoreUnused(commandLine);
-        mainWindow.reset(new MainWindow(getApplicationName()));
+        _mainWindow = std::make_unique<MainWindow>(getApplicationName());
     }
 
-    void shutdown() override { mainWindow = nullptr; }
+    void shutdown() override { _mainWindow = nullptr; }
 
     void systemRequestedQuit() override { quit(); }
 
@@ -24,7 +26,7 @@ struct GuiAppApplication final : juce::JUCEApplication
     struct MainWindow : juce::DocumentWindow
     {
 
-        explicit MainWindow(juce::String name)
+        explicit MainWindow(juce::String const& name)
             : DocumentWindow(
                 name,
                 juce::Desktop::getInstance().getDefaultLookAndFeel().findColour(ResizableWindow::backgroundColourId),
@@ -50,7 +52,7 @@ struct GuiAppApplication final : juce::JUCEApplication
     };
 
 private:
-    std::unique_ptr<MainWindow> mainWindow;
+    std::unique_ptr<MainWindow> _mainWindow;
 };
 
 // This macro generates the main() routine that launches the app.

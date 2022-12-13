@@ -71,6 +71,6 @@ auto LuaScriptViewer::reloadLuaState() -> void
     addLuaJuceModules(_lua->state);
 }
 
-auto LuaScriptViewer::handleLuaError(sol::error const& error) -> void { DBG(error.what()); }
+auto LuaScriptViewer::handleLuaError(sol::error const& /*error*/) -> void { DBG(error.what()); }
 
 } // namespace mc

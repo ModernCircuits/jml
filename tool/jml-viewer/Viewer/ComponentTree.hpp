@@ -20,7 +20,7 @@ private:
         ~Item() override = default;
 
         auto mightContainSubItems() -> bool override;
-        auto getUniqueName() const -> juce::String override;
+        [[nodiscard]] auto getUniqueName() const -> juce::String override;
         auto itemSelectionChanged(bool isNowSelected) -> void override;
         auto paintItem(juce::Graphics& g, int width, int height) -> void override;
 

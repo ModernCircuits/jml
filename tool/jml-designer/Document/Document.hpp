@@ -10,7 +10,7 @@ struct GroupLayer;
 
 struct Document
 {
-    Document(juce::ValueTree valueTree, juce::UndoManager* undoManager);
+    Document(juce::ValueTree valueTree, juce::UndoManager* um);
 
     [[nodiscard]] auto rootLayer() const -> Layer*;
 

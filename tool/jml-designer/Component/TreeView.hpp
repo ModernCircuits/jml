@@ -5,14 +5,16 @@
 namespace mc {
 
 template<typename TreeViewItemType>
-inline juce::OwnedArray<juce::ValueTree> getSelectedTreeViewItems(juce::TreeView& treeView)
+inline auto getSelectedTreeViewItems(juce::TreeView& treeView) -> juce::OwnedArray<juce::ValueTree>
 {
     juce::OwnedArray<juce::ValueTree> items;
     int const numSelected = treeView.getNumSelectedItems();
 
-    for (int i = 0; i < numSelected; ++i)
-        if (auto* vti = dynamic_cast<TreeViewItemType*>(treeView.getSelectedItem(i)))
+    for (int i = 0; i < numSelected; ++i) {
+        if (auto* vti = dynamic_cast<TreeViewItemType*>(treeView.getSelectedItem(i))) {
             items.add(new juce::ValueTree(vti->getState()));
+        }
+    }
 
     return items;
 }
@@ -38,7 +40,7 @@ inline void moveItems(juce::TreeView& treeView, juce::OwnedArray<juce::ValueTree
         newParent.addChild(v, insertIndex, &undoManager);
     }
 
-    if (oldOpenness != nullptr) treeView.restoreOpennessState(*oldOpenness, false);
+    if (oldOpenness != nullptr) { treeView.restoreOpennessState(*oldOpenness, false); }
 }
 
 } // namespace mc
