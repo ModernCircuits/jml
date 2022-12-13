@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.21)
 project(jml-cli VERSION 0.1.0)
 
+find_package(CLI11 REQUIRED)
 find_package(sol2 REQUIRED)
 
 juce_add_console_app(jml-cli
@@ -10,7 +11,18 @@ juce_add_console_app(jml-cli
 
 target_sources(jml-cli
     PRIVATE
-        Main.cpp
+        "Main.cpp"
+
+        "JmlCommandline.cpp"
+        "JmlCommandline.hpp"
+
+        "Command/Snapshot.hpp"
+        "Command/Test.hpp"
+)
+
+target_include_directories(jml-cli
+    PUBLIC
+        ${PROJECT_SOURCE_DIR}
 )
 
 target_compile_definitions(jml-cli
@@ -27,6 +39,7 @@ target_link_libraries(jml-cli
     PUBLIC
         lua::lua
         sol2::sol2
+        CLI11::CLI11
 
         juce::juce_recommended_config_flags
         juce::juce_recommended_lto_flags
