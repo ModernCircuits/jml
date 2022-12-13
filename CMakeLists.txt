@@ -30,7 +30,9 @@ FetchContent_Declare(JUCE GIT_REPOSITORY "https://github.com/juce-framework/JUCE
 FetchContent_MakeAvailable(JUCE)
 juce_disable_default_flags()
 
+add_subdirectory(3rd_party/mc-juce/modules EXCLUDE_FROM_ALL)
 add_subdirectory(modules)
 add_subdirectory(tool/jml-cli)
+add_subdirectory(tool/jml-designer)
 add_subdirectory(tool/jml-viewer)
 add_subdirectory(test)

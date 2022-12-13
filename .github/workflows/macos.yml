@@ -14,6 +14,9 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          lfs: true
 
       - name: Install dependencies
         run: |

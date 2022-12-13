@@ -1,4 +1,5 @@
 [requires]
+mc-core/0.13.0@modern-circuits/stable
 cli11/2.2.0
 sol2/3.2.3
 
