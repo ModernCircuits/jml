@@ -1,42 +1,34 @@
 #include <lua_juce_bindings/lua_juce_bindings.hpp>
 
-auto main(int argc, char* argv[]) -> int
+static auto runTestScript(juce::ArgumentList const& args) -> void
 {
-    auto init = juce::ScopedJuceInitialiser_GUI{};
-
-    if (argc != 2) { return EXIT_FAILURE; }
+    args.checkMinNumArguments(2);
+    jassert(args.containsOption("unit-test"));
 
     auto state = sol::state{};
     state.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string);
     mc::addLuaJuceModules(state);
 
-    auto const scriptFile = juce::File{argv[1]};
-    if (not scriptFile.existsAsFile()) {
-        std::cerr << "Script file does not exist: " << argv[1] << '\n';
-        return EXIT_FAILURE;
-    }
-
+    auto const scriptFile = args[1].resolveAsExistingFile();
     scriptFile.getParentDirectory().setAsCurrentWorkingDirectory();
+
     auto script = state.load_file(scriptFile.getFullPathName().toStdString());
     if (not script.valid()) {
         sol::error error = script;
-        std::cerr << "Load error:" << error.what() << '\n';
-        return EXIT_FAILURE;
+        juce::ConsoleApplication::fail(error.what(), EXIT_FAILURE);
     }
 
     auto factory = script.get<sol::protected_function>();
     auto result  = factory();
     if (not result.valid()) {
         sol::error error = result;
-        std::cerr << "Run error:" << error.what() << '\n';
-        return EXIT_FAILURE;
+        juce::ConsoleApplication::fail(error.what(), EXIT_FAILURE);
     }
 
     sol::object obj = result;
     auto* component = obj.as<juce::Component*>();
     if (component == nullptr) {
-        std::cerr << "Failed to get juce::Component* from lua result\n";
-        return EXIT_FAILURE;
+        juce::ConsoleApplication::fail("Failed to get juce::Component* from lua result\n", EXIT_FAILURE);
     }
 
     component->resized();
@@ -48,6 +40,25 @@ auto main(int argc, char* argv[]) -> int
 
     auto jpg = juce::PNGImageFormat{};
     jpg.writeImageToStream(snapshot, *out);
+}
 
-    return EXIT_SUCCESS;
+auto main(int argc, char* argv[]) -> int
+{
+    auto init = juce::ScopedJuceInitialiser_GUI{};
+    auto app  = juce::ConsoleApplication{};
+
+    app.addHelpCommand("help", "Usage:", true);
+    app.addVersionCommand("version", "jml-cli version 0.1.0");
+    app.addCommand({
+        .commandOption       = "test",
+        .argumentDescription = "test script.lua",
+        .command             = runTestScript,
+    });
+    app.addCommand({
+        .commandOption       = "snapshot",
+        .argumentDescription = "snapshot script.lua",
+        .command             = runTestScript,
+    });
+
+    return app.findAndRunCommand(argc, argv);
 }
