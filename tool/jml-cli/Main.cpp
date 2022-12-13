@@ -5,6 +5,15 @@
 
 #include <lua_juce_bindings/lua_juce_bindings.hpp>
 
+static auto run(auto const func, auto const& app) -> int
+{
+    if (auto const result = func(app); result.failed()) {
+        std::cerr << result.getErrorMessage() << '\n';
+        return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
+}
+
 auto main(int argc, char* argv[]) -> int
 {
     auto init = juce::ScopedJuceInitialiser_GUI{};
@@ -12,7 +21,7 @@ auto main(int argc, char* argv[]) -> int
     auto cli = mc::makeJmlCommandline();
     CLI11_PARSE(cli->app, argc, argv);
 
-    if (cli->app.got_subcommand("test")) { return mc::runTestScript(*cli); }
-    if (cli->app.got_subcommand("snapshot")) { return mc::runSnapshotScript(*cli); }
+    if (cli->app.got_subcommand("test")) { return run(mc::runTestScript, *cli); }
+    if (cli->app.got_subcommand("snapshot")) { return run(mc::runSnapshotScript, *cli); }
     return EXIT_SUCCESS;
 }

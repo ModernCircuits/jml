@@ -4,7 +4,7 @@
 
 namespace mc {
 
-inline auto runSnapshotScript(JmlCommandline const& cli) -> int
+inline auto runSnapshotScript(JmlCommandline const& cli) -> juce::Result
 {
     auto state = sol::state{};
     state.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string);
@@ -16,21 +16,19 @@ inline auto runSnapshotScript(JmlCommandline const& cli) -> int
     auto script = state.load_file(scriptFile.getFullPathName().toStdString());
     if (not script.valid()) {
         sol::error error = script;
-        juce::ConsoleApplication::fail(error.what(), EXIT_FAILURE);
+        return juce::Result::fail(error.what());
     }
 
     auto factory = script.get<sol::protected_function>();
     auto result  = factory();
     if (not result.valid()) {
         sol::error error = result;
-        juce::ConsoleApplication::fail(error.what(), EXIT_FAILURE);
+        return juce::Result::fail(error.what());
     }
 
     sol::object obj = result;
     auto* component = obj.as<juce::Component*>();
-    if (component == nullptr) {
-        juce::ConsoleApplication::fail("Failed to get juce::Component* from lua result\n", EXIT_FAILURE);
-    }
+    if (component == nullptr) { return juce::Result::fail("Failed to get juce::Component* from lua result"); }
 
     component->resized();
     auto snapshot = component->createComponentSnapshot(component->getBounds());
@@ -42,7 +40,7 @@ inline auto runSnapshotScript(JmlCommandline const& cli) -> int
     auto jpg = juce::PNGImageFormat{};
     jpg.writeImageToStream(snapshot, *out);
 
-    return EXIT_SUCCESS;
+    return juce::Result::ok();
 }
 
 } // namespace mc
