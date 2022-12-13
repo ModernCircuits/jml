@@ -13,14 +13,9 @@ Layer::Layer(juce::ValueTree vt, juce::UndoManager& um) : ValueTreeObject{std::m
         auto const bounds = juce::Rectangle{getX(), getY(), getWidth(), getHeight()};
         valueTree().setProperty(IDs::bounds, bounds.toString(), undoManager());
     }
-    valueTree().addListener(this);
 }
 
-Layer::~Layer()
-{
-    valueTree().removeListener(this);
-    masterReference.clear();
-}
+Layer::~Layer() { masterReference.clear(); }
 
 auto Layer::paint(juce::Graphics& g) -> void { juce::ignoreUnused(g); }
 

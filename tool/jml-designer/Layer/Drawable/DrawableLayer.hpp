@@ -9,14 +9,17 @@ struct DrawableLayerIDs
     inline static constexpr auto const* type = "Drawable";
 };
 
-struct DrawableLayer final : Layer
+struct DrawableLayer final
+    : Layer
+    , juce::ValueTree::Listener
 {
     using IDs = DrawableLayerIDs;
 
     DrawableLayer(juce::ValueTree vt, juce::UndoManager& um);
-    ~DrawableLayer() override = default;
+    ~DrawableLayer() override;
 
     auto paint(juce::Graphics& g) -> void override;
+    auto valueTreePropertyChanged(juce::ValueTree& tree, juce::Identifier const& property) -> void override;
 };
 
 } // namespace mc

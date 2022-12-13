@@ -23,9 +23,7 @@ struct LayerIDs
     inline static constexpr auto const* opacity    = "opacity";
 };
 
-struct Layer
-    : ValueTreeObject
-    , juce::ValueTree::Listener
+struct Layer : ValueTreeObject
 {
     using IDs = LayerIDs;
 
@@ -47,7 +45,7 @@ struct Layer
     };
 
     Layer(juce::ValueTree vt, juce::UndoManager& um);
-    ~Layer() override;
+    virtual ~Layer();
 
     virtual auto paint(juce::Graphics& g) -> void;
     virtual auto resized() -> void;
