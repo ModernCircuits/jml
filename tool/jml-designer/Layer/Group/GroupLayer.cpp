@@ -1,7 +1,7 @@
 #include "GroupLayer.hpp"
 
 #include "Layer/Group/GroupLayerCanvas.hpp"
-#include "Layer/Rectangle/RectangleLayer.hpp"
+#include "Layer/Drawable/DrawableLayer.hpp"
 
 namespace mc {
 
@@ -20,14 +20,14 @@ auto GroupLayer::makeCanvas() -> UniquePtr<LayerCanvas> { return makeUnique<Grou
 
 auto GroupLayer::isSuitableType(juce::ValueTree const& v) const -> bool
 {
-    if (v.getType() == juce::StringRef{RectangleLayer::IDs::type}) { return true; }
+    if (v.getType() == juce::StringRef{DrawableLayer::IDs::type}) { return true; }
     if (v.getType() == juce::StringRef{GroupLayer::IDs::type}) { return true; }
     return false;
 }
 
 auto GroupLayer::createNewObject(juce::ValueTree const& v) -> Layer*
 {
-    if (v.getType() == juce::StringRef{RectangleLayer::IDs::type}) { return new RectangleLayer{v, *undoManager()}; }
+    if (v.getType() == juce::StringRef{DrawableLayer::IDs::type}) { return new DrawableLayer{v, *undoManager()}; }
     if (v.getType() == juce::StringRef{GroupLayer::IDs::type}) { return new GroupLayer{v, *undoManager()}; }
     return nullptr;
 }

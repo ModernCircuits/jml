@@ -73,12 +73,12 @@ target_sources(jml-designer
         Layer/Group/GroupLayerTreeViewItem.cpp
         Layer/Group/GroupLayerTreeViewItem.hpp
 
-        Layer/Rectangle/RectangleLayer.cpp
-        Layer/Rectangle/RectangleLayer.hpp
-        Layer/Rectangle/RectangleLayerCanvas.cpp
-        Layer/Rectangle/RectangleLayerCanvas.hpp
-        Layer/Rectangle/RectangleLayerTreeViewItem.cpp
-        Layer/Rectangle/RectangleLayerTreeViewItem.hpp
+        Layer/Drawable/DrawableLayer.cpp
+        Layer/Drawable/DrawableLayer.hpp
+        Layer/Drawable/DrawableLayerCanvas.cpp
+        Layer/Drawable/DrawableLayerCanvas.hpp
+        Layer/Drawable/DrawableLayerTreeViewItem.cpp
+        Layer/Drawable/DrawableLayerTreeViewItem.hpp
 
         LookAndFeel/LookAndFeel.hpp
 

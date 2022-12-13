@@ -20,7 +20,7 @@ private:
     auto updateTool() -> void;
 
     juce::DrawableButton _select{"Select", juce::DrawableButton::ImageFitted};
-    juce::DrawableButton _rectangle{"Rectangle", juce::DrawableButton::ImageFitted};
+    juce::DrawableButton _rectangle{"Drawable", juce::DrawableButton::ImageFitted};
     juce::DrawableButton _ellipse{"Ellipse", juce::DrawableButton::ImageFitted};
 };
 

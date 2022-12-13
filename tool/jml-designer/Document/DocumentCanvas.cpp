@@ -1,7 +1,7 @@
 #include "DocumentCanvas.hpp"
 
 #include "Layer/LayerCanvas.hpp"
-#include "Layer/Rectangle/RectangleLayer.hpp"
+#include "Layer/Drawable/DrawableLayer.hpp"
 #include "Tool/SelectionTool.hpp"
 #include "Tool/ShapeTool.hpp"
 
@@ -37,7 +37,7 @@ auto DocumentCanvas::updateTool(ToolType type) -> void
 {
     _tool.reset(nullptr);
     if (type == ToolType::select) { _tool = makeUnique<SelectionTool>(*this); }
-    if (type == ToolType::rectangle) { _tool = makeUnique<ShapeTool>(*this, Shape::Rectangle); }
+    if (type == ToolType::rectangle) { _tool = makeUnique<ShapeTool>(*this, Shape::Drawable); }
     if (type == ToolType::ellipse) { _tool = makeUnique<ShapeTool>(*this, Shape::Ellipse); }
     repaint();
 }

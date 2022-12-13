@@ -2,7 +2,7 @@
 
 #include "Core/ValueTree.hpp"
 #include "Document/DocumentCanvas.hpp"
-#include "Layer/Rectangle/RectangleLayer.hpp"
+#include "Layer/Drawable/DrawableLayer.hpp"
 
 namespace mc {
 
@@ -20,7 +20,7 @@ auto ShapeTool::paintTool(juce::Graphics& g) -> void
     auto const area = juce::Rectangle<float>{*_start, *_current};
 
     g.setColour(juce::Colours::white);
-    if (_shape == Shape::Rectangle) { g.fillRect(area); }
+    if (_shape == Shape::Drawable) { g.fillRect(area); }
     if (_shape == Shape::Ellipse) { g.fillEllipse(area); }
 }
 
@@ -39,9 +39,9 @@ auto ShapeTool::mouseUp(juce::MouseEvent const& /*event*/) -> void
         juce::Point{_current->getX(), _current->getY()},
     };
 
-    auto shape = juce::ValueTree{RectangleLayer::IDs::type};
+    auto shape = juce::ValueTree{DrawableLayer::IDs::type};
     shape.setProperty(Layer::IDs::uuid, id.toString(), nullptr);
-    shape.setProperty(Layer::IDs::name, RectangleLayer::IDs::type, nullptr);
+    shape.setProperty(Layer::IDs::name, DrawableLayer::IDs::type, nullptr);
     shape.setProperty(Layer::IDs::x, bounds.getX(), nullptr);
     shape.setProperty(Layer::IDs::y, bounds.getY(), nullptr);
     shape.setProperty(Layer::IDs::width, bounds.getWidth(), nullptr);

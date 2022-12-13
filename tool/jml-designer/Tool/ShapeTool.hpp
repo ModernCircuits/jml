@@ -6,7 +6,7 @@ namespace mc {
 
 enum struct Shape
 {
-    Rectangle,
+    Drawable,
     Ellipse,
 };
 

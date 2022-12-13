@@ -3,14 +3,14 @@
 #include <utility>
 
 #include "Layer/Group/GroupLayerTreeViewItem.hpp"
-#include "Layer/Rectangle/RectangleLayerTreeViewItem.hpp"
+#include "Layer/Drawable/DrawableLayerTreeViewItem.hpp"
 
 namespace mc {
 
 static auto createLayerTreeViewItemForType(juce::ValueTree const& v, juce::UndoManager& um) -> LayerTreeViewItem*
 {
     if (v.hasType(GroupLayer::IDs::type)) { return new GroupLayerTreeViewItem(v, um); }
-    if (v.hasType(RectangleLayer::IDs::type)) { return new RectangleLayerTreeViewItem(v, um); }
+    if (v.hasType(DrawableLayer::IDs::type)) { return new DrawableLayerTreeViewItem(v, um); }
     jassertfalse;
     return nullptr;
 }

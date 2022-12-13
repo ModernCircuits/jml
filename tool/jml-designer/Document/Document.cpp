@@ -2,7 +2,7 @@
 
 #include "Core/ValueTree.hpp"
 #include "Layer/Group/GroupLayer.hpp"
-#include "Layer/Rectangle/RectangleLayer.hpp"
+#include "Layer/Drawable/DrawableLayer.hpp"
 
 namespace mc {
 
@@ -12,9 +12,9 @@ Document::Document(juce::ValueTree valueTree, juce::UndoManager* um)
     , _root{makeUnique<GroupLayer>(_valueTree.getOrCreateChildWithName(GroupLayer::IDs::type, um), *um)}
 {
     // _root->name("Document");
-    // _root->valueTree().appendChild(juce::ValueTree { RectangleLayer::IDs::type }, nullptr);
-    // _root->valueTree().appendChild(juce::ValueTree { RectangleLayer::IDs::type }, nullptr);
-    // _root->valueTree().appendChild(juce::ValueTree { RectangleLayer::IDs::type }, nullptr);
+    // _root->valueTree().appendChild(juce::ValueTree { DrawableLayer::IDs::type }, nullptr);
+    // _root->valueTree().appendChild(juce::ValueTree { DrawableLayer::IDs::type }, nullptr);
+    // _root->valueTree().appendChild(juce::ValueTree { DrawableLayer::IDs::type }, nullptr);
 
     // auto& green = (*_root)[0];
     // green.x(300.0F);
