@@ -30,7 +30,7 @@ auto juce_ArrayImpl(sol::table& state, char const* name) -> void
     array["move"]                     = &juce::Array<T>::move;
     array["minimiseStorageOverheads"] = &juce::Array<T>::minimiseStorageOverheads;
     array["ensureStorageAllocated"]   = &juce::Array<T>::ensureStorageAllocated;
-    array["add"]                      = [](juce::Array<T>* array, T const& t) { array->add(t); };
+    array["add"]                      = [](juce::Array<T>* a, T const& t) { a->add(t); };
 
     // array["indexOf"]                  = &juce::Array<T>::indexOf;
     // array["contains"]                 = &juce::Array<T>::contains;

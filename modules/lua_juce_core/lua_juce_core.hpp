@@ -21,12 +21,14 @@ END_JUCE_MODULE_DECLARATION
 #endif
 
 #include <juce_core/juce_core.h>
-
 #include <sol/sol.hpp>
 
 namespace juce {
 
 namespace lua_detail {
+
+JUCE_BEGIN_IGNORE_WARNINGS_GCC_LIKE("-Wzero-as-null-pointer-constant")
+
 template<typename C>
 struct has_toString
 {
@@ -42,6 +44,9 @@ private:
 public:
     static constexpr bool value = type::value;
 };
+
+JUCE_END_IGNORE_WARNINGS_GCC_LIKE
+
 } // namespace lua_detail
 
 template<typename T>
