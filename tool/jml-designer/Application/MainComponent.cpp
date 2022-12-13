@@ -1,6 +1,6 @@
 #include "MainComponent.hpp"
 
-#include "LookAndFeel.hpp"
+#include "LookAndFeel/LookAndFeel.hpp"
 #include "Menu/CommandIDs.hpp"
 
 namespace mc {

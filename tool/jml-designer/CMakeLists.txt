@@ -36,10 +36,9 @@ juce_add_gui_app(jml-designer
 
 target_sources(jml-designer
     PRIVATE
-        LookAndFeel.hpp
-        Main.cpp
-        MainComponent.cpp
-        MainComponent.hpp
+        Application/Main.cpp
+        Application/MainComponent.cpp
+        Application/MainComponent.hpp
 
         Component/Button.hpp
         Component/TreeView.hpp
@@ -78,6 +77,8 @@ target_sources(jml-designer
         Layer/Rectangle/RectangleLayerCanvas.hpp
         Layer/Rectangle/RectangleLayerTreeViewItem.cpp
         Layer/Rectangle/RectangleLayerTreeViewItem.hpp
+
+        LookAndFeel/LookAndFeel.hpp
 
         Menu/CommandIDs.hpp
         Menu/MenuBar.cpp

@@ -1,8 +1,6 @@
-#include <memory>
+#include "Application/MainComponent.hpp"
 
-#include "MainComponent.hpp"
-
-#include "LookAndFeel.hpp"
+#include "LookAndFeel/LookAndFeel.hpp"
 
 namespace mc {
 struct JMLDesignerApplication final : juce::JUCEApplication
