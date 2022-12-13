@@ -1,8 +1,8 @@
 #include "Document.hpp"
 
 #include "Core/ValueTree.hpp"
-#include "Layer/Group/GroupLayer.hpp"
 #include "Layer/Drawable/DrawableLayer.hpp"
+#include "Layer/Group/GroupLayer.hpp"
 
 namespace mc {
 
@@ -11,37 +11,37 @@ Document::Document(juce::ValueTree valueTree, juce::UndoManager* um)
     , _undoManager{um}
     , _root{makeUnique<GroupLayer>(_valueTree.getOrCreateChildWithName(GroupLayer::IDs::type, um), *um)}
 {
-    // _root->name("Document");
+    // _root->setName("Document");
     // _root->valueTree().appendChild(juce::ValueTree { DrawableLayer::IDs::type }, nullptr);
     // _root->valueTree().appendChild(juce::ValueTree { DrawableLayer::IDs::type }, nullptr);
     // _root->valueTree().appendChild(juce::ValueTree { DrawableLayer::IDs::type }, nullptr);
 
     // auto& green = (*_root)[0];
-    // green.x(300.0F);
-    // green.y(300.0F);
-    // green.width(100.0F);
-    // green.height(100.0F);
-    // green.background(juce::Colours::green);
-    // green.opacity(1.0F);
-    // green.name("Green");
+    // green.setX(300.0F);
+    // green.setY(300.0F);
+    // green.setWidth(100.0F);
+    // green.setHeight(100.0F);
+    // green.setBackground(juce::Colours::green);
+    // green.setOpacity(1.0F);
+    // green.setName("Green");
 
     // auto& black = (*_root)[1];
-    // black.x(250.0F);
-    // black.y(250.0F);
-    // black.width(250.0F);
-    // black.height(250.0F);
-    // black.background(juce::Colours::black);
-    // black.opacity(1.0F);
-    // black.name("Black");
+    // black.setX(250.0F);
+    // black.setY(250.0F);
+    // black.setWidth(250.0F);
+    // black.setHeight(250.0F);
+    // black.setBackground(juce::Colours::black);
+    // black.setOpacity(1.0F);
+    // black.setName("Black");
 
     // auto& red = (*_root)[2];
-    // red.x(520.0F);
-    // red.y(250.0F);
-    // red.width(150.0F);
-    // red.height(150.0F);
-    // red.background(juce::Colours::red);
-    // red.opacity(1.0F);
-    // red.name("Red");
+    // red.setX(520.0F);
+    // red.setY(250.0F);
+    // red.setWidth(150.0F);
+    // red.setHeight(150.0F);
+    // red.setBackground(juce::Colours::red);
+    // red.setOpacity(1.0F);
+    // red.setName("Red");
 }
 
 auto Document::rootLayer() const -> Layer* { return _root.get(); }

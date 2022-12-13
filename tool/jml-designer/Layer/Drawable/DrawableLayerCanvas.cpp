@@ -8,7 +8,7 @@ DrawableLayerCanvas::~DrawableLayerCanvas() { layer()->removeListener(this); }
 
 auto DrawableLayerCanvas::paint(juce::Graphics& g) -> void
 {
-    g.setColour(layer()->background());
+    g.setColour(layer()->getBackground());
     g.fillRect(getLocalBounds());
 }
 

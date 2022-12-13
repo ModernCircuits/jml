@@ -29,7 +29,7 @@ auto GroupLayerCanvas::resized() -> void
     auto newBottom   = local.getY();
 
     for (auto const& canvas : _layers) {
-        auto bounds = canvas->layer()->bounds().toNearestInt();
+        auto bounds = canvas->layer()->getBounds().toNearestInt();
         newRight    = std::max(newRight, bounds.getRight());
         newBottom   = std::max(newBottom, bounds.getBottom());
         canvas->setBounds(bounds);
@@ -38,8 +38,8 @@ auto GroupLayerCanvas::resized() -> void
     auto const widthChanged  = newRight != local.getWidth();
     auto const heightChanged = newBottom != local.getHeight();
     if (widthChanged || heightChanged) {
-        layer()->width(static_cast<float>(newRight - local.getX()));
-        layer()->height(static_cast<float>(newBottom - local.getY()));
+        layer()->setWidth(static_cast<float>(newRight - local.getX()));
+        layer()->setHeight(static_cast<float>(newBottom - local.getY()));
     }
 }
 

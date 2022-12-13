@@ -1,7 +1,7 @@
 #include "GroupLayer.hpp"
 
-#include "Layer/Group/GroupLayerCanvas.hpp"
 #include "Layer/Drawable/DrawableLayer.hpp"
+#include "Layer/Group/GroupLayerCanvas.hpp"
 
 namespace mc {
 

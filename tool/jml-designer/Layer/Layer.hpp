@@ -44,29 +44,29 @@ struct Layer
 
     [[nodiscard]] virtual auto makeCanvas() -> UniquePtr<LayerCanvas> = 0;
 
-    [[nodiscard]] auto name() const -> juce::String;
-    auto name(juce::String const& newName) -> void;
+    auto setName(juce::String const& newName) -> void;
+    [[nodiscard]] auto getName() const -> juce::String;
 
-    [[nodiscard]] auto background() const -> juce::Colour;
-    auto background(juce::Colour newColor) -> void;
+    auto setBackground(juce::Colour newColor) -> void;
+    [[nodiscard]] auto getBackground() const -> juce::Colour;
 
-    [[nodiscard]] auto opacity() const -> float;
-    auto opacity(float newOpacity) -> void;
+    auto setOpacity(float newOpacity) -> void;
+    [[nodiscard]] auto getOpacity() const -> float;
 
-    [[nodiscard]] auto x() const -> float;
-    auto x(float newX) -> void;
+    auto setX(float x) -> void;
+    [[nodiscard]] auto getX() const -> float;
 
-    [[nodiscard]] auto y() const -> float;
-    auto y(float newY) -> void;
+    auto setY(float y) -> void;
+    [[nodiscard]] auto getY() const -> float;
 
-    [[nodiscard]] auto width() const -> float;
-    auto width(float newWidth) -> void;
+    auto setWidth(float width) -> void;
+    [[nodiscard]] auto getWidth() const -> float;
 
-    [[nodiscard]] auto height() const -> float;
-    auto height(float newHeight) -> void;
+    auto setHeight(float height) -> void;
+    [[nodiscard]] auto getHeight() const -> float;
 
-    [[nodiscard]] auto bounds() const -> juce::Rectangle<float>;
-    auto bounds(juce::Rectangle<float> newBounds) -> void;
+    auto setBounds(juce::Rectangle<float> bounds) -> void;
+    [[nodiscard]] auto getBounds() const -> juce::Rectangle<float>;
 
     auto addListener(Listener* listener) -> void;
     auto removeListener(Listener* listener) -> void;

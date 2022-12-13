@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Layer/LayerCanvas.hpp"
 #include "Layer/Drawable/DrawableLayer.hpp"
+#include "Layer/LayerCanvas.hpp"
 
 namespace mc {
 

@@ -2,8 +2,8 @@
 
 #include <utility>
 
-#include "Layer/Group/GroupLayerTreeViewItem.hpp"
 #include "Layer/Drawable/DrawableLayerTreeViewItem.hpp"
+#include "Layer/Group/GroupLayerTreeViewItem.hpp"
 
 namespace mc {
 
