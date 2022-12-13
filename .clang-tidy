@@ -29,6 +29,8 @@ Checks: >
   -readability-const-return-type,
   -readability-identifier-length,
   -readability-magic-numbers,
+
+  -*-non-private-member-variables-in-classes
 WarningsAsErrors: "*"
 FormatStyle: none
 CheckOptions:
