@@ -42,7 +42,7 @@ private:
     juce::File _scriptFile;
     std::unique_ptr<FileChangeListener> _fileListener;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LuaScriptViewer)
+    JUCE_LEAK_DETECTOR(LuaScriptViewer) // NOLINT
 };
 
 } // namespace mc

@@ -42,7 +42,7 @@ protected:
 private:
     auto refreshSubItems() -> void;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LayerTreeViewItem)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LayerTreeViewItem) // NOLINT
 };
 
 } // namespace mc

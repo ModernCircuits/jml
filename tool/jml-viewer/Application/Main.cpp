@@ -48,7 +48,7 @@ struct GuiAppApplication final : juce::JUCEApplication
         void closeButtonPressed() override { JUCEApplication::getInstance()->systemRequestedQuit(); }
 
     private:
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainWindow)
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainWindow) // NOLINT
     };
 
 private:
@@ -56,4 +56,4 @@ private:
 };
 
 // This macro generates the main() routine that launches the app.
-START_JUCE_APPLICATION(GuiAppApplication)
+START_JUCE_APPLICATION(GuiAppApplication) // NOLINT

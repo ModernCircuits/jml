@@ -36,6 +36,8 @@ juce_add_gui_app(jml-designer
 
 target_sources(jml-designer
     PRIVATE
+        Application/Application.cpp
+        Application/Application.hpp
         Application/Main.cpp
         Application/MainComponent.cpp
         Application/MainComponent.hpp
