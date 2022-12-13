@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Layer/Group/GroupLayerTreeViewItem.hpp"
+#include "Layer/Group/GroupLayerTreeItem.hpp"
 
 #include <mc_gui_basics/mc_gui_basics.hpp>
 

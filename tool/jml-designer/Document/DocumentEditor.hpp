@@ -2,7 +2,7 @@
 
 #include "Document/DocumentCanvas.hpp"
 #include "Layer/LayerPropertyPanel.hpp"
-#include "Layer/LayerTreeView.hpp"
+#include "Layer/LayerTree.hpp"
 #include "Tool/ToolBar.hpp"
 
 #include <juce_gui_extra/juce_gui_extra.h>
@@ -21,7 +21,7 @@ private:
 
     ToolBar _toolBar;
     DocumentCanvas _canvas{_document, _toolBar};
-    LayerTreeView _layerTree{_document};
+    LayerTree _layerTree{_document};
     LayerPropertyPanel _propertyPanel{_layerTree};
 };
 

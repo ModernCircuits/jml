@@ -1,6 +1,6 @@
 #include "LayerPropertyPanel.hpp"
 
-#include "Layer/LayerTreeView.hpp"
+#include "Layer/LayerTree.hpp"
 #include "Property/ColorPropertyComponent.hpp"
 
 namespace mc {
@@ -33,11 +33,11 @@ auto LayerPropertyPanel::resized() -> void { _panel.setBounds(getLocalBounds());
 
 auto LayerPropertyPanel::changeListenerCallback(juce::ChangeBroadcaster* source) -> void
 {
-    auto* const tree = dynamic_cast<LayerTreeView*>(source);
+    auto* const tree = dynamic_cast<LayerTree*>(source);
     if (tree == nullptr) { return; }
 
     auto* const selected = tree->getSelectedItem(0);
-    auto* const layer    = dynamic_cast<LayerTreeViewItem*>(selected);
+    auto* const layer    = dynamic_cast<LayerTreeItem*>(selected);
     if (layer == nullptr) { return; }
 
     auto vt = layer->getState();

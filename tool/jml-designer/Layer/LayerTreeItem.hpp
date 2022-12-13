@@ -4,12 +4,12 @@
 
 namespace mc {
 
-struct LayerTreeViewItem
+struct LayerTreeItem
     : juce::TreeViewItem
     , protected juce::ValueTree::Listener
 {
-    LayerTreeViewItem(juce::ValueTree v, juce::UndoManager& um);
-    ~LayerTreeViewItem() override = default;
+    LayerTreeItem(juce::ValueTree v, juce::UndoManager& um);
+    ~LayerTreeItem() override = default;
 
     virtual auto getDisplayText() -> juce::String;
 
@@ -42,7 +42,7 @@ protected:
 private:
     auto refreshSubItems() -> void;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LayerTreeViewItem) // NOLINT
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LayerTreeItem) // NOLINT
 };
 
 } // namespace mc

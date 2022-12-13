@@ -61,24 +61,24 @@ target_sources(jml-designer
         Layer/LayerCanvas.hpp
         Layer/LayerPropertyPanel.cpp
         Layer/LayerPropertyPanel.hpp
-        Layer/LayerTreeView.cpp
-        Layer/LayerTreeView.hpp
-        Layer/LayerTreeViewItem.cpp
-        Layer/LayerTreeViewItem.hpp
+        Layer/LayerTree.cpp
+        Layer/LayerTree.hpp
+        Layer/LayerTreeItem.cpp
+        Layer/LayerTreeItem.hpp
 
         Layer/Group/GroupLayer.cpp
         Layer/Group/GroupLayer.hpp
         Layer/Group/GroupLayerCanvas.cpp
         Layer/Group/GroupLayerCanvas.hpp
-        Layer/Group/GroupLayerTreeViewItem.cpp
-        Layer/Group/GroupLayerTreeViewItem.hpp
+        Layer/Group/GroupLayerTreeItem.cpp
+        Layer/Group/GroupLayerTreeItem.hpp
 
         Layer/Drawable/DrawableLayer.cpp
         Layer/Drawable/DrawableLayer.hpp
         Layer/Drawable/DrawableLayerCanvas.cpp
         Layer/Drawable/DrawableLayerCanvas.hpp
-        Layer/Drawable/DrawableLayerTreeViewItem.cpp
-        Layer/Drawable/DrawableLayerTreeViewItem.hpp
+        Layer/Drawable/DrawableLayerTreeItem.cpp
+        Layer/Drawable/DrawableLayerTreeItem.hpp
 
         LookAndFeel/LookAndFeel.hpp
 

@@ -6,17 +6,17 @@
 
 namespace mc {
 
-struct LayerTreeViewItem;
+struct LayerTreeItem;
 
-struct LayerTreeView final
+struct LayerTree final
     : juce::TreeView
     , juce::ChangeBroadcaster
 {
-    explicit LayerTreeView(Document& document);
-    ~LayerTreeView() override;
+    explicit LayerTree(Document& document);
+    ~LayerTree() override;
 
 private:
-    UniquePtr<LayerTreeViewItem> _root;
+    UniquePtr<LayerTreeItem> _root;
 };
 
 } // namespace mc
