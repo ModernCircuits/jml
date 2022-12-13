@@ -22,6 +22,14 @@ Layer::~Layer()
     masterReference.clear();
 }
 
+auto Layer::paint(juce::Graphics& g) -> void { juce::ignoreUnused(g); }
+
+auto Layer::resized() -> void {}
+
+auto Layer::getCanvas() -> juce::Component& { return _canvas; }
+
+auto Layer::getCanvas() const -> juce::Component const& { return _canvas; }
+
 auto Layer::getName() const -> juce::String { return valueTree().getProperty(IDs::name).toString(); }
 
 auto Layer::setName(juce::String const& name) -> void { valueTree().setProperty(IDs::name, name, undoManager()); }
@@ -60,12 +68,12 @@ auto Layer::setBounds(juce::Rectangle<float> bounds) -> void
     setHeight(bounds.getHeight());
 }
 
-auto Layer::addListener(Listener* listener) -> void { _listeners.add(listener); }
-auto Layer::removeListener(Listener* listener) -> void { _listeners.remove(listener); }
+Layer::Canvas::Canvas(Layer& layer) : _layer{layer} {}
 
-auto Layer::valueTreePropertyChanged(juce::ValueTree& /*tree*/, juce::Identifier const& /*property*/) -> void
-{
-    _listeners.call(&Listener::layerPropertyChanged, *this);
-}
+auto Layer::Canvas::layer() -> Layer& { return _layer; }
+auto Layer::Canvas::layer() const -> Layer const& { return _layer; }
+
+auto Layer::Canvas::paint(juce::Graphics& g) -> void { _layer.paint(g); }
+auto Layer::Canvas::resized() -> void { _layer.resized(); }
 
 } // namespace mc

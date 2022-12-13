@@ -16,7 +16,7 @@ struct DrawableLayer final : Layer
     DrawableLayer(juce::ValueTree vt, juce::UndoManager& um);
     ~DrawableLayer() override = default;
 
-    [[nodiscard]] auto makeCanvas() -> UniquePtr<LayerCanvas> override;
+    auto paint(juce::Graphics& g) -> void override;
 };
 
 } // namespace mc

@@ -18,11 +18,7 @@ struct GroupLayer final
     GroupLayer(juce::ValueTree const& v, juce::UndoManager& undoManager);
     ~GroupLayer() override;
 
-    [[nodiscard]] auto makeCanvas() -> UniquePtr<LayerCanvas> override;
-
-    std::function<void(Layer* layer)> onNewObjectAdded;
-    std::function<void(Layer* layer)> onObjectRemoved;
-    std::function<void()> onObjectOrderChanged;
+    auto resized() -> void override;
 
 private:
     [[nodiscard]] auto isSuitableType(juce::ValueTree const& v) const -> bool override;

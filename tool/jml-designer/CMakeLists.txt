@@ -57,8 +57,6 @@ target_sources(jml-designer
 
         Layer/Layer.cpp
         Layer/Layer.hpp
-        Layer/LayerCanvas.cpp
-        Layer/LayerCanvas.hpp
         Layer/LayerPropertyPanel.cpp
         Layer/LayerPropertyPanel.hpp
         Layer/LayerTree.cpp
@@ -68,15 +66,11 @@ target_sources(jml-designer
 
         Layer/Group/GroupLayer.cpp
         Layer/Group/GroupLayer.hpp
-        Layer/Group/GroupLayerCanvas.cpp
-        Layer/Group/GroupLayerCanvas.hpp
         Layer/Group/GroupLayerTreeItem.cpp
         Layer/Group/GroupLayerTreeItem.hpp
 
         Layer/Drawable/DrawableLayer.cpp
         Layer/Drawable/DrawableLayer.hpp
-        Layer/Drawable/DrawableLayerCanvas.cpp
-        Layer/Drawable/DrawableLayerCanvas.hpp
         Layer/Drawable/DrawableLayerTreeItem.cpp
         Layer/Drawable/DrawableLayerTreeItem.hpp
 

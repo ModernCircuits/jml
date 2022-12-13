@@ -24,7 +24,6 @@ private:
     auto updateTool(ToolType type) -> void;
 
     Document& _document;
-    UniquePtr<LayerCanvas> _canvas;
     UniquePtr<Tool> _tool;
 };
 

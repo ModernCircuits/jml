@@ -1,7 +1,7 @@
 #include "SelectionTool.hpp"
 
 #include "Document/DocumentCanvas.hpp"
-#include "Layer/LayerCanvas.hpp"
+#include "Layer/Layer.hpp"
 
 namespace mc {
 
@@ -25,7 +25,7 @@ auto SelectionTool::paintTool(juce::Graphics& g) -> void
 
 auto SelectionTool::mouseDown(juce::MouseEvent const& event) -> void
 {
-    _layer        = dynamic_cast<LayerCanvas*>(event.eventComponent)->layer();
+    _layer        = &dynamic_cast<Layer::Canvas*>(event.eventComponent)->layer();
     _selectedTree = _layer == nullptr ? juce::ValueTree{} : _layer->valueTree();
     canvas().repaint();
 }

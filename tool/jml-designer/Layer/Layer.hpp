@@ -7,7 +7,6 @@
 namespace mc {
 
 struct Layer;
-struct LayerCanvas;
 
 struct LayerIDs
 {
@@ -24,25 +23,37 @@ struct LayerIDs
     inline static constexpr auto const* opacity    = "opacity";
 };
 
-struct LayerListener
-{
-    LayerListener()          = default;
-    virtual ~LayerListener() = default;
-
-    virtual auto layerPropertyChanged(Layer& layer) -> void = 0;
-};
-
 struct Layer
     : ValueTreeObject
     , juce::ValueTree::Listener
 {
-    using IDs      = LayerIDs;
-    using Listener = LayerListener;
+    using IDs = LayerIDs;
+
+    struct Canvas final : juce::Component
+    {
+        ~Canvas() override = default;
+
+        [[nodiscard]] auto layer() -> Layer&;
+        [[nodiscard]] auto layer() const -> Layer const&;
+
+        auto paint(juce::Graphics& g) -> void override;
+        auto resized() -> void override;
+
+    private:
+        explicit Canvas(Layer& layer);
+
+        friend Layer;
+        Layer& _layer;
+    };
 
     Layer(juce::ValueTree vt, juce::UndoManager& um);
     ~Layer() override;
 
-    [[nodiscard]] virtual auto makeCanvas() -> UniquePtr<LayerCanvas> = 0;
+    virtual auto paint(juce::Graphics& g) -> void;
+    virtual auto resized() -> void;
+
+    [[nodiscard]] auto getCanvas() -> juce::Component&;
+    [[nodiscard]] auto getCanvas() const -> juce::Component const&;
 
     auto setName(juce::String const& newName) -> void;
     [[nodiscard]] auto getName() const -> juce::String;
@@ -68,15 +79,9 @@ struct Layer
     auto setBounds(juce::Rectangle<float> bounds) -> void;
     [[nodiscard]] auto getBounds() const -> juce::Rectangle<float>;
 
-    auto addListener(Listener* listener) -> void;
-    auto removeListener(Listener* listener) -> void;
-
-protected:
-    auto valueTreePropertyChanged(juce::ValueTree& tree, juce::Identifier const& property) -> void override;
-
-    juce::ListenerList<Listener> _listeners;
-
 private:
+    Canvas _canvas{*this};
+
     juce::WeakReference<Layer>::Master masterReference; // NOLINT
     friend class juce::WeakReference<Layer>;
 };

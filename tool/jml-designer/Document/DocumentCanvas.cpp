@@ -1,20 +1,19 @@
 #include "DocumentCanvas.hpp"
 
 #include "Layer/Drawable/DrawableLayer.hpp"
-#include "Layer/LayerCanvas.hpp"
 #include "Tool/SelectionTool.hpp"
 #include "Tool/ShapeTool.hpp"
 
 namespace mc {
 
 DocumentCanvas::DocumentCanvas(Document& doc, ToolBar& toolBar)
-    : _document{doc}, _canvas{_document.rootLayer()->makeCanvas()}, _tool{makeUnique<SelectionTool>(*this)}
+    : _document{doc}, _tool{makeUnique<SelectionTool>(*this)}
 {
-    addAndMakeVisible(_canvas.get());
+    addAndMakeVisible(_document.rootLayer()->getCanvas());
     toolBar.onToolChange = [this](ToolType type) { updateTool(type); };
 }
 
-DocumentCanvas::~DocumentCanvas() { _canvas.reset(nullptr); }
+DocumentCanvas::~DocumentCanvas() = default;
 
 auto DocumentCanvas::document() -> Document& { return _document; }
 
@@ -27,11 +26,7 @@ auto DocumentCanvas::paintOverChildren(juce::Graphics& g) -> void
     if (_tool) { _tool->paintTool(g); }
 }
 
-auto DocumentCanvas::resized() -> void
-{
-    jassert(_canvas != nullptr);
-    _canvas->setBounds(getLocalBounds());
-}
+auto DocumentCanvas::resized() -> void { _document.rootLayer()->getCanvas().setBounds(getLocalBounds()); }
 
 auto DocumentCanvas::updateTool(ToolType type) -> void
 {
