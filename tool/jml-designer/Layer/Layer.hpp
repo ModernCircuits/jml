@@ -50,8 +50,8 @@ struct Layer : ValueTreeObject
 
     virtual auto paintLayer(juce::Graphics& g) -> void;
 
-    [[nodiscard]] auto getCanvas() -> juce::Component&;
-    [[nodiscard]] auto getCanvas() const -> juce::Component const&;
+    [[nodiscard]] auto getCanvas() -> Canvas&;
+    [[nodiscard]] auto getCanvas() const -> Canvas const&;
 
     [[nodiscard]] auto getUUID() const -> juce::String;
 

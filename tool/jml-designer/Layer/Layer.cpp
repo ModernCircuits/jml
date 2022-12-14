@@ -15,9 +15,9 @@ Layer::~Layer() { masterReference.clear(); }
 
 auto Layer::paintLayer(juce::Graphics& g) -> void { juce::ignoreUnused(g); }
 
-auto Layer::getCanvas() -> juce::Component& { return _canvas; }
+auto Layer::getCanvas() -> Canvas& { return _canvas; }
 
-auto Layer::getCanvas() const -> juce::Component const& { return _canvas; }
+auto Layer::getCanvas() const -> Canvas const& { return _canvas; }
 
 auto Layer::getUUID() const -> juce::String { return valueTree().getProperty(IDs::uuid).toString(); }
 

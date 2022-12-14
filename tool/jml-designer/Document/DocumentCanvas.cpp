@@ -9,7 +9,7 @@ namespace mc {
 DocumentCanvas::DocumentCanvas(Document& doc, ToolBar& toolBar)
     : _document{doc}, _tool{makeUnique<SelectionTool>(*this)}
 {
-    addAndMakeVisible(_document.rootLayer()->getCanvas());
+    addAndMakeVisible(_document.getRootLayer()->getCanvas());
     toolBar.onToolChange = [this](ToolType type) { updateTool(type); };
 }
 
@@ -19,12 +19,7 @@ auto DocumentCanvas::document() -> Document& { return _document; }
 
 auto DocumentCanvas::document() const -> Document const& { return _document; }
 
-auto DocumentCanvas::paint(juce::Graphics& g) -> void
-{
-    g.fillAll(juce::Colours::lightgrey.brighter(0.75F));
-    g.setColour(juce::Colours::green);
-    g.drawRect(_document.rootLayer()->getCanvas().getBounds(), 2);
-}
+auto DocumentCanvas::paint(juce::Graphics& g) -> void { g.fillAll(juce::Colours::lightgrey.brighter(0.75F)); }
 
 auto DocumentCanvas::paintOverChildren(juce::Graphics& g) -> void
 {
@@ -33,8 +28,8 @@ auto DocumentCanvas::paintOverChildren(juce::Graphics& g) -> void
 
 auto DocumentCanvas::resized() -> void
 {
-    // auto const bounds = _document.rootLayer()->getBounds().toNearestInt();
-    // _document.rootLayer()->getCanvas().setBounds(bounds);
+    // auto const bounds = _document.getRootLayer()->getBounds().toNearestInt();
+    // _document.getRootLayer()->getCanvas().setBounds(bounds);
 }
 
 auto DocumentCanvas::updateTool(ToolType type) -> void

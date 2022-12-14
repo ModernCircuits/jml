@@ -20,7 +20,7 @@ auto SelectionTool::paintTool(juce::Graphics& g) -> void
     if (not _selectedTree.isValid()) { return; }
 
     g.setColour(juce::Colours::blue);
-    g.drawRect(canvas().getLocalArea(&l->getCanvas(), l->getCanvas().getLocalBounds()), 2.0F);
+    g.drawRect(canvas().getLocalArea(&l->getCanvas(), l->getCanvas().getLocalBounds()), 2);
 }
 
 auto SelectionTool::mouseDown(juce::MouseEvent const& event) -> void

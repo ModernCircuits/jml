@@ -47,6 +47,7 @@ auto GroupLayer::objectOrderChanged() -> void
 {
     for (auto& layer : *this) { layer->getCanvas().toBack(); }
     getCanvas().resized();
+    getCanvas().repaint();
 }
 
 } // namespace mc

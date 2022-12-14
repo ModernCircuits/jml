@@ -12,7 +12,7 @@ struct Document
 {
     Document(juce::ValueTree valueTree, juce::UndoManager* um);
 
-    [[nodiscard]] auto rootLayer() const -> Layer*;
+    [[nodiscard]] auto getRootLayer() const -> Layer*;
 
     [[nodiscard]] auto valueTree() -> juce::ValueTree&;
     [[nodiscard]] auto valueTree() const -> juce::ValueTree const&;

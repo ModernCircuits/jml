@@ -48,7 +48,7 @@ Document::Document(juce::ValueTree valueTree, juce::UndoManager* um)
     red.setName("Red");
 }
 
-auto Document::rootLayer() const -> Layer* { return _root.get(); }
+auto Document::getRootLayer() const -> Layer* { return _root.get(); }
 auto Document::valueTree() -> juce::ValueTree& { return _valueTree; }
 auto Document::valueTree() const -> juce::ValueTree const& { return _valueTree; }
 auto Document::undoManager() const -> juce::UndoManager* { return _undoManager; }

@@ -50,7 +50,7 @@ auto ShapeTool::mouseUp(juce::MouseEvent const& /*event*/) -> void
     shape.setProperty(Layer::IDs::opacity, 1.0F, nullptr);
 
     auto& doc = canvas().document();
-    doc.rootLayer()->valueTree().appendChild(shape, doc.undoManager());
+    doc.getRootLayer()->valueTree().appendChild(shape, doc.undoManager());
 
     _start.reset();
     _current.reset();
