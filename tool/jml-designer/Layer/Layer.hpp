@@ -53,6 +53,8 @@ struct Layer : ValueTreeObject
     [[nodiscard]] auto getCanvas() -> juce::Component&;
     [[nodiscard]] auto getCanvas() const -> juce::Component const&;
 
+    [[nodiscard]] auto getUUID() const -> juce::String;
+
     auto setName(juce::String const& newName) -> void;
     [[nodiscard]] auto getName() const -> juce::String;
 

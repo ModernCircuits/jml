@@ -43,6 +43,8 @@ target_sources(jml-designer
         Application/MainComponent.hpp
 
         Component/Button.hpp
+        Component/ComponentTree.cpp
+        Component/ComponentTree.hpp
         Component/TreeView.hpp
 
         Core/ValueTree.cpp

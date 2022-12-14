@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Component/ComponentTree.hpp"
 #include "Document/DocumentCanvas.hpp"
 #include "Layer/LayerPropertyPanel.hpp"
 #include "Layer/LayerTree.hpp"
@@ -23,6 +24,7 @@ private:
     DocumentCanvas _canvas{_document, _toolBar};
     LayerTree _layerTree{_document};
     LayerPropertyPanel _propertyPanel{_layerTree};
+    ComponentTree _componentTree{};
 };
 
 } // namespace mc

@@ -19,6 +19,8 @@ auto Layer::getCanvas() -> juce::Component& { return _canvas; }
 
 auto Layer::getCanvas() const -> juce::Component const& { return _canvas; }
 
+auto Layer::getUUID() const -> juce::String { return valueTree().getProperty(IDs::uuid).toString(); }
+
 auto Layer::getName() const -> juce::String { return valueTree().getProperty(IDs::name).toString(); }
 
 auto Layer::setName(juce::String const& name) -> void { valueTree().setProperty(IDs::name, name, undoManager()); }
@@ -50,7 +52,13 @@ auto Layer::setHeight(float height) -> void { valueTree().setProperty(IDs::heigh
 
 auto Layer::getBounds() const -> juce::Rectangle<float> { return {getX(), getY(), getWidth(), getHeight()}; }
 
-Layer::Canvas::Canvas(Layer& layer) : _layer{layer} { _layer.valueTree().addListener(this); }
+Layer::Canvas::Canvas(Layer& layer) : _layer{layer}
+{
+    _layer.valueTree().addListener(this);
+    setComponentID(layer.getUUID());
+    DBG(layer.getUUID());
+}
+
 Layer::Canvas::~Canvas() { _layer.valueTree().removeListener(this); }
 
 auto Layer::Canvas::layer() -> Layer& { return _layer; }
@@ -58,12 +66,19 @@ auto Layer::Canvas::layer() const -> Layer const& { return _layer; }
 
 auto Layer::Canvas::paint(juce::Graphics& g) -> void { _layer.paintLayer(g); }
 
-auto Layer::Canvas::valueTreePropertyChanged(juce::ValueTree& /*tree*/, juce::Identifier const& property) -> void
+auto Layer::Canvas::valueTreePropertyChanged(juce::ValueTree& tree, juce::Identifier const& property) -> void
 {
+    if (tree != layer().valueTree()) { return repaint(); }
+
+    // ID & Name
+    if (property == juce::StringRef{IDs::uuid}) { setComponentID(layer().getUUID()); }
+    if (property == juce::StringRef{IDs::name}) { setName(layer().getName()); }
+
+    // Size
     auto const hasID   = [&](auto id) { return property == juce::StringRef{id}; };
     auto const sizeIDs = Array<char const*, 4>{IDs::x, IDs::y, IDs::width, IDs::height};
     if (ranges::any_of(sizeIDs, hasID)) { setBounds(layer().getBounds().toNearestInt()); }
-    resized();
+
     repaint();
 }
 
