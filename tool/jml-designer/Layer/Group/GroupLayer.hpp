@@ -18,8 +18,6 @@ struct GroupLayer final
     GroupLayer(juce::ValueTree const& v, juce::UndoManager& undoManager);
     ~GroupLayer() override;
 
-    auto resized() -> void override;
-
 private:
     [[nodiscard]] auto isSuitableType(juce::ValueTree const& v) const -> bool override;
     auto createNewObject(juce::ValueTree const& v) -> Layer* override;

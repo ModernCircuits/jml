@@ -18,8 +18,7 @@ struct DrawableLayer final
     DrawableLayer(juce::ValueTree vt, juce::UndoManager& um);
     ~DrawableLayer() override;
 
-    auto paint(juce::Graphics& g) -> void override;
-    auto valueTreePropertyChanged(juce::ValueTree& tree, juce::Identifier const& property) -> void override;
+    auto paintLayer(juce::Graphics& g) -> void override;
 };
 
 } // namespace mc

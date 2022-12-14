@@ -9,17 +9,11 @@ Layer::Layer(juce::ValueTree vt, juce::UndoManager& um) : ValueTreeObject{std::m
     if (not valueTree().hasProperty(IDs::uuid)) {
         valueTree().setProperty(IDs::uuid, juce::Uuid{}.toString(), undoManager());
     }
-    if (not valueTree().hasProperty(IDs::bounds)) {
-        auto const bounds = juce::Rectangle{getX(), getY(), getWidth(), getHeight()};
-        valueTree().setProperty(IDs::bounds, bounds.toString(), undoManager());
-    }
 }
 
 Layer::~Layer() { masterReference.clear(); }
 
-auto Layer::paint(juce::Graphics& g) -> void { juce::ignoreUnused(g); }
-
-auto Layer::resized() -> void {}
+auto Layer::paintLayer(juce::Graphics& g) -> void { juce::ignoreUnused(g); }
 
 auto Layer::getCanvas() -> juce::Component& { return _canvas; }
 
@@ -55,20 +49,22 @@ auto Layer::getHeight() const -> float { return static_cast<float>(valueTree().g
 auto Layer::setHeight(float height) -> void { valueTree().setProperty(IDs::height, height, undoManager()); }
 
 auto Layer::getBounds() const -> juce::Rectangle<float> { return {getX(), getY(), getWidth(), getHeight()}; }
-auto Layer::setBounds(juce::Rectangle<float> bounds) -> void
-{
-    setX(bounds.getX());
-    setY(bounds.getX());
-    setWidth(bounds.getWidth());
-    setHeight(bounds.getHeight());
-}
 
-Layer::Canvas::Canvas(Layer& layer) : _layer{layer} {}
+Layer::Canvas::Canvas(Layer& layer) : _layer{layer} { _layer.valueTree().addListener(this); }
+Layer::Canvas::~Canvas() { _layer.valueTree().removeListener(this); }
 
 auto Layer::Canvas::layer() -> Layer& { return _layer; }
 auto Layer::Canvas::layer() const -> Layer const& { return _layer; }
 
-auto Layer::Canvas::paint(juce::Graphics& g) -> void { _layer.paint(g); }
-auto Layer::Canvas::resized() -> void { _layer.resized(); }
+auto Layer::Canvas::paint(juce::Graphics& g) -> void { _layer.paintLayer(g); }
+
+auto Layer::Canvas::valueTreePropertyChanged(juce::ValueTree& /*tree*/, juce::Identifier const& property) -> void
+{
+    auto const hasID   = [&](auto id) { return property == juce::StringRef{id}; };
+    auto const sizeIDs = Array<char const*, 4>{IDs::x, IDs::y, IDs::width, IDs::height};
+    if (ranges::any_of(sizeIDs, hasID)) { setBounds(layer().getBounds().toNearestInt()); }
+    resized();
+    repaint();
+}
 
 } // namespace mc

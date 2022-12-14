@@ -17,7 +17,6 @@ struct LayerIDs
     inline static constexpr auto const* y      = "y";
     inline static constexpr auto const* width  = "width";
     inline static constexpr auto const* height = "height";
-    inline static constexpr auto const* bounds = "bounds";
 
     inline static constexpr auto const* background = "background";
     inline static constexpr auto const* opacity    = "opacity";
@@ -27,15 +26,17 @@ struct Layer : ValueTreeObject
 {
     using IDs = LayerIDs;
 
-    struct Canvas final : juce::Component
+    struct Canvas final
+        : juce::Component
+        , juce::ValueTree::Listener
     {
-        ~Canvas() override = default;
+        ~Canvas() override;
 
         [[nodiscard]] auto layer() -> Layer&;
         [[nodiscard]] auto layer() const -> Layer const&;
 
         auto paint(juce::Graphics& g) -> void override;
-        auto resized() -> void override;
+        auto valueTreePropertyChanged(juce::ValueTree& tree, juce::Identifier const& property) -> void override;
 
     private:
         explicit Canvas(Layer& layer);
@@ -47,8 +48,7 @@ struct Layer : ValueTreeObject
     Layer(juce::ValueTree vt, juce::UndoManager& um);
     virtual ~Layer();
 
-    virtual auto paint(juce::Graphics& g) -> void;
-    virtual auto resized() -> void;
+    virtual auto paintLayer(juce::Graphics& g) -> void;
 
     [[nodiscard]] auto getCanvas() -> juce::Component&;
     [[nodiscard]] auto getCanvas() const -> juce::Component const&;
@@ -74,7 +74,6 @@ struct Layer : ValueTreeObject
     auto setHeight(float height) -> void;
     [[nodiscard]] auto getHeight() const -> float;
 
-    auto setBounds(juce::Rectangle<float> bounds) -> void;
     [[nodiscard]] auto getBounds() const -> juce::Rectangle<float>;
 
 private:

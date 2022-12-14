@@ -15,30 +15,6 @@ GroupLayer::GroupLayer(juce::ValueTree const& v, juce::UndoManager& undoManager)
 
 GroupLayer::~GroupLayer() { freeObjects(); }
 
-auto GroupLayer::resized() -> void
-{
-    if (size() == 0) { return; }
-
-    auto const local = getBounds().toNearestInt();
-    auto newRight    = local.getX();
-    auto newBottom   = local.getY();
-
-    for (auto& layer : *this) {
-        auto& canvas = layer->getCanvas();
-        auto bounds  = layer->getBounds().toNearestInt();
-        newRight     = std::max(newRight, bounds.getRight());
-        newBottom    = std::max(newBottom, bounds.getBottom());
-        canvas.setBounds(bounds);
-    }
-
-    auto const widthChanged  = newRight != local.getWidth();
-    auto const heightChanged = newBottom != local.getHeight();
-    if (widthChanged || heightChanged) {
-        setWidth(static_cast<float>(newRight - local.getX()));
-        setHeight(static_cast<float>(newBottom - local.getY()));
-    }
-}
-
 auto GroupLayer::isSuitableType(juce::ValueTree const& v) const -> bool
 {
     if (v.getType() == juce::StringRef{DrawableLayer::IDs::type}) { return true; }
@@ -70,7 +46,7 @@ auto GroupLayer::objectRemoved(Layer* layer) -> void
 auto GroupLayer::objectOrderChanged() -> void
 {
     for (auto& layer : *this) { layer->getCanvas().toBack(); }
-    resized();
+    getCanvas().resized();
 }
 
 } // namespace mc

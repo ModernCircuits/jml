@@ -19,14 +19,23 @@ auto DocumentCanvas::document() -> Document& { return _document; }
 
 auto DocumentCanvas::document() const -> Document const& { return _document; }
 
-auto DocumentCanvas::paint(juce::Graphics& g) -> void { g.fillAll(juce::Colours::lightgrey.brighter(0.75F)); }
+auto DocumentCanvas::paint(juce::Graphics& g) -> void
+{
+    g.fillAll(juce::Colours::lightgrey.brighter(0.75F));
+    g.setColour(juce::Colours::green);
+    g.drawRect(_document.rootLayer()->getCanvas().getBounds(), 2);
+}
 
 auto DocumentCanvas::paintOverChildren(juce::Graphics& g) -> void
 {
     if (_tool) { _tool->paintTool(g); }
 }
 
-auto DocumentCanvas::resized() -> void { _document.rootLayer()->getCanvas().setBounds(getLocalBounds()); }
+auto DocumentCanvas::resized() -> void
+{
+    // auto const bounds = _document.rootLayer()->getBounds().toNearestInt();
+    // _document.rootLayer()->getCanvas().setBounds(bounds);
+}
 
 auto DocumentCanvas::updateTool(ToolType type) -> void
 {
