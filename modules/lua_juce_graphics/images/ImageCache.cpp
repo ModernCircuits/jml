@@ -2,6 +2,7 @@
 
 #include <juce_graphics/juce_graphics.h>
 
+namespace mc::lua::bindings {
 auto juce_ImageCache(sol::table& state) -> void
 {
     auto cache                   = state.create_named("ImageCache");
@@ -12,3 +13,4 @@ auto juce_ImageCache(sol::table& state) -> void
     cache["setCacheTimeout"]     = &juce::ImageCache::setCacheTimeout;
     cache["releaseUnusedImages"] = &juce::ImageCache::releaseUnusedImages;
 }
+} // namespace mc::lua::bindings

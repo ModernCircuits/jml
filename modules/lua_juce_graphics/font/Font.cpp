@@ -1,7 +1,7 @@
 #include "Font.hpp"
 
 #include <juce_graphics/juce_graphics.h>
-
+namespace mc::lua::bindings {
 auto juce_Font(sol::table& state) -> void
 {
 
@@ -33,3 +33,4 @@ auto juce_Font(sol::table& state) -> void
     font["withTypefaceStyle"]  = &juce::Font::withTypefaceStyle;
     font["getAvailableStyles"] = &juce::Font::getAvailableStyles;
 }
+} // namespace mc::lua::bindings

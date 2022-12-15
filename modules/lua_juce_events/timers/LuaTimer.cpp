@@ -2,6 +2,7 @@
 
 #include <juce_events/juce_events.h>
 
+namespace mc::lua::bindings {
 struct LuaTimer final : juce::Timer
 {
     sol::safe_function lua_timerCallback;
@@ -25,3 +26,4 @@ auto juce_LuaTimer(sol::table& state) -> void
     );
     // clang-format on
 }
+} // namespace mc::lua::bindings

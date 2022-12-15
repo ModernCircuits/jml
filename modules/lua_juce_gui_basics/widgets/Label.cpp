@@ -3,7 +3,7 @@
 #include <juce_gui_basics/juce_gui_basics.h>
 
 SOL_BASE_CLASSES(juce::Label, juce::Component, juce::MouseListener, juce::SettableTooltipClient, juce::TooltipClient);
-
+namespace mc::lua::bindings {
 auto juce_Label(sol::table& state) -> void
 {
     // clang-format off
@@ -46,3 +46,4 @@ auto juce_Label(sol::table& state) -> void
     label["isBeingEdited"]                 = &juce::Label::isBeingEdited;
     label["getCurrentTextEditor"]          = &juce::Label::getCurrentTextEditor;
 }
+} // namespace mc::lua::bindings

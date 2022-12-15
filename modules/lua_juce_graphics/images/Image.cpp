@@ -1,7 +1,7 @@
 #include "Image.hpp"
 
 #include <juce_graphics/juce_graphics.h>
-
+namespace mc::lua::bindings {
 auto juce_Image(sol::table& state) -> void
 {
     // clang-format off
@@ -54,3 +54,4 @@ auto juce_Image(sol::table& state) -> void
     img["getReferenceCount"]     = &juce::Image::getReferenceCount;
     img["getPixelData"]          = &juce::Image::getPixelData;
 }
+} // namespace mc::lua::bindings

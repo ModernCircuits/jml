@@ -5,6 +5,7 @@
 SOL_BASE_CLASSES(juce::ComboBox, juce::Component, juce::MouseListener, juce::SettableTooltipClient, juce::TooltipClient,
                  juce::Value::Listener);
 
+namespace mc::lua::bindings {
 auto juce_ComboBox(sol::table& state) -> void
 {
     // clang-format off
@@ -76,3 +77,4 @@ auto juce_ComboBox(sol::table& state) -> void
     combo["setScrollWheelEnabled"]         = &juce::ComboBox::setScrollWheelEnabled;
     combo["onChange"]                      = &juce::ComboBox::onChange;
 }
+} // namespace mc::lua::bindings

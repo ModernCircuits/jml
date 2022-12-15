@@ -2,6 +2,7 @@
 
 #include <juce_core/juce_core.h>
 
+namespace mc::lua::bindings {
 auto juce_Int(sol::table& state) -> void
 {
     state.new_usertype<juce::int8>("int8", sol::default_constructor);
@@ -17,3 +18,4 @@ auto juce_Int(sol::table& state) -> void
     state.new_usertype<juce::pointer_sized_int>("pointer_sized_int", sol::default_constructor);
     state.new_usertype<juce::pointer_sized_uint>("pointer_sized_uint", sol::default_constructor);
 }
+} // namespace mc::lua::bindings

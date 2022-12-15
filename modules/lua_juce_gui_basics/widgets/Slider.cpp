@@ -3,7 +3,7 @@
 #include <juce_gui_basics/juce_gui_basics.h>
 
 SOL_BASE_CLASSES(juce::Slider, juce::MouseListener, juce::Component, juce::TooltipClient, juce::SettableTooltipClient);
-
+namespace mc::lua::bindings {
 auto juce_Slider(sol::table& state) -> void
 {
 
@@ -193,3 +193,4 @@ auto juce_Slider(sol::table& state) -> void
     // slider["valueFromTextFunction"] = &juce::Slider::valueFromTextFunction;
     // slider["textFromValueFunction"] = &juce::Slider::textFromValueFunction;
 }
+} // namespace mc::lua::bindings

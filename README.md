@@ -39,7 +39,7 @@ In your source code:
 
 auto state = sol::state{};
 state.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string);
-mc::addLuaJuceModules(state);
+mc::lua::bindings::allJuceModules(state);
 ```
 
 ### Tools

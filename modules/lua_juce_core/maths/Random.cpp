@@ -2,6 +2,7 @@
 
 #include <juce_core/juce_core.h>
 
+namespace mc::lua::bindings {
 auto juce_Random(sol::table& state) -> void
 {
     // clang-format off
@@ -21,3 +22,4 @@ auto juce_Random(sol::table& state) -> void
     );
     // clang-format on
 }
+} // namespace mc::lua::bindings

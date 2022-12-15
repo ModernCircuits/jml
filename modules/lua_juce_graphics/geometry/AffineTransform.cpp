@@ -1,7 +1,7 @@
 #include "AffineTransform.hpp"
 
 #include <juce_graphics/juce_graphics.h>
-
+namespace mc::lua::bindings {
 auto juce_AffineTransform(sol::table& state) -> void
 {
     using Transform = juce::AffineTransform;
@@ -50,3 +50,4 @@ auto juce_AffineTransform(sol::table& state) -> void
     transform["mat11"] = &Transform::mat11;
     transform["mat12"] = &Transform::mat12;
 }
+} // namespace mc::lua::bindings

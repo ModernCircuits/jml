@@ -1,7 +1,7 @@
 #include "Time.hpp"
 
 #include <juce_core/juce_core.h>
-
+namespace mc::lua::bindings {
 auto juce_Time(sol::table& state) -> void
 {
     auto t = state.new_usertype<juce::Time>("Time", sol::constructors<juce::Time(), juce::Time(juce::int64)>());
@@ -43,3 +43,4 @@ auto juce_Time(sol::table& state) -> void
     // t["getWeekdayName"]                   = &juce::Time::getWeekdayName;
     // t["getMonthName"]                     = &juce::Time::getMonthName;
 }
+} // namespace mc::lua::bindings

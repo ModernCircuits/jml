@@ -1,5 +1,5 @@
 #include "StringArray.hpp"
-
+namespace mc::lua::bindings {
 auto juce_StringArray(sol::table& state) -> void
 {
     auto array = state.new_usertype<juce::StringArray>("StringArray", sol::constructors<juce::StringArray()>());
@@ -37,3 +37,4 @@ auto juce_StringArray(sol::table& state) -> void
     // addTokens
     // fromTokens
 }
+} // namespace mc::lua::bindings

@@ -1,5 +1,6 @@
 #include "PerformanceCounter.hpp"
 
+namespace mc::lua::bindings {
 auto juce_PerformanceCounter(sol::table& state) -> void
 {
     // clang-format off
@@ -14,3 +15,4 @@ auto juce_PerformanceCounter(sol::table& state) -> void
     pc["printStatistics"]       = &juce::PerformanceCounter::printStatistics;
     pc["getStatisticsAndReset"] = &juce::PerformanceCounter::getStatisticsAndReset;
 }
+} // namespace mc::lua::bindings

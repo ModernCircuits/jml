@@ -1,7 +1,7 @@
 #include "Path.hpp"
 
 #include <juce_graphics/juce_graphics.h>
-
+namespace mc::lua::bindings {
 auto juce_Path(sol::table& state) -> void
 {
     // TODO(tobi)
@@ -64,3 +64,4 @@ auto juce_Path(sol::table& state) -> void
     path["toString"]                     = &juce::Path::toString;
     path["restoreFromString"]            = &juce::Path::restoreFromString;
 }
+} // namespace mc::lua::bindings

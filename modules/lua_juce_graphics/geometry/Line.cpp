@@ -1,7 +1,7 @@
 #include "Line.hpp"
 
 #include <juce_graphics/juce_graphics.h>
-
+namespace mc::lua::bindings {
 template<typename T>
 auto juce_LineImpl(sol::table& state, char const* name) -> void
 {
@@ -46,3 +46,4 @@ auto juce_Line(sol::table& state) -> void
     juce_LineImpl<float>(state, "LineFloat");
     juce_LineImpl<double>(state, "LineDouble");
 }
+} // namespace mc::lua::bindings

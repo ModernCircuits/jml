@@ -2,6 +2,7 @@
 
 #include <juce_core/juce_core.h>
 
+namespace mc::lua::bindings {
 auto juce_MathConstants(sol::table& state) -> void
 {
     auto constants      = state.create_named("MathConstants");
@@ -11,3 +12,4 @@ auto juce_MathConstants(sol::table& state) -> void
     constants["euler"]  = &juce::MathConstants<double>::euler;
     constants["sqrt2"]  = &juce::MathConstants<double>::sqrt2;
 }
+} // namespace mc::lua::bindings

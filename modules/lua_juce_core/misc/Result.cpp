@@ -2,6 +2,7 @@
 
 #include <juce_core/juce_core.h>
 
+namespace mc::lua::bindings {
 auto juce_Result(sol::table& state) -> void
 {
     auto result               = state.new_usertype<juce::Result>("Result");
@@ -11,3 +12,4 @@ auto juce_Result(sol::table& state) -> void
     result["ok"]              = &juce::Result::ok;
     result["fail"]            = &juce::Result::fail;
 }
+} // namespace mc::lua::bindings

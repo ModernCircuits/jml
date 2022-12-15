@@ -1,8 +1,8 @@
 #include <lua_juce_bindings/lua_juce_bindings.hpp>
 
-namespace mc {
+namespace mc::lua::bindings {
 
-auto addLuaJuceModules(sol::state& lua) -> void
+auto allJuceModules(sol::state& lua) -> void
 {
     auto table = lua["juce"].get_or_create<sol::table>();
 
@@ -63,4 +63,4 @@ auto addLuaJuceModules(sol::state& lua) -> void
     juce_LuaTimer(table);
 }
 
-} // namespace mc
+} // namespace mc::lua::bindings

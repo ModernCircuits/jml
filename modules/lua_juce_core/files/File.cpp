@@ -1,7 +1,7 @@
 #include "File.hpp"
 
 #include <juce_core/juce_core.h>
-
+namespace mc::lua::bindings {
 auto juce_File(sol::table& state) -> void
 {
     // clang-format off
@@ -170,3 +170,4 @@ auto juce_File(sol::table& state) -> void
 
     // TODO(tobi): createSymbolicLink
 }
+} // namespace mc::lua::bindings

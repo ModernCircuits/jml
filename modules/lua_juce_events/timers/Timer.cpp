@@ -2,6 +2,7 @@
 
 #include <juce_events/juce_events.h>
 
+namespace mc::lua::bindings {
 auto juce_Timer(sol::table& state) -> void
 {
     auto timer = state.new_usertype<juce::Timer>("InternalTimer", sol::meta_function::construct, sol::no_constructor);
@@ -15,3 +16,4 @@ auto juce_Timer(sol::table& state) -> void
     timer["callAfterDelay"]                 = &juce::Timer::callAfterDelay;
     timer["callPendingTimersSynchronously"] = &juce::Timer::callPendingTimersSynchronously;
 }
+} // namespace mc::lua::bindings

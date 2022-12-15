@@ -2,6 +2,7 @@
 
 #include <juce_core/juce_core.h>
 
+namespace mc::lua::bindings {
 auto juce_Uuid(sol::table& state) -> void
 {
     // clang-format off
@@ -21,3 +22,4 @@ auto juce_Uuid(sol::table& state) -> void
     uuid["hash"]                   = &juce::Uuid::hash;
     uuid["getRawData"]             = &juce::Uuid::getRawData;
 }
+} // namespace mc::lua::bindings

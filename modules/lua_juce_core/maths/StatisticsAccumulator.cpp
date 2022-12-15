@@ -2,6 +2,7 @@
 
 #include <juce_core/juce_core.h>
 
+namespace mc::lua::bindings {
 template<typename T>
 auto juce_StatisticsAccumulatorImpl(sol::table& state, char const* name) -> void
 {
@@ -20,3 +21,4 @@ auto juce_StatisticsAccumulator(sol::table& state) -> void
     juce_StatisticsAccumulatorImpl<float>(state, "StatisticsAccumulatorFloat");
     juce_StatisticsAccumulatorImpl<double>(state, "StatisticsAccumulatorDouble");
 }
+} // namespace mc::lua::bindings

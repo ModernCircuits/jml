@@ -1,7 +1,7 @@
 #include "Rectangle.hpp"
 
 #include <juce_graphics/juce_graphics.h>
-
+namespace mc::lua::bindings {
 template<typename T>
 auto juce_RectangleImpl(sol::table& state, char const* name) -> void
 {
@@ -114,3 +114,4 @@ auto juce_Rectangle(sol::table& state) -> void
     juce_RectangleImpl<float>(state, "RectangleFloat");
     juce_RectangleImpl<double>(state, "RectangleDouble");
 }
+} // namespace mc::lua::bindings

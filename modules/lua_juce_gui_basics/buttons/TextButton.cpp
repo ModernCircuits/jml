@@ -5,6 +5,7 @@
 SOL_BASE_CLASSES(juce::TextButton, juce::Button, juce::Component, juce::MouseListener, juce::SettableTooltipClient, juce::TooltipClient);
 SOL_DERIVED_CLASSES(juce::Button, juce::TextButton);
 
+namespace mc::lua::bindings {
 auto juce_TextButton(sol::table& state) -> void
 {
     // clang-format off
@@ -27,3 +28,4 @@ auto juce_TextButton(sol::table& state) -> void
 
     // button["onClick"] = &juce::Button::onClick;
 }
+} // namespace mc::lua::bindings

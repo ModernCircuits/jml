@@ -2,6 +2,7 @@
 
 #include <juce_gui_basics/juce_gui_basics.h>
 
+namespace mc::lua::bindings {
 auto juce_MouseEvent(sol::table& state) -> void
 {
     auto event           = state.new_usertype<juce::MouseEvent>("MouseEvent");
@@ -13,3 +14,4 @@ auto juce_MouseEvent(sol::table& state) -> void
     event["tiltX"]       = &juce::MouseEvent::tiltX;
     event["tiltY"]       = &juce::MouseEvent::tiltY;
 }
+} // namespace mc::lua::bindings

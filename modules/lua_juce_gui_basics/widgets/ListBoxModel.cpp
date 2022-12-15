@@ -1,5 +1,5 @@
 #include "ListBoxModel.hpp"
-
+namespace mc::lua::bindings {
 auto juce_LuaListBoxModel(sol::table& state) -> void
 {
     // clang-format off
@@ -45,3 +45,4 @@ auto juce_ListBoxModel(sol::table& state) -> void
 
     juce_LuaListBoxModel(state);
 }
+} // namespace mc::lua::bindings

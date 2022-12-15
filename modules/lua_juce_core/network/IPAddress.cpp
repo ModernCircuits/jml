@@ -1,7 +1,7 @@
 #include "IPAddress.hpp"
 
 #include <juce_core/juce_core.h>
-
+namespace mc::lua::bindings {
 auto juce_IPAddress(sol::table& state) -> void
 {
     // clang-format off
@@ -36,3 +36,4 @@ auto juce_IPAddress(sol::table& state) -> void
     ip["address"] = &juce::IPAddress::address;
     ip["isIPv6"]  = &juce::IPAddress::isIPv6;
 }
+} // namespace mc::lua::bindings

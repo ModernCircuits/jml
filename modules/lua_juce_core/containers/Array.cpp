@@ -1,5 +1,6 @@
 #include "Array.hpp"
 
+namespace mc::lua::bindings {
 auto juce_Array(sol::table& state) -> void
 {
     juce_ArrayImpl<int>(state, "Array_int");
@@ -10,3 +11,4 @@ auto juce_Array(sol::table& state) -> void
     juce_ArrayImpl<juce::File>(state, "Array_File");
     juce_ArrayImpl<juce::var>(state, "Array_var");
 }
+} // namespace mc::lua::bindings

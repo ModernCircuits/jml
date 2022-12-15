@@ -2,6 +2,7 @@
 
 #include <juce_gui_basics/juce_gui_basics.h>
 
+namespace mc::lua::bindings {
 auto juce_LookAndFeel(sol::table& state) -> void
 {
     auto lnf = state.new_usertype<juce::LookAndFeel>("LookAndFeel", sol::meta_function::construct, sol::no_constructor);
@@ -22,3 +23,4 @@ auto juce_LookAndFeel(sol::table& state) -> void
     lnf["playAlertSound"]                  = &juce::LookAndFeel::playAlertSound;
     // lnf["getTypefaceForFont"]           = &juce::LookAndFeel::getTypefaceForFont;
 }
+} // namespace mc::lua::bindings

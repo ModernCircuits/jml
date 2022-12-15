@@ -1,7 +1,7 @@
 #include "Colours.hpp"
 
 #include <juce_graphics/juce_graphics.h>
-
+namespace mc::lua::bindings {
 auto juce_Colours(sol::table& state) -> void
 {
     auto colours                    = state.create_named("Colours");
@@ -149,3 +149,4 @@ auto juce_Colours(sol::table& state) -> void
     colours["yellow"]               = std::cref(juce::Colours::yellow);
     colours["yellowgreen"]          = std::cref(juce::Colours::yellowgreen);
 }
+} // namespace mc::lua::bindings

@@ -111,4 +111,6 @@ struct LuaListBoxModel final : juce::ListBoxModel
 SOL_BASE_CLASSES(LuaListBoxModel, juce::ListBoxModel);
 SOL_DERIVED_CLASSES(juce::ListBoxModel, LuaListBoxModel);
 
+namespace mc::lua::bindings {
 auto juce_ListBoxModel(sol::table& state) -> void;
+}
