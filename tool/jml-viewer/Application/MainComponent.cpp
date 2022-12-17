@@ -19,6 +19,8 @@ MainComponent::MainComponent()
 
     setLookAndFeel(&_lnf);
     setSize(1280, 720);
+
+    if (not _connection.connectToSocket("127.0.0.1", 14430, 1000)) { DBG("DID NOT CONNECT TO SERVER"); }
 }
 
 MainComponent::~MainComponent() { setLookAndFeel(nullptr); }

@@ -56,7 +56,6 @@ Layer::Canvas::Canvas(Layer& layer) : _layer{layer}
 {
     _layer.valueTree().addListener(this);
     setComponentID(layer.getUUID());
-    DBG(layer.getUUID());
 }
 
 Layer::Canvas::~Canvas() { _layer.valueTree().removeListener(this); }

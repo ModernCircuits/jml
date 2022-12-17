@@ -1,5 +1,6 @@
 project(jml-viewer VERSION 0.1.0)
 
+find_package(mc-core REQUIRED)
 find_package(sol2 REQUIRED)
 
 juce_add_gui_app(jml-viewer
@@ -54,11 +55,14 @@ target_compile_definitions(jml-viewer
 target_link_libraries(jml-viewer
     PRIVATE
         mc::lua_juce_bindings
+        mc::mc_gui_testing
         juce::juce_gui_extra
 
     PUBLIC
         lua::lua
         sol2::sol2
+        mc-core::mc-core
+
         juce::juce_recommended_config_flags
         juce::juce_recommended_lto_flags
         juce::juce_recommended_warning_flags
