@@ -45,9 +45,6 @@ target_sources(jml-designer
         Component/Button.hpp
         Component/TreeView.hpp
 
-        Core/ValueTree.cpp
-        Core/ValueTree.hpp
-
         Document/Document.cpp
         Document/Document.hpp
         Document/DocumentCanvas.cpp

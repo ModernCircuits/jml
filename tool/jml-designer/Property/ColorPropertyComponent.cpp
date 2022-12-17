@@ -1,7 +1,5 @@
 #include "ColorPropertyComponent.hpp"
 
-#include "Core/ValueTree.hpp"
-
 namespace mc {
 
 ColorPropertyComponent::ColorPropertyComponent(juce::Value const& valueToControl, juce::String const& propertyName,

@@ -1,6 +1,5 @@
 #include "Document.hpp"
 
-#include "Core/ValueTree.hpp"
 #include "Layer/Drawable/DrawableLayer.hpp"
 #include "Layer/Group/GroupLayer.hpp"
 

@@ -1,6 +1,5 @@
 #include "ShapeTool.hpp"
 
-#include "Core/ValueTree.hpp"
 #include "Document/DocumentCanvas.hpp"
 #include "Layer/Drawable/DrawableLayer.hpp"
 

@@ -1,7 +1,5 @@
 #include "Layer.hpp"
 
-#include "Core/ValueTree.hpp"
-
 namespace mc {
 
 Layer::Layer(juce::ValueTree vt, juce::UndoManager& um) : ValueTreeObject{std::move(vt), &um}
