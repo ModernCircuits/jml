@@ -27,7 +27,7 @@ MainComponent::~MainComponent() { setLookAndFeel(nullptr); }
 
 auto MainComponent::paint(juce::Graphics& g) -> void { g.fillAll(juce::Colours::white); }
 
-void MainComponent::resized()
+auto MainComponent::resized() -> void
 {
     auto area = getLocalBounds();
     _menuBar.setBounds(area.removeFromTop(getLookAndFeel().getDefaultMenuBarHeight()));

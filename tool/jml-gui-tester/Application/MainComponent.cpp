@@ -17,6 +17,6 @@ MainComponent::~MainComponent()
 
 auto MainComponent::paint(juce::Graphics& g) -> void { g.fillAll(juce::Colours::white); }
 
-void MainComponent::resized() {}
+auto MainComponent::resized() -> void {}
 
 } // namespace mc

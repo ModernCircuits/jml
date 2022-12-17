@@ -9,17 +9,17 @@ struct Application final : juce::JUCEApplication
     auto getApplicationVersion() -> const juce::String override { return JUCE_APPLICATION_VERSION_STRING; }
     auto moreThanOneInstanceAllowed() -> bool override { return true; }
 
-    void initialise(juce::String const& commandLine) override
+    auto initialise(juce::String const& commandLine) -> void override
     {
         juce::ignoreUnused(commandLine);
         _mainWindow = std::make_unique<MainWindow>(getApplicationName());
     }
 
-    void shutdown() override { _mainWindow = nullptr; }
+    auto shutdown() -> void override { _mainWindow = nullptr; }
 
-    void systemRequestedQuit() override { quit(); }
+    auto systemRequestedQuit() -> void override { quit(); }
 
-    void anotherInstanceStarted(juce::String const& commandLine) override { juce::ignoreUnused(commandLine); }
+    auto anotherInstanceStarted(juce::String const& commandLine) -> void override { juce::ignoreUnused(commandLine); }
 
     struct MainWindow : juce::DocumentWindow
     {
@@ -43,7 +43,7 @@ struct Application final : juce::JUCEApplication
             setVisible(true);
         }
 
-        void closeButtonPressed() override { JUCEApplication::getInstance()->systemRequestedQuit(); }
+        auto closeButtonPressed() -> void override { JUCEApplication::getInstance()->systemRequestedQuit(); }
 
     private:
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainWindow) // NOLINT

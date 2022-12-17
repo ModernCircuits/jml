@@ -4,30 +4,32 @@
 
 namespace mc {
 
-template<typename TreeViewItemType>
-inline auto getSelectedTreeViewItems(juce::TreeView& treeView) -> juce::OwnedArray<juce::ValueTree>
+auto forEachSelectedItem(juce::TreeView& treeView, auto callback) -> void
 {
-    juce::OwnedArray<juce::ValueTree> items;
-    int const numSelected = treeView.getNumSelectedItems();
-
-    for (int i = 0; i < numSelected; ++i) {
-        if (auto* vti = dynamic_cast<TreeViewItemType*>(treeView.getSelectedItem(i))) {
-            items.add(new juce::ValueTree(vti->getState()));
-        }
+    for (auto i{0}; i < treeView.getNumSelectedItems(); ++i) {
+        auto* item = treeView.getSelectedItem(i);
+        jassert(item != nullptr);
+        callback(*item);
     }
-
-    return items;
 }
 
-inline void moveItems(juce::TreeView& treeView, juce::OwnedArray<juce::ValueTree> const& items,
-                      juce::ValueTree newParent, int insertIndex, juce::UndoManager& undoManager)
+template<typename Type>
+auto forEachSelectedItemWithType(juce::TreeView& treeView, auto callback) -> void
 {
-    if (items.isEmpty()) { return; }
+    forEachSelectedItem(treeView, [&callback](auto& item) {
+        auto* typed = dynamic_cast<Type*>(&item);
+        if (typed == nullptr) { return; }
+        callback(*typed);
+    });
+}
 
-    auto oldOpenness = treeView.getOpennessState(false);
+inline void moveItems(Span<juce::ValueTree const> items, juce::ValueTree newParent, int insertIndex,
+                      juce::UndoManager& undoManager)
+{
+    if (items.empty()) { return; }
 
-    for (auto i = items.size(); --i >= 0;) {
-        auto& v        = *items.getUnchecked(i);
+    for (auto i{mc::ssize(items) - 1}; i >= 0; --i) {
+        auto const& v  = items[static_cast<size_t>(i)];
         auto oldParent = v.getParent();
 
         if (not oldParent.isValid()) { continue; }
@@ -39,8 +41,6 @@ inline void moveItems(juce::TreeView& treeView, juce::OwnedArray<juce::ValueTree
         oldParent.removeChild(v, &undoManager);
         newParent.addChild(v, insertIndex, &undoManager);
     }
-
-    if (oldOpenness != nullptr) { treeView.restoreOpennessState(*oldOpenness, false); }
 }
 
 } // namespace mc

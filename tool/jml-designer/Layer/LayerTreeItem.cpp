@@ -32,7 +32,7 @@ auto LayerTreeItem::getUniqueName() const -> juce::String
 
 auto LayerTreeItem::mightContainSubItems() -> bool { return state.getNumChildren() > 0; }
 
-void LayerTreeItem::paintItem(juce::Graphics& g, int width, int height)
+auto LayerTreeItem::paintItem(juce::Graphics& g, int width, int height) -> void
 {
     g.fillAll(isSelected() ? juce::Colours::black : juce::Colours::lightgrey);
     g.setColour(isSelected() ? juce::Colours::white : juce::Colours::black);
@@ -40,16 +40,13 @@ void LayerTreeItem::paintItem(juce::Graphics& g, int width, int height)
     g.drawText(getDisplayText(), 4, 0, width - 4, height, juce::Justification::centredLeft, true);
 }
 
-void LayerTreeItem::itemOpennessChanged(bool isNowOpen)
+auto LayerTreeItem::itemOpennessChanged(bool isNowOpen) -> void
 {
-    if (isNowOpen && getNumSubItems() == 0) {
-        refreshSubItems();
-    } else {
-        clearSubItems();
-    }
+    if (isNowOpen && getNumSubItems() == 0) { return refreshSubItems(); }
+    clearSubItems();
 }
 
-void LayerTreeItem::itemSelectionChanged(bool /*isNowSelected*/)
+auto LayerTreeItem::itemSelectionChanged(bool /*isNowSelected*/) -> void
 {
     auto* const ov = getOwnerView();
     if (ov == nullptr) { return; }
@@ -61,27 +58,27 @@ void LayerTreeItem::itemSelectionChanged(bool /*isNowSelected*/)
 
 auto LayerTreeItem::getDragSourceDescription() -> juce::var { return state.getType().toString(); }
 
-void LayerTreeItem::valueTreePropertyChanged(juce::ValueTree& /*treeWhosePropertyHasChanged*/,
-                                             juce::Identifier const& /*property*/)
+auto LayerTreeItem::valueTreePropertyChanged(juce::ValueTree& /*tree*/, juce::Identifier const& /*property*/) -> void
 {
     repaintItem();
 }
-void LayerTreeItem::valueTreeChildAdded(juce::ValueTree& tree, juce::ValueTree& /*childWhichHasBeenAdded*/)
-{
-    treeChildrenChanged(tree);
-}
-void LayerTreeItem::valueTreeChildRemoved(juce::ValueTree& tree, juce::ValueTree& /*childWhichHasBeenRemoved*/,
-                                          int /*indexFromWhichChildWasRemoved*/)
-{
-    treeChildrenChanged(tree);
-}
-void LayerTreeItem::valueTreeChildOrderChanged(juce::ValueTree& tree, int /*oldIndex*/, int /*newIndex*/)
-{
-    treeChildrenChanged(tree);
-}
-void LayerTreeItem::valueTreeParentChanged(juce::ValueTree& /*treeWhoseParentHasChanged*/) {}
 
-void LayerTreeItem::treeChildrenChanged(juce::ValueTree const& tree)
+auto LayerTreeItem::valueTreeChildAdded(juce::ValueTree& tree, juce::ValueTree& /*child*/) -> void
+{
+    treeChildrenChanged(tree);
+}
+
+auto LayerTreeItem::valueTreeChildRemoved(juce::ValueTree& tree, juce::ValueTree& /*child*/, int /*index*/) -> void
+{
+    treeChildrenChanged(tree);
+}
+
+auto LayerTreeItem::valueTreeChildOrderChanged(juce::ValueTree& tree, int /*oldIndex*/, int /*newIndex*/) -> void
+{
+    treeChildrenChanged(tree);
+}
+
+auto LayerTreeItem::treeChildrenChanged(juce::ValueTree const& tree) -> void
 {
     if (tree == state) {
         refreshSubItems();
@@ -90,7 +87,7 @@ void LayerTreeItem::treeChildrenChanged(juce::ValueTree const& tree)
     }
 }
 
-void LayerTreeItem::refreshSubItems()
+auto LayerTreeItem::refreshSubItems() -> void
 {
     clearSubItems();
 
