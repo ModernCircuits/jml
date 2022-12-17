@@ -33,8 +33,11 @@ auto GroupLayer::deleteObject(Layer* c) -> void { delete c; }
 
 auto GroupLayer::newObjectAdded(Layer* layer) -> void
 {
-    getCanvas().addAndMakeVisible(layer->getCanvas());
+    auto& childCanvas = layer->getCanvas();
+    getCanvas().addAndMakeVisible(childCanvas);
     objectOrderChanged();
+    childCanvas.setBounds(layer->getBounds().toNearestInt());
+    childCanvas.repaint();
 }
 
 auto GroupLayer::objectRemoved(Layer* layer) -> void
@@ -46,8 +49,6 @@ auto GroupLayer::objectRemoved(Layer* layer) -> void
 auto GroupLayer::objectOrderChanged() -> void
 {
     for (auto& layer : *this) { layer->getCanvas().toBack(); }
-    getCanvas().resized();
-    getCanvas().repaint();
 }
 
 } // namespace mc
