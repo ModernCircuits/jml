@@ -9,7 +9,7 @@ BEGIN_JUCE_MODULE_DECLARATION
     dependencies:       lua_juce_core, lua_juce_events, lua_juce_graphics, lua_juce_gui_basics
     website:            http://github.com/ModernCircuits/juce-lua-bindings
     license:            BSL-1.0
-    minimumCppStandard: 17
+    minimumCppStandard: 20
 
 END_JUCE_MODULE_DECLARATION
 */

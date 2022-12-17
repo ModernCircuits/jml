@@ -33,6 +33,7 @@ target_compile_definitions(jml-cli
         SOL_ALL_SAFETIES_ON=1
         JUCE_WEB_BROWSER=0
         JUCE_USE_CURL=0
+        _SILENCE_CXX23_ALIGNED_STORAGE_DEPRECATION_WARNING=1
 )
 
 target_link_libraries(jml-cli

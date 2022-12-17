@@ -34,6 +34,7 @@ target_compile_definitions(jml-gui-tester
         JUCE_USE_CURL=0
         JUCE_APPLICATION_NAME_STRING="$<TARGET_PROPERTY:jml-gui-tester,JUCE_PRODUCT_NAME>"
         JUCE_APPLICATION_VERSION_STRING="$<TARGET_PROPERTY:jml-gui-tester,JUCE_VERSION>"
+        _SILENCE_CXX23_ALIGNED_STORAGE_DEPRECATION_WARNING=1
 )
 
 target_link_libraries(jml-gui-tester

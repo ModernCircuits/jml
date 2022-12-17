@@ -7,7 +7,7 @@ jobs:
     runs-on: macos-12
     strategy:
       matrix:
-        cxx: [17, 20]
+        cxx: [20]
         build_mode: ["Release"]
       fail-fast: false
     name: ${{ matrix.cxx }} - ${{ matrix.build_mode }}
