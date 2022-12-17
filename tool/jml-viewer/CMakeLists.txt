@@ -56,7 +56,7 @@ target_link_libraries(jml-viewer
     PRIVATE
         mc::lua_juce_bindings
         mc::mc_gui_testing
-        juce::juce_gui_extra
+        mc::mc_gui_extra
 
     PUBLIC
         lua::lua

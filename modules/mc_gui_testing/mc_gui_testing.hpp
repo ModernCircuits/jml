@@ -6,7 +6,7 @@ BEGIN_JUCE_MODULE_DECLARATION
     version:            0.1.0
     name:               Lua bindings for juce_events
     description:        Lua/Sol2 bindings for juce_events
-    dependencies:       mc_gui_basics
+    dependencies:       mc_gui_extra
     website:            http://github.com/ModernCircuits/juce-lua-bindings
     license:            BSL-1.0
     minimumCppStandard: 17
@@ -20,6 +20,7 @@ END_JUCE_MODULE_DECLARATION
     #define USE_MC_GUI_TESTING
 #endif
 
-#include <mc_gui_basics/mc_gui_basics.hpp>
+#include <mc_gui_extra/mc_gui_extra.hpp>
 
+#include "message/button.hpp"
 #include "message/component.hpp"

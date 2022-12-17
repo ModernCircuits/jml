@@ -77,13 +77,6 @@ target_sources(jml-designer
         Menu/MenuBar.cpp
         Menu/MenuBar.hpp
 
-        Property/ColorPropertyComponent.cpp
-        Property/ColorPropertyComponent.hpp
-        Property/FilePropertyComponent.cpp
-        Property/FilePropertyComponent.hpp
-        Property/ValuePropertyComponent.cpp
-        Property/ValuePropertyComponent.hpp
-
         Tool/SelectionTool.cpp
         Tool/SelectionTool.hpp
         Tool/ShapeTool.cpp
@@ -109,8 +102,7 @@ target_include_directories(jml-designer
 
 target_link_libraries(jml-designer
     PRIVATE
-        mc::mc_gui_basics
-        juce::juce_gui_extra
+        mc::mc_gui_extra
     PUBLIC
         JMLDesigner_BinaryData
 
