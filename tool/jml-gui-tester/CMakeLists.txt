@@ -12,12 +12,15 @@ juce_add_gui_app(jml-gui-tester
     PRODUCT_NAME "JML GUI Tester"       # The name of the final executable, which can differ from the target name
 )
 
-target_sources(jml-gui-tester
-    PRIVATE
-        "Application/Main.cpp"
-        "Application/MainComponent.hpp"
-        "Application/MainComponent.cpp"
+set(sources
+    "Application/Main.cpp"
+    "Application/MainComponent.hpp"
+    "Application/MainComponent.cpp"
 )
+
+target_sources(jml-gui-tester PRIVATE ${sources})
+set_source_files_properties(jml-gui-tester ${sources} PROPERTIES UNITY_GROUP "src")
+set_target_properties(jml-gui-tester PROPERTIES UNITY_BUILD_MODE GROUP)
 
 target_include_directories(jml-gui-tester
     PUBLIC

@@ -34,58 +34,65 @@ juce_add_gui_app(jml-designer
         "JML Designer"
 )
 
-target_sources(jml-designer
-    PRIVATE
-        Application/Application.cpp
-        Application/Application.hpp
-        Application/Main.cpp
-        Application/MainComponent.cpp
-        Application/MainComponent.hpp
-
-        Component/Button.hpp
-        Component/TreeView.hpp
-
-        Document/Document.cpp
-        Document/Document.hpp
-        Document/DocumentCanvas.cpp
-        Document/DocumentCanvas.hpp
-        Document/DocumentEditor.cpp
-        Document/DocumentEditor.hpp
-
-        Layer/Layer.cpp
-        Layer/Layer.hpp
-        Layer/LayerPropertyPanel.cpp
-        Layer/LayerPropertyPanel.hpp
-        Layer/LayerTree.cpp
-        Layer/LayerTree.hpp
-        Layer/LayerTreeItem.cpp
-        Layer/LayerTreeItem.hpp
-
-        Layer/Group/GroupLayer.cpp
-        Layer/Group/GroupLayer.hpp
-        Layer/Group/GroupLayerTreeItem.cpp
-        Layer/Group/GroupLayerTreeItem.hpp
-
-        Layer/Drawable/DrawableLayer.cpp
-        Layer/Drawable/DrawableLayer.hpp
-        Layer/Drawable/DrawableLayerTreeItem.cpp
-        Layer/Drawable/DrawableLayerTreeItem.hpp
-
-        LookAndFeel/LookAndFeel.hpp
-
-        Menu/CommandIDs.hpp
-        Menu/MenuBar.cpp
-        Menu/MenuBar.hpp
-
-        Tool/SelectionTool.cpp
-        Tool/SelectionTool.hpp
-        Tool/ShapeTool.cpp
-        Tool/ShapeTool.hpp
-        Tool/Tool.cpp
-        Tool/Tool.hpp
-        Tool/ToolBar.cpp
-        Tool/ToolBar.hpp
+set_target_properties(jml-designer
+    PROPERTIES
+        UNITY_BUILD_MODE GROUP
 )
+
+set(sources
+    Application/Application.cpp
+    Application/Application.hpp
+    Application/Main.cpp
+    Application/MainComponent.cpp
+    Application/MainComponent.hpp
+
+    Component/Button.hpp
+    Component/TreeView.hpp
+
+    Document/Document.cpp
+    Document/Document.hpp
+    Document/DocumentCanvas.cpp
+    Document/DocumentCanvas.hpp
+    Document/DocumentEditor.cpp
+    Document/DocumentEditor.hpp
+
+    Layer/Layer.cpp
+    Layer/Layer.hpp
+    Layer/LayerPropertyPanel.cpp
+    Layer/LayerPropertyPanel.hpp
+    Layer/LayerTree.cpp
+    Layer/LayerTree.hpp
+    Layer/LayerTreeItem.cpp
+    Layer/LayerTreeItem.hpp
+
+    Layer/Group/GroupLayer.cpp
+    Layer/Group/GroupLayer.hpp
+    Layer/Group/GroupLayerTreeItem.cpp
+    Layer/Group/GroupLayerTreeItem.hpp
+
+    Layer/Drawable/DrawableLayer.cpp
+    Layer/Drawable/DrawableLayer.hpp
+    Layer/Drawable/DrawableLayerTreeItem.cpp
+    Layer/Drawable/DrawableLayerTreeItem.hpp
+
+    LookAndFeel/LookAndFeel.hpp
+
+    Menu/CommandIDs.hpp
+    Menu/MenuBar.cpp
+    Menu/MenuBar.hpp
+
+    Tool/SelectionTool.cpp
+    Tool/SelectionTool.hpp
+    Tool/ShapeTool.cpp
+    Tool/ShapeTool.hpp
+    Tool/Tool.cpp
+    Tool/Tool.hpp
+    Tool/ToolBar.cpp
+    Tool/ToolBar.hpp
+)
+
+target_sources(jml-designer PRIVATE ${sources})
+set_source_files_properties(jml-designer ${sources} PROPERTIES UNITY_GROUP "src")
 
 target_compile_definitions(jml-designer
     PRIVATE

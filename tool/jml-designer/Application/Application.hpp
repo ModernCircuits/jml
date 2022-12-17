@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Application/MainComponent.hpp"
 
 #include "LookAndFeel/LookAndFeel.hpp"

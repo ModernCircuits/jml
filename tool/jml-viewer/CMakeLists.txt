@@ -12,31 +12,34 @@ juce_add_gui_app(jml-viewer
     PRODUCT_NAME "JML Viewer"           # The name of the final executable, which can differ from the target name
 )
 
-target_sources(jml-viewer
-    PRIVATE
-        "Application/CommandIDs.hpp"
-        "Application/Main.cpp"
-        "Application/MainComponent.hpp"
-        "Application/MainComponent.cpp"
-        "Application/MenuBar.hpp"
-        "Application/MenuBar.cpp"
+set(sources
+    "Application/CommandIDs.hpp"
+    "Application/Main.cpp"
+    "Application/MainComponent.hpp"
+    "Application/MainComponent.cpp"
+    "Application/MenuBar.hpp"
+    "Application/MenuBar.cpp"
 
-        "CodeEditor/CodeEditor.cpp"
-        "CodeEditor/CodeEditor.hpp"
+    "CodeEditor/CodeEditor.cpp"
+    "CodeEditor/CodeEditor.hpp"
 
-        "LookAndFeel/JmlViewerColors.hpp"
-        "LookAndFeel/JmlViewerLookAndFeel.cpp"
-        "LookAndFeel/JmlViewerLookAndFeel.hpp"
+    "LookAndFeel/JmlViewerColors.hpp"
+    "LookAndFeel/JmlViewerLookAndFeel.cpp"
+    "LookAndFeel/JmlViewerLookAndFeel.hpp"
 
-        "Viewer/ComponentContainer.cpp"
-        "Viewer/ComponentContainer.hpp"
-        "Viewer/ComponentTree.cpp"
-        "Viewer/ComponentTree.hpp"
-        "Viewer/FileChangeListener.cpp"
-        "Viewer/FileChangeListener.hpp"
-        "Viewer/LuaScriptViewer.cpp"
-        "Viewer/LuaScriptViewer.hpp"
+    "Viewer/ComponentContainer.cpp"
+    "Viewer/ComponentContainer.hpp"
+    "Viewer/ComponentTree.cpp"
+    "Viewer/ComponentTree.hpp"
+    "Viewer/FileChangeListener.cpp"
+    "Viewer/FileChangeListener.hpp"
+    "Viewer/LuaScriptViewer.cpp"
+    "Viewer/LuaScriptViewer.hpp"
 )
+
+target_sources(jml-viewer PRIVATE ${sources})
+set_source_files_properties(jml-viewer ${sources} PROPERTIES UNITY_GROUP "src")
+set_target_properties(jml-viewer PROPERTIES UNITY_BUILD_MODE GROUP)
 
 target_include_directories(jml-viewer
     PUBLIC

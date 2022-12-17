@@ -9,16 +9,19 @@ juce_add_console_app(jml-cli
         "jml-cli"
 )
 
-target_sources(jml-cli
-    PRIVATE
-        "Main.cpp"
+set(sources
+    "Main.cpp"
 
-        "JmlCommandline.cpp"
-        "JmlCommandline.hpp"
+    "JmlCommandline.cpp"
+    "JmlCommandline.hpp"
 
-        "Command/Snapshot.hpp"
-        "Command/Test.hpp"
+    "Command/Snapshot.hpp"
+    "Command/Test.hpp"
 )
+
+target_sources(jml-cli PRIVATE ${sources})
+set_source_files_properties(jml-cli ${sources} PROPERTIES UNITY_GROUP "src")
+set_target_properties(jml-cli PROPERTIES UNITY_BUILD_MODE GROUP)
 
 target_include_directories(jml-cli
     PUBLIC

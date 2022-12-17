@@ -31,6 +31,7 @@ jobs:
           -B build
           -D CMAKE_BUILD_TYPE=${{ matrix.build_mode }}
           -D CMAKE_CXX_STANDARD="${{ matrix.cxx }}"
+          -D CMAKE_UNITY_BUILD=ON
 
       - name: CMake build
         run: cmake --build build --config ${{ matrix.build_mode }}
