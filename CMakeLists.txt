@@ -26,7 +26,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/3rd_party/mc-juce/cmak
 include(mcConan)
 
 include(FetchContent)
-FetchContent_Declare(JUCE GIT_REPOSITORY "https://github.com/juce-framework/JUCE" GIT_TAG "7.0.3")
+FetchContent_Declare(JUCE GIT_REPOSITORY "https://github.com/juce-framework/JUCE" GIT_TAG "develop")
 FetchContent_MakeAvailable(JUCE)
 juce_disable_default_flags()
 
