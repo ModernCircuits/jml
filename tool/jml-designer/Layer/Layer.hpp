@@ -2,7 +2,7 @@
 
 #include <mc_data_structures/mc_data_structures.hpp>
 #include <mc_graphics/mc_graphics.hpp>
-#include <mc_gui_basics/mc_gui_basics.hpp>
+#include <mc_gui_extra/mc_gui_extra.hpp>
 
 namespace mc {
 
@@ -83,6 +83,9 @@ struct Layer
 
     [[nodiscard]] virtual auto mightHaveChildren() -> bool;
     virtual auto paintLayer(juce::Graphics& g) -> void;
+    virtual auto addLayerProperties(juce::PropertyPanel& panel) -> void;
+
+    auto fillPropertyPanel(juce::PropertyPanel& panel) -> void;
 
     [[nodiscard]] auto getCanvas() -> Canvas&;
     [[nodiscard]] auto getCanvas() const -> Canvas const&;

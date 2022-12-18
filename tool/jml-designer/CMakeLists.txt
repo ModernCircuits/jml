@@ -47,6 +47,7 @@ set(sources
     Application/MainComponent.hpp
 
     Component/Button.hpp
+    Component/PropertyPanel.hpp
     Component/TreeView.hpp
 
     Document/Document.cpp

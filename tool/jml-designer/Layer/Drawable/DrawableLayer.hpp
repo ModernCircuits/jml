@@ -4,7 +4,7 @@
 
 namespace mc {
 
-struct DrawableLayerIDs
+struct DrawableLayerIDs : Layer::IDs
 {
     inline static constexpr auto const* type = "Drawable";
 };
@@ -17,6 +17,7 @@ struct DrawableLayer final : Layer
     ~DrawableLayer() override = default;
 
     auto paintLayer(juce::Graphics& g) -> void override;
+    auto addLayerProperties(juce::PropertyPanel& panel) -> void override;
 };
 
 } // namespace mc

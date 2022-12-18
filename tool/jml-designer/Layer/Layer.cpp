@@ -1,5 +1,6 @@
 #include "Layer.hpp"
 
+#include "Component/PropertyPanel.hpp"
 #include "Layer/Drawable/DrawableLayer.hpp"
 #include "Layer/Group/GroupLayer.hpp"
 
@@ -126,6 +127,27 @@ Layer::~Layer()
 auto Layer::paintLayer(juce::Graphics& g) -> void { juce::ignoreUnused(g); }
 
 auto Layer::mightHaveChildren() -> bool { return false; }
+
+auto Layer::fillPropertyPanel(juce::PropertyPanel& panel) -> void
+{
+    auto const general = juce::Array<juce::PropertyComponent*>{
+        makeTextProperty(valueTree(), Layer::IDs::uuid, "UUID", false),
+        makeTextProperty(valueTree(), Layer::IDs::name, "Name", true),
+    };
+
+    auto const position = juce::Array<juce::PropertyComponent*>{
+        makeSliderProperty(valueTree(), Layer::IDs::x, "X", 0.0, 1000.0, 1.0),
+        makeSliderProperty(valueTree(), Layer::IDs::y, "Y", 0.0, 1000.0, 1.0),
+        makeSliderProperty(valueTree(), Layer::IDs::width, "Width", 0.0, 1000.0, 1.0),
+        makeSliderProperty(valueTree(), Layer::IDs::height, "Height", 0.0, 1000.0, 1.0),
+    };
+
+    panel.clear();
+    panel.addSection("Layer", general);
+    panel.addSection("Position", position);
+    addLayerProperties(panel);
+}
+auto Layer::addLayerProperties(juce::PropertyPanel& panel) -> void { juce::ignoreUnused(panel); }
 
 auto Layer::getCanvas() -> Canvas& { return _canvas; }
 

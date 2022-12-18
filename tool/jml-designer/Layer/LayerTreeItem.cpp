@@ -15,6 +15,7 @@ static auto getSelectedValueTrees(juce::TreeView& treeView) -> Vector<juce::Valu
 LayerTreeItem::LayerTreeItem(Layer& layer) : _layer{layer} { _layer.addListener(this); }
 LayerTreeItem::~LayerTreeItem() { _layer.removeListener(this); }
 
+auto LayerTreeItem::getLayer() -> Layer& { return _layer; }
 auto LayerTreeItem::getState() const -> juce::ValueTree { return _layer.valueTree(); }
 
 auto LayerTreeItem::getUndoManager() const -> juce::UndoManager* { return _layer.undoManager(); }

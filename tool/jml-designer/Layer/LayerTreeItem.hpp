@@ -11,6 +11,7 @@ struct LayerTreeItem final
     explicit LayerTreeItem(Layer& layer);
     ~LayerTreeItem() override;
 
+    [[nodiscard]] auto getLayer() -> Layer&;
     [[nodiscard]] auto getDisplayText() -> juce::String;
     [[nodiscard]] auto getState() const -> juce::ValueTree;
     [[nodiscard]] auto getUndoManager() const -> juce::UndoManager*;
