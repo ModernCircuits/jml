@@ -65,10 +65,11 @@ auto LayerTreeItem::itemDropped(juce::DragAndDropTarget::SourceDetails const& /*
     if (oldOpenness != nullptr) { treeView.restoreOpennessState(*oldOpenness, false); }
 }
 
-// auto LayerTreeItem::valueTreePropertyChanged(juce::ValueTree& /*tree*/, juce::Identifier const& /*property*/) -> void
-// {
-//     repaintItem();
-// }
+auto LayerTreeItem::layerPropertyChanged(Layer* layer, juce::Identifier const& /*property*/) -> void
+{
+    jassert(&_layer == layer);
+    repaintItem();
+}
 
 auto LayerTreeItem::layerChildrenChanged(Layer* layer) -> void
 {

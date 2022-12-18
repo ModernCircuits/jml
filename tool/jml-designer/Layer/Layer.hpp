@@ -32,13 +32,14 @@ struct LayerListener
 {
     virtual ~LayerListener() = default;
 
+    virtual auto layerPropertyChanged(Layer* layer, juce::Identifier const& property) -> void;
     virtual auto layerChildrenChanged(Layer* layer) -> void;
     virtual auto layerBeingDeleted(Layer* layer) -> void;
 };
 
 struct LayerCanvas final
     : juce::Component
-    , juce::ValueTree::Listener
+    , LayerListener
 {
     ~LayerCanvas() override;
 
@@ -46,7 +47,7 @@ struct LayerCanvas final
     [[nodiscard]] auto layer() const -> Layer const&;
 
     auto paint(juce::Graphics& g) -> void override;
-    auto valueTreePropertyChanged(juce::ValueTree& tree, juce::Identifier const& property) -> void override;
+    auto layerPropertyChanged(Layer* layer, juce::Identifier const& property) -> void override;
 
 private:
     explicit LayerCanvas(Layer& layer);
@@ -69,7 +70,9 @@ struct LayerIDs
     inline static constexpr auto const* opacity    = "opacity";
 };
 
-struct Layer : ValueTreeObject
+struct Layer
+    : ValueTreeObject
+    , juce::ValueTree::Listener
 {
     using IDs      = LayerIDs;
     using Listener = LayerListener;
@@ -115,10 +118,12 @@ struct Layer : ValueTreeObject
     auto addListener(Listener* listener) -> void;
     auto removeListener(Listener* listener) -> void;
 
+    auto valueTreePropertyChanged(juce::ValueTree& tree, juce::Identifier const& property) -> void override;
+
 private:
+    juce::ListenerList<Listener> _listeners;
     Canvas _canvas{*this};
     LayerList _children{valueTree(), *undoManager()};
-    juce::ListenerList<Listener> _listeners;
 
     juce::WeakReference<Layer>::Master masterReference; // NOLINT
     friend class juce::WeakReference<Layer>;

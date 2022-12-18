@@ -45,25 +45,29 @@ auto LayerList::objectOrderChanged() -> void
     if (onOrderChanged) { onOrderChanged(); }
 }
 
+auto LayerListener::layerPropertyChanged(Layer* layer, juce::Identifier const& property) -> void
+{
+    juce::ignoreUnused(layer, property);
+}
 auto LayerListener::layerChildrenChanged(Layer* layer) -> void { juce::ignoreUnused(layer); }
 auto LayerListener::layerBeingDeleted(Layer* layer) -> void { juce::ignoreUnused(layer); }
 
 LayerCanvas::LayerCanvas(Layer& layer) : _layer{layer}
 {
-    _layer.valueTree().addListener(this);
+    _layer.addListener(this);
     setComponentID(layer.getUUID());
 }
 
-LayerCanvas::~LayerCanvas() { _layer.valueTree().removeListener(this); }
+LayerCanvas::~LayerCanvas() { _layer.removeListener(this); }
 
 auto LayerCanvas::layer() -> Layer& { return _layer; }
 auto LayerCanvas::layer() const -> Layer const& { return _layer; }
 
 auto LayerCanvas::paint(juce::Graphics& g) -> void { _layer.paintLayer(g); }
 
-auto LayerCanvas::valueTreePropertyChanged(juce::ValueTree& tree, juce::Identifier const& property) -> void
+auto LayerCanvas::layerPropertyChanged(Layer* l, juce::Identifier const& property) -> void
 {
-    if (tree != layer().valueTree()) { return repaint(); }
+    if (l->valueTree() != layer().valueTree()) { return repaint(); }
 
     // ID & Name
     using IDs = Layer::IDs;
@@ -108,10 +112,13 @@ Layer::Layer(juce::ValueTree vt, juce::UndoManager& um) : ValueTreeObject{std::m
     if (not valueTree().hasProperty(IDs::name)) {
         valueTree().setProperty(IDs::name, valueTree().getType().toString(), undoManager());
     }
+
+    valueTree().addListener(this);
 }
 
 Layer::~Layer()
 {
+    valueTree().removeListener(this);
     _listeners.call(&Listener::layerBeingDeleted, this);
     masterReference.clear();
 }
@@ -164,4 +171,9 @@ auto Layer::getChildren() const -> juce::Array<Layer*> const& { return _children
 auto Layer::addListener(Listener* listener) -> void { _listeners.add(listener); }
 auto Layer::removeListener(Listener* listener) -> void { _listeners.remove(listener); }
 
+auto Layer::valueTreePropertyChanged(juce::ValueTree& tree, juce::Identifier const& property) -> void
+{
+    if (tree != valueTree()) { return; }
+    _listeners.call(&Listener::layerPropertyChanged, this, property);
+}
 } // namespace mc

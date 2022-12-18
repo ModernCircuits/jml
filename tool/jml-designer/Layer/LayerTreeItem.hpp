@@ -28,6 +28,7 @@ struct LayerTreeItem final
     auto itemDropped(juce::DragAndDropTarget::SourceDetails const& sourceDetails, int index) -> void override;
 
     // Layer::Listener
+    auto layerPropertyChanged(Layer* layer, juce::Identifier const& property) -> void override;
     auto layerChildrenChanged(Layer* layer) -> void override;
 
 private:
