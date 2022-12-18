@@ -21,11 +21,11 @@ auto LayerPropertyPanel::changeListenerCallback(juce::ChangeBroadcaster* source)
 
     auto* const tree = dynamic_cast<LayerTree*>(source);
     if (tree == nullptr) { return; }
+    if (tree->getNumSelectedItems() > 1) { return; }
 
     auto* const selected      = tree->getSelectedItem(0);
     auto* const layerTreeItem = dynamic_cast<LayerTreeItem*>(selected);
     if (layerTreeItem == nullptr) { return; }
-
     layerTreeItem->getLayer().fillPropertyPanel(_panel);
 }
 

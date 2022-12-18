@@ -6,17 +6,15 @@
 
 namespace mc {
 
-struct GroupLayer;
-
 struct Document
 {
     Document(juce::ValueTree valueTree, juce::UndoManager* um);
 
     [[nodiscard]] auto getRootLayer() const -> Layer*;
 
-    [[nodiscard]] auto valueTree() -> juce::ValueTree&;
-    [[nodiscard]] auto valueTree() const -> juce::ValueTree const&;
-    [[nodiscard]] auto undoManager() const -> juce::UndoManager*;
+    [[nodiscard]] auto getValueTree() -> juce::ValueTree&;
+    [[nodiscard]] auto getValueTree() const -> juce::ValueTree const&;
+    [[nodiscard]] auto getUndoManager() const -> juce::UndoManager*;
 
     auto save(juce::File const& file) -> void;
     [[nodiscard]] static auto load(juce::File const& file, juce::UndoManager* um) -> UniquePtr<Document>;
@@ -25,7 +23,7 @@ private:
     juce::ValueTree _valueTree;
     juce::UndoManager* _undoManager;
 
-    UniquePtr<GroupLayer> _root;
+    UniquePtr<Layer> _root;
 };
 
 } // namespace mc

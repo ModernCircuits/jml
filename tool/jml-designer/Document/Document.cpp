@@ -6,20 +6,19 @@
 namespace mc {
 
 Document::Document(juce::ValueTree valueTree, juce::UndoManager* um)
-    : _valueTree{std::move(valueTree)}
-    , _undoManager{um}
-    , _root{makeUnique<GroupLayer>(_valueTree.getOrCreateChildWithName(GroupLayer::IDs::type, um), *um)}
+    : _valueTree{std::move(valueTree)}, _undoManager{um}
 {
-    _root->setX(0.0F);
-    _root->setY(0.0F);
-    _root->setWidth(750.0F);
-    _root->setHeight(750.0F);
-    _root->setName("Document");
-    _root->valueTree().appendChild(juce::ValueTree{ShapeLayer::IDs::type}, nullptr);
-    _root->valueTree().appendChild(juce::ValueTree{ShapeLayer::IDs::type}, nullptr);
-    _root->valueTree().appendChild(juce::ValueTree{ShapeLayer::IDs::type}, nullptr);
+    auto group = makeUnique<GroupLayer>(_valueTree.getOrCreateChildWithName(GroupLayer::IDs::type, um), *um);
+    group->setX(0.0F);
+    group->setY(0.0F);
+    group->setWidth(750.0F);
+    group->setHeight(750.0F);
+    group->setName("Document");
+    group->valueTree().appendChild(juce::ValueTree{ShapeLayer::IDs::type}, nullptr);
+    group->valueTree().appendChild(juce::ValueTree{ShapeLayer::IDs::type}, nullptr);
+    group->valueTree().appendChild(juce::ValueTree{ShapeLayer::IDs::type}, nullptr);
 
-    auto& children = _root->getChildren();
+    auto& children = group->getChildren();
     auto& green    = *children[0];
     green.setX(300.0F);
     green.setY(300.0F);
@@ -46,17 +45,19 @@ Document::Document(juce::ValueTree valueTree, juce::UndoManager* um)
     red.setBackgroundFill(juce::Colours::red);
     red.setOpacity(1.0F);
     red.setName("Red");
+
+    _root = std::move(group);
 }
 
 auto Document::getRootLayer() const -> Layer* { return _root.get(); }
-auto Document::valueTree() -> juce::ValueTree& { return _valueTree; }
-auto Document::valueTree() const -> juce::ValueTree const& { return _valueTree; }
-auto Document::undoManager() const -> juce::UndoManager* { return _undoManager; }
+auto Document::getValueTree() -> juce::ValueTree& { return _valueTree; }
+auto Document::getValueTree() const -> juce::ValueTree const& { return _valueTree; }
+auto Document::getUndoManager() const -> juce::UndoManager* { return _undoManager; }
 
 auto Document::save(juce::File const& file) -> void
 {
     if (file == juce::File{}) { return; }
-    saveValueTree(valueTree(), file, true);
+    saveValueTree(getValueTree(), file, true);
 }
 
 auto Document::load(juce::File const& file, juce::UndoManager* um) -> UniquePtr<Document>

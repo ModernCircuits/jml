@@ -18,7 +18,7 @@ MainComponent::MainComponent()
     setSize(1280, 720);
 }
 
-MainComponent::~MainComponent() { DBG(_document->valueTree().toXmlString()); }
+MainComponent::~MainComponent() { DBG(_document->getValueTree().toXmlString()); }
 
 auto MainComponent::paint(juce::Graphics& g) -> void
 {
