@@ -19,7 +19,8 @@ Document::Document(juce::ValueTree valueTree, juce::UndoManager* um)
     _root->valueTree().appendChild(juce::ValueTree{DrawableLayer::IDs::type}, nullptr);
     _root->valueTree().appendChild(juce::ValueTree{DrawableLayer::IDs::type}, nullptr);
 
-    auto& green = (*_root)[0];
+    auto& children = _root->getChildLayers();
+    auto& green    = *children[0];
     green.setX(300.0F);
     green.setY(300.0F);
     green.setWidth(100.0F);
@@ -28,7 +29,7 @@ Document::Document(juce::ValueTree valueTree, juce::UndoManager* um)
     green.setOpacity(1.0F);
     green.setName("Green");
 
-    auto& black = (*_root)[1];
+    auto& black = *children[1];
     black.setX(250.0F);
     black.setY(250.0F);
     black.setWidth(250.0F);
@@ -37,7 +38,7 @@ Document::Document(juce::ValueTree valueTree, juce::UndoManager* um)
     black.setOpacity(1.0F);
     black.setName("Black");
 
-    auto& red = (*_root)[2];
+    auto& red = *children[2];
     red.setX(520.0F);
     red.setY(250.0F);
     red.setWidth(150.0F);

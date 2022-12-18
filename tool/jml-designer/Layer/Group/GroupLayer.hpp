@@ -6,9 +6,7 @@
 
 namespace mc {
 
-struct GroupLayer final
-    : Layer
-    , ValueTreeObjectList<Layer>
+struct GroupLayer final : Layer
 {
     struct IDs
     {
@@ -16,15 +14,9 @@ struct GroupLayer final
     };
 
     GroupLayer(juce::ValueTree const& v, juce::UndoManager& undoManager);
-    ~GroupLayer() override;
+    ~GroupLayer() override = default;
 
-private:
-    [[nodiscard]] auto isSuitableType(juce::ValueTree const& v) const -> bool override;
-    auto createNewObject(juce::ValueTree const& v) -> Layer* override;
-    auto deleteObject(Layer* c) -> void override;
-    auto newObjectAdded(Layer* layer) -> void override;
-    auto objectRemoved(Layer* layer) -> void override;
-    auto objectOrderChanged() -> void override;
+    auto mightContainChildLayers() -> bool override;
 };
 
 } // namespace mc

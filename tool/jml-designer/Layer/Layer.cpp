@@ -80,9 +80,26 @@ auto LayerCanvas::valueTreePropertyChanged(juce::ValueTree& tree, juce::Identifi
 
 Layer::Layer(juce::ValueTree vt, juce::UndoManager& um) : ValueTreeObject{std::move(vt), &um}
 {
-    _children.onAdded        = [this](Layer*) { _listeners.call(&Listener::layerChildrenChanged, this); };
-    _children.onRemoved      = [this](Layer*) { _listeners.call(&Listener::layerChildrenChanged, this); };
-    _children.onOrderChanged = [this]() { _listeners.call(&Listener::layerChildrenChanged, this); };
+    _children.onAdded = [this](Layer* layer) {
+        jassert(mightContainChildLayers());
+
+        auto& childCanvas = layer->getCanvas();
+        getCanvas().addAndMakeVisible(childCanvas);
+        for (auto* l : _children) { l->getCanvas().toBack(); }
+        childCanvas.setBounds(layer->getBounds().toNearestInt());
+        childCanvas.repaint();
+
+        _listeners.call(&Listener::layerChildrenChanged, this);
+    };
+    _children.onRemoved = [this](Layer* layer) {
+        getCanvas().removeChildComponent(&layer->getCanvas());
+        for (auto* l : _children) { l->getCanvas().toBack(); }
+        _listeners.call(&Listener::layerChildrenChanged, this);
+    };
+    _children.onOrderChanged = [this]() {
+        for (auto* l : _children) { l->getCanvas().toBack(); }
+        _listeners.call(&Listener::layerChildrenChanged, this);
+    };
     _children.rebuildObjects();
 
     if (not valueTree().hasProperty(IDs::uuid)) {
@@ -100,6 +117,8 @@ Layer::~Layer()
 }
 
 auto Layer::paintLayer(juce::Graphics& g) -> void { juce::ignoreUnused(g); }
+
+auto Layer::mightContainChildLayers() -> bool { return false; }
 
 auto Layer::getCanvas() -> Canvas& { return _canvas; }
 

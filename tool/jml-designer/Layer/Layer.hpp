@@ -78,6 +78,7 @@ struct Layer : ValueTreeObject
     Layer(juce::ValueTree vt, juce::UndoManager& um);
     virtual ~Layer();
 
+    [[nodiscard]] virtual auto mightContainChildLayers() -> bool;
     virtual auto paintLayer(juce::Graphics& g) -> void;
 
     [[nodiscard]] auto getCanvas() -> Canvas&;

@@ -26,7 +26,7 @@ struct LayerTreeItem
     auto getDragSourceDescription() -> juce::var override;
 
 protected:
-    juce::WeakReference<Layer> _layer{nullptr};
+    Layer& _layer;
 
     auto layerChildrenChanged(Layer* layer) -> void override;
     auto treeChildrenChanged(Layer* layer) -> void;

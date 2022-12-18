@@ -5,7 +5,7 @@
 
 namespace mc {
 
-static auto createLayerTreeItemForType(Layer& layer) -> LayerTreeItem*
+static auto createLayerTreeItem(Layer& layer) -> LayerTreeItem*
 {
     auto const& v = layer.valueTree();
     if (v.hasType(GroupLayer::IDs::type)) { return new GroupLayerTreeItem{layer}; }
@@ -14,40 +14,16 @@ static auto createLayerTreeItemForType(Layer& layer) -> LayerTreeItem*
     return nullptr;
 }
 
-LayerTreeItem::LayerTreeItem(Layer& layer) : _layer{&layer}
-{
-    jassert(_layer != nullptr);
-    _layer->addListener(this);
-}
-LayerTreeItem::~LayerTreeItem()
-{
-    if (_layer == nullptr) { return; }
-    _layer->removeListener(this);
-}
+LayerTreeItem::LayerTreeItem(Layer& layer) : _layer{layer} { _layer.addListener(this); }
+LayerTreeItem::~LayerTreeItem() { _layer.removeListener(this); }
 
-auto LayerTreeItem::getState() const -> juce::ValueTree
-{
-    jassert(_layer != nullptr);
-    return _layer->valueTree();
-}
+auto LayerTreeItem::getState() const -> juce::ValueTree { return _layer.valueTree(); }
 
-auto LayerTreeItem::getUndoManager() const -> juce::UndoManager*
-{
-    jassert(_layer != nullptr);
-    return _layer->undoManager();
-}
+auto LayerTreeItem::getUndoManager() const -> juce::UndoManager* { return _layer.undoManager(); }
 
-auto LayerTreeItem::getDisplayText() -> juce::String
-{
-    jassert(_layer != nullptr);
-    return _layer->getName();
-}
+auto LayerTreeItem::getDisplayText() -> juce::String { return _layer.getName(); }
 
-auto LayerTreeItem::getUniqueName() const -> juce::String
-{
-    jassert(_layer != nullptr);
-    return _layer->getUUID();
-}
+auto LayerTreeItem::getUniqueName() const -> juce::String { return _layer.getUUID(); }
 
 auto LayerTreeItem::mightContainSubItems() -> bool { return getState().getNumChildren() > 0; }
 
@@ -86,7 +62,7 @@ auto LayerTreeItem::layerChildrenChanged(Layer* layer) -> void { treeChildrenCha
 
 auto LayerTreeItem::treeChildrenChanged(Layer* layer) -> void
 {
-    if (_layer == layer) {
+    if (&_layer == layer) {
         refreshSubItems();
         treeHasChanged();
         setOpen(true);
@@ -95,13 +71,10 @@ auto LayerTreeItem::treeChildrenChanged(Layer* layer) -> void
 
 auto LayerTreeItem::refreshSubItems() -> void
 {
-    jassert(_layer != nullptr);
-
     clearSubItems();
-    DBG(_layer->getName() << ": " << _layer->getNumChildLayers() << ", " << _layer->valueTree().getNumChildren());
-
-    for (auto* child : _layer->getChildLayers()) {
-        if (auto* item = createLayerTreeItemForType(*child); item != nullptr) { addSubItem(item); }
+    for (auto* child : _layer.getChildLayers()) {
+        auto* item = createLayerTreeItem(*child);
+        if (item != nullptr) { addSubItem(item); }
     }
 }
 
