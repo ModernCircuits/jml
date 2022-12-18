@@ -25,9 +25,17 @@ auto SelectionTool::paintTool(juce::Graphics& g) -> void
 
 auto SelectionTool::mouseDown(juce::MouseEvent const& event) -> void
 {
-    _layer        = &dynamic_cast<Layer::Canvas*>(event.eventComponent)->layer();
+    SCOPE_EXIT { canvas().repaint(); };
+
+    auto layerCanvas = dynamic_cast<Layer::Canvas*>(event.eventComponent);
+    if (layerCanvas == nullptr) {
+        _layer        = nullptr;
+        _selectedTree = juce::ValueTree{};
+        return;
+    }
+
+    _layer        = &layerCanvas->layer();
     _selectedTree = _layer == nullptr ? juce::ValueTree{} : _layer->valueTree();
-    canvas().repaint();
 }
 
 auto SelectionTool::valueTreePropertyChanged(juce::ValueTree& /*tree*/, juce::Identifier const& /*property*/) -> void
