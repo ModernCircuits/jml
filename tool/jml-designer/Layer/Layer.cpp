@@ -81,7 +81,7 @@ auto LayerCanvas::valueTreePropertyChanged(juce::ValueTree& tree, juce::Identifi
 Layer::Layer(juce::ValueTree vt, juce::UndoManager& um) : ValueTreeObject{std::move(vt), &um}
 {
     _children.onAdded = [this](Layer* layer) {
-        jassert(mightContainChildLayers());
+        jassert(mightHaveChildren());
 
         auto& childCanvas = layer->getCanvas();
         getCanvas().addAndMakeVisible(childCanvas);
@@ -118,7 +118,7 @@ Layer::~Layer()
 
 auto Layer::paintLayer(juce::Graphics& g) -> void { juce::ignoreUnused(g); }
 
-auto Layer::mightContainChildLayers() -> bool { return false; }
+auto Layer::mightHaveChildren() -> bool { return false; }
 
 auto Layer::getCanvas() -> Canvas& { return _canvas; }
 
@@ -157,9 +157,9 @@ auto Layer::setHeight(float height) -> void { valueTree().setProperty(IDs::heigh
 
 auto Layer::getBounds() const -> juce::Rectangle<float> { return {getX(), getY(), getWidth(), getHeight()}; }
 
-auto Layer::getNumChildLayers() const -> int { return _children.size(); }
+auto Layer::getNumChildren() const -> int { return _children.size(); }
 
-auto Layer::getChildLayers() const -> juce::Array<Layer*> const& { return _children.objects; }
+auto Layer::getChildren() const -> juce::Array<Layer*> const& { return _children.objects; }
 
 auto Layer::addListener(Listener* listener) -> void { _listeners.add(listener); }
 auto Layer::removeListener(Listener* listener) -> void { _listeners.remove(listener); }

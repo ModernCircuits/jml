@@ -1,8 +1,6 @@
 #pragma once
 
-#include "Layer/Group/GroupLayerTreeItem.hpp"
-
-#include <mc_gui_basics/mc_gui_basics.hpp>
+#include <mc_gui_extra/mc_gui_extra.hpp>
 
 namespace mc {
 

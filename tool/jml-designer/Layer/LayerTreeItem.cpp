@@ -1,17 +1,15 @@
 #include "LayerTreeItem.hpp"
 
-#include "Layer/Drawable/DrawableLayerTreeItem.hpp"
-#include "Layer/Group/GroupLayerTreeItem.hpp"
+#include "Component/TreeView.hpp"
 
 namespace mc {
 
-static auto createLayerTreeItem(Layer& layer) -> LayerTreeItem*
+static auto getSelectedValueTrees(juce::TreeView& treeView) -> Vector<juce::ValueTree>
 {
-    auto const& v = layer.valueTree();
-    if (v.hasType(GroupLayer::IDs::type)) { return new GroupLayerTreeItem{layer}; }
-    if (v.hasType(DrawableLayer::IDs::type)) { return new DrawableLayerTreeItem{layer}; }
-    jassertfalse;
-    return nullptr;
+    auto items        = Vector<juce::ValueTree>{};
+    auto addValueTree = [&items](auto const& i) { items.push_back(i.getState()); };
+    forEachSelectedItemWithType<LayerTreeItem>(treeView, addValueTree);
+    return items;
 }
 
 LayerTreeItem::LayerTreeItem(Layer& layer) : _layer{layer} { _layer.addListener(this); }
@@ -25,7 +23,7 @@ auto LayerTreeItem::getDisplayText() -> juce::String { return _layer.getName(); 
 
 auto LayerTreeItem::getUniqueName() const -> juce::String { return _layer.getUUID(); }
 
-auto LayerTreeItem::mightContainSubItems() -> bool { return getState().getNumChildren() > 0; }
+auto LayerTreeItem::mightContainSubItems() -> bool { return _layer.getNumChildren() > 0; }
 
 auto LayerTreeItem::paintItem(juce::Graphics& g, int width, int height) -> void
 {
@@ -53,27 +51,38 @@ auto LayerTreeItem::itemSelectionChanged(bool /*isNowSelected*/) -> void
 
 auto LayerTreeItem::getDragSourceDescription() -> juce::var { return getState().getType().toString(); }
 
+auto LayerTreeItem::isInterestedInDragSource(juce::DragAndDropTarget::SourceDetails const& /*sourceDetails*/) -> bool
+{
+    return _layer.mightHaveChildren();
+}
+
+auto LayerTreeItem::itemDropped(juce::DragAndDropTarget::SourceDetails const& /*sourceDetails*/, int index) -> void
+{
+    auto& treeView      = *getOwnerView();
+    auto selectedLayers = getSelectedValueTrees(treeView);
+    auto oldOpenness    = treeView.getOpennessState(false);
+    moveItems(selectedLayers, getState(), index, *getUndoManager());
+    if (oldOpenness != nullptr) { treeView.restoreOpennessState(*oldOpenness, false); }
+}
+
 // auto LayerTreeItem::valueTreePropertyChanged(juce::ValueTree& /*tree*/, juce::Identifier const& /*property*/) -> void
 // {
 //     repaintItem();
 // }
 
-auto LayerTreeItem::layerChildrenChanged(Layer* layer) -> void { treeChildrenChanged(layer); }
-
-auto LayerTreeItem::treeChildrenChanged(Layer* layer) -> void
+auto LayerTreeItem::layerChildrenChanged(Layer* layer) -> void
 {
-    if (&_layer == layer) {
-        refreshSubItems();
-        treeHasChanged();
-        setOpen(true);
-    }
+    jassert(&_layer == layer);
+    refreshSubItems();
+    treeHasChanged();
+    setOpen(true);
 }
 
 auto LayerTreeItem::refreshSubItems() -> void
 {
     clearSubItems();
-    for (auto* child : _layer.getChildLayers()) {
-        auto* item = createLayerTreeItem(*child);
+    for (auto* child : _layer.getChildren()) {
+        auto* item = new LayerTreeItem(*child);
         if (item != nullptr) { addSubItem(item); }
     }
 }

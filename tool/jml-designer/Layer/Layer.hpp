@@ -78,7 +78,7 @@ struct Layer : ValueTreeObject
     Layer(juce::ValueTree vt, juce::UndoManager& um);
     virtual ~Layer();
 
-    [[nodiscard]] virtual auto mightContainChildLayers() -> bool;
+    [[nodiscard]] virtual auto mightHaveChildren() -> bool;
     virtual auto paintLayer(juce::Graphics& g) -> void;
 
     [[nodiscard]] auto getCanvas() -> Canvas&;
@@ -109,8 +109,8 @@ struct Layer : ValueTreeObject
 
     [[nodiscard]] auto getBounds() const -> juce::Rectangle<float>;
 
-    [[nodiscard]] auto getNumChildLayers() const -> int;
-    [[nodiscard]] auto getChildLayers() const -> juce::Array<Layer*> const&;
+    [[nodiscard]] auto getNumChildren() const -> int;
+    [[nodiscard]] auto getChildren() const -> juce::Array<Layer*> const&;
 
     auto addListener(Listener* listener) -> void;
     auto removeListener(Listener* listener) -> void;

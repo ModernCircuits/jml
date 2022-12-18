@@ -67,13 +67,9 @@ set(sources
 
     Layer/Group/GroupLayer.cpp
     Layer/Group/GroupLayer.hpp
-    Layer/Group/GroupLayerTreeItem.cpp
-    Layer/Group/GroupLayerTreeItem.hpp
 
     Layer/Drawable/DrawableLayer.cpp
     Layer/Drawable/DrawableLayer.hpp
-    Layer/Drawable/DrawableLayerTreeItem.cpp
-    Layer/Drawable/DrawableLayerTreeItem.hpp
 
     LookAndFeel/LookAndFeel.hpp
 

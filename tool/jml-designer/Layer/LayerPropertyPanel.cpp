@@ -1,6 +1,7 @@
 #include "LayerPropertyPanel.hpp"
 
 #include "Layer/LayerTree.hpp"
+#include "Layer/LayerTreeItem.hpp"
 #include <mc_gui_extra/mc_gui_extra.hpp>
 
 namespace mc {

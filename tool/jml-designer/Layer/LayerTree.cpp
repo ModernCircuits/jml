@@ -1,10 +1,10 @@
 #include "LayerTree.hpp"
 
-#include "Layer/Group/GroupLayerTreeItem.hpp"
+#include "Layer/LayerTreeItem.hpp"
 
 namespace mc {
 
-LayerTree::LayerTree(Document& document) : _root{makeUnique<GroupLayerTreeItem>(*document.getRootLayer())}
+LayerTree::LayerTree(Document& document) : _root{makeUnique<LayerTreeItem>(*document.getRootLayer())}
 {
     setRootItemVisible(false);
     setMultiSelectEnabled(true);

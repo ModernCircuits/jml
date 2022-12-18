@@ -19,7 +19,7 @@ Document::Document(juce::ValueTree valueTree, juce::UndoManager* um)
     _root->valueTree().appendChild(juce::ValueTree{DrawableLayer::IDs::type}, nullptr);
     _root->valueTree().appendChild(juce::ValueTree{DrawableLayer::IDs::type}, nullptr);
 
-    auto& children = _root->getChildLayers();
+    auto& children = _root->getChildren();
     auto& green    = *children[0];
     green.setX(300.0F);
     green.setY(300.0F);

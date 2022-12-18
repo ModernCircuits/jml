@@ -16,7 +16,7 @@ struct GroupLayer final : Layer
     GroupLayer(juce::ValueTree const& v, juce::UndoManager& undoManager);
     ~GroupLayer() override = default;
 
-    auto mightContainChildLayers() -> bool override;
+    auto mightHaveChildren() -> bool override;
 };
 
 } // namespace mc
