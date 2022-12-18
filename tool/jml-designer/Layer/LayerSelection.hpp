@@ -22,6 +22,7 @@ struct LayerSelection
 
     auto add(Layer* layer) -> void;
     auto remove(Layer* layer) -> void;
+    auto addOrRemove(Layer* layer) -> void;
     auto clear() -> void;
 
     auto addListener(Listener* listener) -> void;

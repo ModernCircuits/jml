@@ -35,7 +35,7 @@ auto SelectionTool::mouseDown(juce::MouseEvent const& event) -> void
     getLayerSelection().clear();
     auto layerCanvas = dynamic_cast<Layer::Canvas*>(event.eventComponent);
     if (layerCanvas == nullptr) { return; }
-    getLayerSelection().add(&layerCanvas->layer());
+    getLayerSelection().addOrRemove(&layerCanvas->layer());
 }
 
 auto SelectionTool::layerSelectionChanged(LayerSelection* selection) -> void

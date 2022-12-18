@@ -43,7 +43,8 @@ auto LayerTreeItem::itemOpennessChanged(bool isNowOpen) -> void
 
 auto LayerTreeItem::itemSelectionChanged(bool isNowSelected) -> void
 {
-    auto const ignoreCallbacks = juce::ScopedValueSetter<bool>{_ignoreSelectionCallbacks, true};
+    auto const ignoreCallbacks = juce::ScopedValueSetter<bool>{_ignoreItemSelectionCallbacks, true};
+    if (_ignoreLayerSelectionCallbacks) { return; }
 
     auto* const ov = getOwnerView();
     if (ov == nullptr) { return; }
@@ -93,8 +94,11 @@ auto LayerTreeItem::layerChildrenChanged(Layer* layer) -> void
 auto LayerTreeItem::layerSelectionChanged(Layer* layer) -> void
 {
     jassert(&_layer == layer);
-    if (_ignoreSelectionCallbacks) { return; }
-    setSelected(layer->isSelected(), false);
+
+    auto const ignoreCallbacks = juce::ScopedValueSetter<bool>{_ignoreLayerSelectionCallbacks, true};
+    if (_ignoreItemSelectionCallbacks) { return; }
+
+    if (isSelected() != layer->isSelected()) { setSelected(layer->isSelected(), false); }
 }
 
 auto LayerTreeItem::refreshSubItems() -> void

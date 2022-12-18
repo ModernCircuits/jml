@@ -37,7 +37,8 @@ private:
     auto refreshSubItems() -> void;
 
     Layer& _layer;
-    bool _ignoreSelectionCallbacks{false};
+    bool _ignoreItemSelectionCallbacks{false};
+    bool _ignoreLayerSelectionCallbacks{false};
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LayerTreeItem) // NOLINT
 };
