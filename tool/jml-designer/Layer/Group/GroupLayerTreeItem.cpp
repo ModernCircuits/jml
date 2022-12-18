@@ -10,9 +10,9 @@ static auto getSelectedValueTrees(juce::TreeView& treeView) -> Vector<juce::Valu
     return items;
 }
 
-GroupLayerTreeItem::GroupLayerTreeItem(juce::ValueTree const& v, juce::UndoManager& um) : LayerTreeItem(v, um)
+GroupLayerTreeItem::GroupLayerTreeItem(Layer& layer) : LayerTreeItem{layer}
 {
-    jassert(state.hasType(GroupLayer::IDs::type));
+    jassert(getState().hasType(GroupLayer::IDs::type));
 }
 
 auto GroupLayerTreeItem::isInterestedInDragSource(juce::DragAndDropTarget::SourceDetails const& /*sourceDetails*/)
@@ -26,7 +26,7 @@ auto GroupLayerTreeItem::itemDropped(juce::DragAndDropTarget::SourceDetails cons
     auto& treeView      = *getOwnerView();
     auto selectedLayers = getSelectedValueTrees(treeView);
     auto oldOpenness    = treeView.getOpennessState(false);
-    moveItems(selectedLayers, state, index, *getUndoManager());
+    moveItems(selectedLayers, getState(), index, *getUndoManager());
     if (oldOpenness != nullptr) { treeView.restoreOpennessState(*oldOpenness, false); }
 }
 

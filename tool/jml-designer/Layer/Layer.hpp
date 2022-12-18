@@ -8,6 +8,53 @@ namespace mc {
 
 struct Layer;
 
+struct LayerList final : ValueTreeObjectList<Layer>
+{
+    LayerList(juce::ValueTree v, juce::UndoManager& undoManager);
+    ~LayerList() override;
+
+    std::function<void(Layer*)> onAdded{};
+    std::function<void(Layer*)> onRemoved{};
+    std::function<void()> onOrderChanged{};
+
+private:
+    [[nodiscard]] auto isSuitableType(juce::ValueTree const& v) const -> bool override;
+    auto createNewObject(juce::ValueTree const& v) -> Layer* override;
+    auto deleteObject(Layer* c) -> void override;
+    auto newObjectAdded(Layer* layer) -> void override;
+    auto objectRemoved(Layer* layer) -> void override;
+    auto objectOrderChanged() -> void override;
+
+    juce::UndoManager& _undoManager;
+};
+
+struct LayerListener
+{
+    virtual ~LayerListener() = default;
+
+    virtual auto layerChildrenChanged(Layer* layer) -> void;
+    virtual auto layerBeingDeleted(Layer* layer) -> void;
+};
+
+struct LayerCanvas final
+    : juce::Component
+    , juce::ValueTree::Listener
+{
+    ~LayerCanvas() override;
+
+    [[nodiscard]] auto layer() -> Layer&;
+    [[nodiscard]] auto layer() const -> Layer const&;
+
+    auto paint(juce::Graphics& g) -> void override;
+    auto valueTreePropertyChanged(juce::ValueTree& tree, juce::Identifier const& property) -> void override;
+
+private:
+    explicit LayerCanvas(Layer& layer);
+
+    friend Layer;
+    Layer& _layer;
+};
+
 struct LayerIDs
 {
     inline static constexpr auto const* uuid = "uuid";
@@ -24,26 +71,9 @@ struct LayerIDs
 
 struct Layer : ValueTreeObject
 {
-    using IDs = LayerIDs;
-
-    struct Canvas final
-        : juce::Component
-        , juce::ValueTree::Listener
-    {
-        ~Canvas() override;
-
-        [[nodiscard]] auto layer() -> Layer&;
-        [[nodiscard]] auto layer() const -> Layer const&;
-
-        auto paint(juce::Graphics& g) -> void override;
-        auto valueTreePropertyChanged(juce::ValueTree& tree, juce::Identifier const& property) -> void override;
-
-    private:
-        explicit Canvas(Layer& layer);
-
-        friend Layer;
-        Layer& _layer;
-    };
+    using IDs      = LayerIDs;
+    using Listener = LayerListener;
+    using Canvas   = LayerCanvas;
 
     Layer(juce::ValueTree vt, juce::UndoManager& um);
     virtual ~Layer();
@@ -78,8 +108,16 @@ struct Layer : ValueTreeObject
 
     [[nodiscard]] auto getBounds() const -> juce::Rectangle<float>;
 
+    [[nodiscard]] auto getNumChildLayers() const -> int;
+    [[nodiscard]] auto getChildLayers() const -> juce::Array<Layer*> const&;
+
+    auto addListener(Listener* listener) -> void;
+    auto removeListener(Listener* listener) -> void;
+
 private:
     Canvas _canvas{*this};
+    LayerList _children{valueTree(), *undoManager()};
+    juce::ListenerList<Listener> _listeners;
 
     juce::WeakReference<Layer>::Master masterReference; // NOLINT
     friend class juce::WeakReference<Layer>;

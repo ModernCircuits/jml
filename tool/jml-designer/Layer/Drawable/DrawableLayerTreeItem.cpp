@@ -1,8 +1,8 @@
 #include "DrawableLayerTreeItem.hpp"
 
 namespace mc {
-DrawableLayerTreeItem::DrawableLayerTreeItem(juce::ValueTree const& v, juce::UndoManager& um) : LayerTreeItem(v, um)
+DrawableLayerTreeItem::DrawableLayerTreeItem(Layer& layer) : LayerTreeItem{layer}
 {
-    jassert(state.hasType(DrawableLayer::IDs::type));
+    jassert(getState().hasType(DrawableLayer::IDs::type));
 }
 } // namespace mc

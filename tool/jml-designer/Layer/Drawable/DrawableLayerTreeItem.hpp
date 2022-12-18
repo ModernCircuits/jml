@@ -8,7 +8,7 @@ namespace mc {
 
 struct DrawableLayerTreeItem final : LayerTreeItem
 {
-    DrawableLayerTreeItem(juce::ValueTree const& v, juce::UndoManager& um);
+    explicit DrawableLayerTreeItem(Layer& layer);
     ~DrawableLayerTreeItem() override = default;
 };
 

@@ -4,8 +4,7 @@
 
 namespace mc {
 
-LayerTree::LayerTree(Document& document)
-    : _root{makeUnique<GroupLayerTreeItem>(document.getRootLayer()->valueTree(), *document.undoManager())}
+LayerTree::LayerTree(Document& document) : _root{makeUnique<GroupLayerTreeItem>(*document.getRootLayer())}
 {
     setRootItemVisible(false);
     setMultiSelectEnabled(true);

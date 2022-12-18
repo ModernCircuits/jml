@@ -6,10 +6,10 @@ namespace mc {
 
 struct LayerTreeItem
     : juce::TreeViewItem
-    , protected juce::ValueTree::Listener
+    , protected Layer::Listener
 {
-    LayerTreeItem(juce::ValueTree v, juce::UndoManager& um);
-    ~LayerTreeItem() override = default;
+    explicit LayerTreeItem(Layer& layer);
+    ~LayerTreeItem() override;
 
     virtual auto getDisplayText() -> juce::String;
 
@@ -26,15 +26,10 @@ struct LayerTreeItem
     auto getDragSourceDescription() -> juce::var override;
 
 protected:
-    juce::ValueTree state;
-    juce::UndoManager& undoManager;
+    juce::WeakReference<Layer> _layer{nullptr};
 
-    auto treeChildrenChanged(juce::ValueTree const& tree) -> void;
-
-    auto valueTreePropertyChanged(juce::ValueTree& tree, juce::Identifier const& property) -> void override;
-    auto valueTreeChildAdded(juce::ValueTree& tree, juce::ValueTree& child) -> void override;
-    auto valueTreeChildRemoved(juce::ValueTree& tree, juce::ValueTree& child, int index) -> void override;
-    auto valueTreeChildOrderChanged(juce::ValueTree& tree, int oldIndex, int newIndex) -> void override;
+    auto layerChildrenChanged(Layer* layer) -> void override;
+    auto treeChildrenChanged(Layer* layer) -> void;
 
 private:
     auto refreshSubItems() -> void;

@@ -1,15 +1,103 @@
 #include "Layer.hpp"
 
+#include "Layer/Drawable/DrawableLayer.hpp"
+#include "Layer/Group/GroupLayer.hpp"
+
 namespace mc {
+
+LayerList::LayerList(juce::ValueTree v, juce::UndoManager& undoManager)
+    : ValueTreeObjectList<Layer>(v), _undoManager{undoManager}
+{
+    if (not v.hasProperty(Layer::IDs::name)) { v.setProperty(Layer::IDs::name, v.getType().toString(), &undoManager); }
+    rebuildObjects();
+}
+
+LayerList::~LayerList() { freeObjects(); }
+
+auto LayerList::isSuitableType(juce::ValueTree const& v) const -> bool
+{
+    if (v.getType() == juce::StringRef{DrawableLayer::IDs::type}) { return true; }
+    if (v.getType() == juce::StringRef{GroupLayer::IDs::type}) { return true; }
+    return false;
+}
+
+auto LayerList::createNewObject(juce::ValueTree const& v) -> Layer*
+{
+    if (v.getType() == juce::StringRef{DrawableLayer::IDs::type}) { return new DrawableLayer{v, _undoManager}; }
+    if (v.getType() == juce::StringRef{GroupLayer::IDs::type}) { return new GroupLayer{v, _undoManager}; }
+    return nullptr;
+}
+
+auto LayerList::deleteObject(Layer* c) -> void { delete c; }
+
+auto LayerList::newObjectAdded(Layer* layer) -> void
+{
+    if (onAdded) { onAdded(layer); }
+}
+
+auto LayerList::objectRemoved(Layer* layer) -> void
+{
+    if (onRemoved) { onRemoved(layer); }
+}
+
+auto LayerList::objectOrderChanged() -> void
+{
+    if (onOrderChanged) { onOrderChanged(); }
+}
+
+auto LayerListener::layerChildrenChanged(Layer* layer) -> void { juce::ignoreUnused(layer); }
+auto LayerListener::layerBeingDeleted(Layer* layer) -> void { juce::ignoreUnused(layer); }
+
+LayerCanvas::LayerCanvas(Layer& layer) : _layer{layer}
+{
+    _layer.valueTree().addListener(this);
+    setComponentID(layer.getUUID());
+}
+
+LayerCanvas::~LayerCanvas() { _layer.valueTree().removeListener(this); }
+
+auto LayerCanvas::layer() -> Layer& { return _layer; }
+auto LayerCanvas::layer() const -> Layer const& { return _layer; }
+
+auto LayerCanvas::paint(juce::Graphics& g) -> void { _layer.paintLayer(g); }
+
+auto LayerCanvas::valueTreePropertyChanged(juce::ValueTree& tree, juce::Identifier const& property) -> void
+{
+    if (tree != layer().valueTree()) { return repaint(); }
+
+    // ID & Name
+    using IDs = Layer::IDs;
+    if (property == juce::StringRef{IDs::uuid}) { setComponentID(layer().getUUID()); }
+    if (property == juce::StringRef{IDs::name}) { setName(layer().getName()); }
+
+    // Size
+    auto const hasID   = [&](auto id) { return property == juce::StringRef{id}; };
+    auto const sizeIDs = Array<char const*, 4>{IDs::x, IDs::y, IDs::width, IDs::height};
+    if (ranges::any_of(sizeIDs, hasID)) { setBounds(layer().getBounds().toNearestInt()); }
+
+    repaint();
+}
 
 Layer::Layer(juce::ValueTree vt, juce::UndoManager& um) : ValueTreeObject{std::move(vt), &um}
 {
+    _children.onAdded        = [this](Layer*) { _listeners.call(&Listener::layerChildrenChanged, this); };
+    _children.onRemoved      = [this](Layer*) { _listeners.call(&Listener::layerChildrenChanged, this); };
+    _children.onOrderChanged = [this]() { _listeners.call(&Listener::layerChildrenChanged, this); };
+    _children.rebuildObjects();
+
     if (not valueTree().hasProperty(IDs::uuid)) {
         valueTree().setProperty(IDs::uuid, juce::Uuid{}.toString(), undoManager());
     }
+    if (not valueTree().hasProperty(IDs::name)) {
+        valueTree().setProperty(IDs::name, valueTree().getType().toString(), undoManager());
+    }
 }
 
-Layer::~Layer() { masterReference.clear(); }
+Layer::~Layer()
+{
+    _listeners.call(&Listener::layerBeingDeleted, this);
+    masterReference.clear();
+}
 
 auto Layer::paintLayer(juce::Graphics& g) -> void { juce::ignoreUnused(g); }
 
@@ -50,33 +138,11 @@ auto Layer::setHeight(float height) -> void { valueTree().setProperty(IDs::heigh
 
 auto Layer::getBounds() const -> juce::Rectangle<float> { return {getX(), getY(), getWidth(), getHeight()}; }
 
-Layer::Canvas::Canvas(Layer& layer) : _layer{layer}
-{
-    _layer.valueTree().addListener(this);
-    setComponentID(layer.getUUID());
-}
+auto Layer::getNumChildLayers() const -> int { return _children.size(); }
 
-Layer::Canvas::~Canvas() { _layer.valueTree().removeListener(this); }
+auto Layer::getChildLayers() const -> juce::Array<Layer*> const& { return _children.objects; }
 
-auto Layer::Canvas::layer() -> Layer& { return _layer; }
-auto Layer::Canvas::layer() const -> Layer const& { return _layer; }
-
-auto Layer::Canvas::paint(juce::Graphics& g) -> void { _layer.paintLayer(g); }
-
-auto Layer::Canvas::valueTreePropertyChanged(juce::ValueTree& tree, juce::Identifier const& property) -> void
-{
-    if (tree != layer().valueTree()) { return repaint(); }
-
-    // ID & Name
-    if (property == juce::StringRef{IDs::uuid}) { setComponentID(layer().getUUID()); }
-    if (property == juce::StringRef{IDs::name}) { setName(layer().getName()); }
-
-    // Size
-    auto const hasID   = [&](auto id) { return property == juce::StringRef{id}; };
-    auto const sizeIDs = Array<char const*, 4>{IDs::x, IDs::y, IDs::width, IDs::height};
-    if (ranges::any_of(sizeIDs, hasID)) { setBounds(layer().getBounds().toNearestInt()); }
-
-    repaint();
-}
+auto Layer::addListener(Listener* listener) -> void { _listeners.add(listener); }
+auto Layer::removeListener(Listener* listener) -> void { _listeners.remove(listener); }
 
 } // namespace mc

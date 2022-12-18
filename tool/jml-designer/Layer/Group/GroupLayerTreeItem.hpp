@@ -8,7 +8,7 @@ namespace mc {
 
 struct GroupLayerTreeItem final : LayerTreeItem
 {
-    GroupLayerTreeItem(juce::ValueTree const& v, juce::UndoManager& um);
+    explicit GroupLayerTreeItem(Layer& layer);
     ~GroupLayerTreeItem() override = default;
 
     auto isInterestedInDragSource(juce::DragAndDropTarget::SourceDetails const& sourceDetails) -> bool override;
