@@ -19,6 +19,7 @@ struct LayerPropertyPanel final
 private:
     LayerSelection& _selection;
     juce::PropertyPanel _panel;
+    juce::TextButton _export{"Export to PNG"};
 };
 
 } // namespace mc

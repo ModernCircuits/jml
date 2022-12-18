@@ -40,54 +40,58 @@ set_target_properties(jml-designer
 )
 
 set(sources
-    Application/Application.cpp
-    Application/Application.hpp
-    Application/Main.cpp
-    Application/MainComponent.cpp
-    Application/MainComponent.hpp
+    "Application/Application.cpp"
+    "Application/Application.hpp"
+    "Application/Main.cpp"
+    "Application/MainComponent.cpp"
+    "Application/MainComponent.hpp"
 
-    Component/Button.hpp
-    Component/PropertyPanel.hpp
-    Component/TreeView.hpp
+    "Component/Button.hpp"
+    "Component/PropertyPanel.hpp"
+    "Component/TreeView.hpp"
 
-    Document/Document.cpp
-    Document/Document.hpp
-    Document/DocumentCanvas.cpp
-    Document/DocumentCanvas.hpp
-    Document/DocumentEditor.cpp
-    Document/DocumentEditor.hpp
+    "Document/Document.cpp"
+    "Document/Document.hpp"
+    "Document/DocumentCanvas.cpp"
+    "Document/DocumentCanvas.hpp"
+    "Document/DocumentEditor.cpp"
+    "Document/DocumentEditor.hpp"
 
-    Layer/Layer.cpp
-    Layer/Layer.hpp
-    Layer/LayerPropertyPanel.cpp
-    Layer/LayerPropertyPanel.hpp
-    Layer/LayerSelection.cpp
-    Layer/LayerSelection.hpp
-    Layer/LayerTree.cpp
-    Layer/LayerTree.hpp
-    Layer/LayerTreeItem.cpp
-    Layer/LayerTreeItem.hpp
+    "Export/Exporter.hpp"
+    "Export/ImageExporter.cpp"
+    "Export/ImageExporter.hpp"
 
-    Layer/Group/GroupLayer.cpp
-    Layer/Group/GroupLayer.hpp
+    "Layer/Layer.cpp"
+    "Layer/Layer.hpp"
+    "Layer/LayerPropertyPanel.cpp"
+    "Layer/LayerPropertyPanel.hpp"
+    "Layer/LayerSelection.cpp"
+    "Layer/LayerSelection.hpp"
+    "Layer/LayerTree.cpp"
+    "Layer/LayerTree.hpp"
+    "Layer/LayerTreeItem.cpp"
+    "Layer/LayerTreeItem.hpp"
 
-    Layer/Shape/ShapeLayer.cpp
-    Layer/Shape/ShapeLayer.hpp
+    "Layer/Group/GroupLayer.cpp"
+    "Layer/Group/GroupLayer.hpp"
 
-    LookAndFeel/LookAndFeel.hpp
+    "Layer/Shape/ShapeLayer.cpp"
+    "Layer/Shape/ShapeLayer.hpp"
 
-    Menu/CommandIDs.hpp
-    Menu/MenuBar.cpp
-    Menu/MenuBar.hpp
+    "LookAndFeel/LookAndFeel.hpp"
 
-    Tool/SelectionTool.cpp
-    Tool/SelectionTool.hpp
-    Tool/ShapeTool.cpp
-    Tool/ShapeTool.hpp
-    Tool/Tool.cpp
-    Tool/Tool.hpp
-    Tool/ToolBar.cpp
-    Tool/ToolBar.hpp
+    "Menu/CommandIDs.hpp"
+    "Menu/MenuBar.cpp"
+    "Menu/MenuBar.hpp"
+
+    "Tool/SelectionTool.cpp"
+    "Tool/SelectionTool.hpp"
+    "Tool/ShapeTool.cpp"
+    "Tool/ShapeTool.hpp"
+    "Tool/Tool.cpp"
+    "Tool/Tool.hpp"
+    "Tool/ToolBar.cpp"
+    "Tool/ToolBar.hpp"
 )
 
 target_sources(jml-designer PRIVATE ${sources})
