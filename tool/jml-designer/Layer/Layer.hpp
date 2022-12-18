@@ -47,6 +47,7 @@ struct LayerCanvas final
     [[nodiscard]] auto layer() const -> Layer const&;
 
     auto paint(juce::Graphics& g) -> void override;
+    auto paintOverChildren(juce::Graphics& g) -> void override;
     auto layerPropertyChanged(Layer* layer, juce::Identifier const& property) -> void override;
 
 private:
@@ -66,8 +67,9 @@ struct LayerIDs
     inline static constexpr auto const* width  = "width";
     inline static constexpr auto const* height = "height";
 
-    inline static constexpr auto const* background = "background";
-    inline static constexpr auto const* opacity    = "opacity";
+    inline static constexpr auto const* opacity        = "opacity";
+    inline static constexpr auto const* backgroundFill = "backgroundFill";
+    inline static constexpr auto const* overlayFill    = "overlayFill";
 };
 
 struct Layer
@@ -85,21 +87,10 @@ struct Layer
     virtual auto paintLayer(juce::Graphics& g) -> void;
     virtual auto addLayerProperties(juce::PropertyPanel& panel) -> void;
 
-    auto fillPropertyPanel(juce::PropertyPanel& panel) -> void;
-
-    [[nodiscard]] auto getCanvas() -> Canvas&;
-    [[nodiscard]] auto getCanvas() const -> Canvas const&;
-
     [[nodiscard]] auto getUUID() const -> juce::String;
 
     auto setName(juce::String const& newName) -> void;
     [[nodiscard]] auto getName() const -> juce::String;
-
-    auto setBackground(juce::Colour newColor) -> void;
-    [[nodiscard]] auto getBackground() const -> juce::Colour;
-
-    auto setOpacity(float newOpacity) -> void;
-    [[nodiscard]] auto getOpacity() const -> float;
 
     auto setX(float x) -> void;
     [[nodiscard]] auto getX() const -> float;
@@ -114,6 +105,19 @@ struct Layer
     [[nodiscard]] auto getHeight() const -> float;
 
     [[nodiscard]] auto getBounds() const -> juce::Rectangle<float>;
+
+    [[nodiscard]] auto getCanvas() -> Canvas&;
+    [[nodiscard]] auto getCanvas() const -> Canvas const&;
+    auto fillPropertyPanel(juce::PropertyPanel& panel) -> void;
+
+    auto setOpacity(float newOpacity) -> void;
+    [[nodiscard]] auto getOpacity() const -> float;
+
+    auto setBackgroundFill(juce::Colour newColor) -> void;
+    [[nodiscard]] auto getBackgroundFill() const -> juce::Colour;
+
+    auto setOverlayFill(juce::Colour newColor) -> void;
+    [[nodiscard]] auto getOverlayFill() const -> juce::Colour;
 
     [[nodiscard]] auto getNumChildren() const -> int;
     [[nodiscard]] auto getChildren() const -> juce::Array<Layer*> const&;

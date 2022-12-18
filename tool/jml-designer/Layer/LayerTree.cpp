@@ -6,7 +6,7 @@ namespace mc {
 
 LayerTree::LayerTree(Document& document) : _root{makeUnique<LayerTreeItem>(*document.getRootLayer())}
 {
-    setRootItemVisible(false);
+    // setRootItemVisible(false);
     setMultiSelectEnabled(true);
     setRootItem(_root.get());
     setIndentSize(16);

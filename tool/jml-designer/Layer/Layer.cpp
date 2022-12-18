@@ -64,7 +64,13 @@ LayerCanvas::~LayerCanvas() { _layer.removeListener(this); }
 auto LayerCanvas::layer() -> Layer& { return _layer; }
 auto LayerCanvas::layer() const -> Layer const& { return _layer; }
 
-auto LayerCanvas::paint(juce::Graphics& g) -> void { _layer.paintLayer(g); }
+auto LayerCanvas::paint(juce::Graphics& g) -> void
+{
+    g.fillAll(_layer.getBackgroundFill());
+    _layer.paintLayer(g);
+}
+
+auto LayerCanvas::paintOverChildren(juce::Graphics& g) -> void { g.fillAll(_layer.getOverlayFill()); }
 
 auto LayerCanvas::layerPropertyChanged(Layer* l, juce::Identifier const& property) -> void
 {
@@ -142,9 +148,16 @@ auto Layer::fillPropertyPanel(juce::PropertyPanel& panel) -> void
         makeSliderProperty(valueTree(), Layer::IDs::height, "Height", 0.0, 1000.0, 1.0),
     };
 
+    auto const fill = juce::Array<juce::PropertyComponent*>{
+        makeSliderProperty(valueTree(), IDs::opacity, "Opacity", 0.0, 1.0, 0.01),
+        makeColorProperty(valueTree(), IDs::backgroundFill, "Background", true),
+        makeColorProperty(valueTree(), IDs::overlayFill, "Overlay", true),
+    };
+
     panel.clear();
     panel.addSection("Layer", general);
     panel.addSection("Position", position);
+    panel.addSection("Fill", fill);
     addLayerProperties(panel);
 }
 auto Layer::addLayerProperties(juce::PropertyPanel& panel) -> void { juce::ignoreUnused(panel); }
@@ -159,14 +172,23 @@ auto Layer::getName() const -> juce::String { return valueTree().getProperty(IDs
 
 auto Layer::setName(juce::String const& name) -> void { valueTree().setProperty(IDs::name, name, undoManager()); }
 
-auto Layer::getBackground() const -> juce::Colour
+auto Layer::getBackgroundFill() const -> juce::Colour
 {
-    return fromVar<juce::Colour>(valueTree().getProperty(IDs::background));
+    return fromVar<juce::Colour>(valueTree().getProperty(IDs::backgroundFill));
 }
 
-auto Layer::setBackground(juce::Colour newColor) -> void
+auto Layer::setBackgroundFill(juce::Colour newColor) -> void
 {
-    valueTree().setProperty(IDs::background, toVar(newColor), undoManager());
+    valueTree().setProperty(IDs::backgroundFill, toVar(newColor), undoManager());
+}
+auto Layer::getOverlayFill() const -> juce::Colour
+{
+    return fromVar<juce::Colour>(valueTree().getProperty(IDs::overlayFill));
+}
+
+auto Layer::setOverlayFill(juce::Colour newColor) -> void
+{
+    valueTree().setProperty(IDs::overlayFill, toVar(newColor), undoManager());
 }
 
 auto Layer::getOpacity() const -> float { return static_cast<float>(valueTree().getProperty(IDs::opacity, 1.0F)); }

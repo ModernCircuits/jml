@@ -25,7 +25,7 @@ Document::Document(juce::ValueTree valueTree, juce::UndoManager* um)
     green.setY(300.0F);
     green.setWidth(100.0F);
     green.setHeight(100.0F);
-    green.setBackground(juce::Colours::green);
+    green.setBackgroundFill(juce::Colours::green);
     green.setOpacity(1.0F);
     green.setName("Green");
 
@@ -34,7 +34,7 @@ Document::Document(juce::ValueTree valueTree, juce::UndoManager* um)
     black.setY(250.0F);
     black.setWidth(250.0F);
     black.setHeight(250.0F);
-    black.setBackground(juce::Colours::black);
+    black.setBackgroundFill(juce::Colours::black);
     black.setOpacity(1.0F);
     black.setName("Black");
 
@@ -43,7 +43,7 @@ Document::Document(juce::ValueTree valueTree, juce::UndoManager* um)
     red.setY(250.0F);
     red.setWidth(150.0F);
     red.setHeight(150.0F);
-    red.setBackground(juce::Colours::red);
+    red.setBackgroundFill(juce::Colours::red);
     red.setOpacity(1.0F);
     red.setName("Red");
 }
