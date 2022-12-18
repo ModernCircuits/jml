@@ -51,6 +51,7 @@ auto LayerListener::layerPropertyChanged(Layer* layer, juce::Identifier const& p
     juce::ignoreUnused(layer, property);
 }
 auto LayerListener::layerChildrenChanged(Layer* layer) -> void { juce::ignoreUnused(layer); }
+auto LayerListener::layerSelectionChanged(Layer* layer) -> void { juce::ignoreUnused(layer); }
 auto LayerListener::layerBeingDeleted(Layer* layer) -> void { juce::ignoreUnused(layer); }
 
 LayerCanvas::LayerCanvas(Layer& layer) : _layer{layer}
@@ -205,6 +206,14 @@ auto Layer::setWidth(float width) -> void { valueTree().setProperty(IDs::width, 
 
 auto Layer::getHeight() const -> float { return static_cast<float>(valueTree().getProperty(IDs::height, 0.0F)); }
 auto Layer::setHeight(float height) -> void { valueTree().setProperty(IDs::height, height, undoManager()); }
+
+auto Layer::setSelected(bool isSelected) -> void
+{
+    if (_selected == isSelected) { return; }
+    _selected = isSelected;
+    _listeners.call(&Listener::layerSelectionChanged, this);
+}
+auto Layer::isSelected() const -> bool { return _selected; }
 
 auto Layer::getBounds() const -> juce::Rectangle<float> { return {getX(), getY(), getWidth(), getHeight()}; }
 

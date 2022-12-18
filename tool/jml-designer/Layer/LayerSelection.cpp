@@ -5,6 +5,7 @@ auto LayerSelection::getLayers() const -> Span<juce::WeakReference<Layer> const>
 
 auto LayerSelection::clear() -> void
 {
+    for (auto l : _layers) { l->setSelected(false); }
     _layers.clear();
     _listeners.call(&Listener::layerSelectionChanged, this);
 }
@@ -12,11 +13,13 @@ auto LayerSelection::clear() -> void
 auto LayerSelection::add(Layer* layer) -> void
 {
     _layers.emplace_back(layer);
+    layer->setSelected(true);
     _listeners.call(&Listener::layerSelectionChanged, this);
 }
 
 auto LayerSelection::remove(Layer* layer) -> void
 {
+    layer->setSelected(false);
     std::erase(_layers, layer);
     _listeners.call(&Listener::layerSelectionChanged, this);
 }

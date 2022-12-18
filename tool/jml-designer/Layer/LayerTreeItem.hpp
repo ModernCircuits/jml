@@ -31,11 +31,13 @@ struct LayerTreeItem final
     // Layer::Listener
     auto layerPropertyChanged(Layer* layer, juce::Identifier const& property) -> void override;
     auto layerChildrenChanged(Layer* layer) -> void override;
+    auto layerSelectionChanged(Layer* layer) -> void override;
 
 private:
     auto refreshSubItems() -> void;
 
     Layer& _layer;
+    bool _ignoreSelectionCallbacks{false};
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LayerTreeItem) // NOLINT
 };

@@ -34,6 +34,7 @@ struct LayerListener
 
     virtual auto layerPropertyChanged(Layer* layer, juce::Identifier const& property) -> void;
     virtual auto layerChildrenChanged(Layer* layer) -> void;
+    virtual auto layerSelectionChanged(Layer* layer) -> void;
     virtual auto layerBeingDeleted(Layer* layer) -> void;
 };
 
@@ -119,6 +120,9 @@ struct Layer
     auto setOverlayFill(juce::Colour newColor) -> void;
     [[nodiscard]] auto getOverlayFill() const -> juce::Colour;
 
+    auto setSelected(bool isSelected) -> void;
+    [[nodiscard]] auto isSelected() const -> bool;
+
     [[nodiscard]] auto getNumChildren() const -> int;
     [[nodiscard]] auto getChildren() const -> juce::Array<Layer*> const&;
 
@@ -131,6 +135,7 @@ private:
     juce::ListenerList<Listener> _listeners;
     Canvas _canvas{*this};
     LayerList _children{valueTree(), *undoManager()};
+    bool _selected{false};
 
     juce::WeakReference<Layer>::Master masterReference; // NOLINT
     friend class juce::WeakReference<Layer>;
