@@ -7,10 +7,10 @@ namespace mc {
 
 ShapeTool::ShapeTool(DocumentCanvas& c, Shape shape) noexcept : Tool{c}, _shape{shape}
 {
-    canvas().addMouseListener(this, true);
+    getDocumentCanvas().addMouseListener(this, true);
 }
 
-ShapeTool::~ShapeTool() { canvas().removeMouseListener(this); }
+ShapeTool::~ShapeTool() { getDocumentCanvas().removeMouseListener(this); }
 
 auto ShapeTool::paintTool(juce::Graphics& g) -> void
 {
@@ -25,9 +25,9 @@ auto ShapeTool::paintTool(juce::Graphics& g) -> void
 
 auto ShapeTool::mouseDrag(juce::MouseEvent const& event) -> void
 {
-    _start   = canvas().getLocalPoint(event.eventComponent, event.mouseDownPosition);
-    _current = canvas().getLocalPoint(event.eventComponent, event.position);
-    canvas().repaint();
+    _start   = getDocumentCanvas().getLocalPoint(event.eventComponent, event.mouseDownPosition);
+    _current = getDocumentCanvas().getLocalPoint(event.eventComponent, event.position);
+    getDocumentCanvas().repaint();
 }
 
 auto ShapeTool::mouseUp(juce::MouseEvent const& /*event*/) -> void
@@ -48,12 +48,12 @@ auto ShapeTool::mouseUp(juce::MouseEvent const& /*event*/) -> void
     shape.setProperty(Layer::IDs::backgroundFill, toVar(juce::Colours::white), nullptr);
     shape.setProperty(Layer::IDs::opacity, 1.0F, nullptr);
 
-    auto& doc = canvas().document();
+    auto& doc = getDocumentCanvas().document();
     doc.getRootLayer()->valueTree().appendChild(shape, doc.getUndoManager());
 
     _start.reset();
     _current.reset();
-    canvas().repaint();
+    getDocumentCanvas().repaint();
 }
 
 } // namespace mc

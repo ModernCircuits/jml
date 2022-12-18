@@ -21,8 +21,8 @@ struct Tool
 
     virtual auto paintTool(juce::Graphics& g) -> void = 0;
 
-    [[nodiscard]] auto canvas() -> DocumentCanvas&;
-    [[nodiscard]] auto canvas() const -> DocumentCanvas const&;
+    [[nodiscard]] auto getDocumentCanvas() -> DocumentCanvas&;
+    [[nodiscard]] auto getDocumentCanvas() const -> DocumentCanvas const&;
 
 private:
     DocumentCanvas* _canvas;

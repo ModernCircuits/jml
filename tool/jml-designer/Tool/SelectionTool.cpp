@@ -7,13 +7,13 @@ namespace mc {
 
 SelectionTool::SelectionTool(DocumentCanvas& c) noexcept : Tool{c}
 {
-    canvas().addMouseListener(this, true);
+    getDocumentCanvas().addMouseListener(this, true);
     getLayerSelection().addListener(this);
 }
 
 SelectionTool::~SelectionTool()
 {
-    canvas().removeMouseListener(this);
+    getDocumentCanvas().removeMouseListener(this);
     getLayerSelection().removeListener(this);
 }
 
@@ -24,13 +24,13 @@ auto SelectionTool::paintTool(juce::Graphics& g) -> void
         jassert(layer.get() != nullptr);
         auto const& lc = layer->getCanvas();
         g.setColour(juce::Colours::blue);
-        g.drawRect(canvas().getLocalArea(&lc, lc.getLocalBounds()), 2);
+        g.drawRect(getDocumentCanvas().getLocalArea(&lc, lc.getLocalBounds()), 2);
     }
 }
 
 auto SelectionTool::mouseDown(juce::MouseEvent const& event) -> void
 {
-    SCOPE_EXIT { canvas().repaint(); };
+    SCOPE_EXIT { getDocumentCanvas().repaint(); };
 
     getLayerSelection().clear();
     auto layerCanvas = dynamic_cast<Layer::Canvas*>(event.eventComponent);
@@ -41,13 +41,16 @@ auto SelectionTool::mouseDown(juce::MouseEvent const& event) -> void
 auto SelectionTool::layerSelectionChanged(LayerSelection* selection) -> void
 {
     jassertquiet(selection == &getLayerSelection());
-    canvas().repaint();
+    getDocumentCanvas().repaint();
 }
 
-auto SelectionTool::getLayerSelection() -> LayerSelection& { return canvas().document().getLayerSelection(); }
+auto SelectionTool::getLayerSelection() -> LayerSelection&
+{
+    return getDocumentCanvas().document().getLayerSelection();
+}
 auto SelectionTool::getLayerSelection() const -> LayerSelection const&
 {
-    return canvas().document().getLayerSelection();
+    return getDocumentCanvas().document().getLayerSelection();
 }
 
 } // namespace mc
