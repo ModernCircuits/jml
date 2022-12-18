@@ -21,11 +21,11 @@ auto LayerPropertyPanel::layerSelectionChanged(LayerSelection* selection) -> voi
     _panel.clear();
 
     auto layers = selection->getLayers();
-    DBG("SELECTED: " << layers.size());
-    for (auto l : layers) { DBG("\t" << l->getName()); }
-
     if (layers.size() != 1) { return; }
-    layers[0]->fillPropertyPanel(_panel);
+
+    auto selected = layers[0];
+    if (selected == nullptr) { return; }
+    selected->fillPropertyPanel(_panel);
 }
 
 } // namespace mc

@@ -5,14 +5,17 @@ auto LayerSelection::getLayers() const -> Span<juce::WeakReference<Layer> const>
 
 auto LayerSelection::clear() -> void
 {
+    for (auto layer : _layers) {
+        if (layer != nullptr) { remove(layer.get()); }
+    }
     _layers.clear();
-    for (auto l : _layers) { l->setSelected(false); }
     _listeners.call(&Listener::layerSelectionChanged, this);
 }
 
 auto LayerSelection::add(Layer* layer) -> void
 {
-    jassert(ranges::none_of(_layers, [layer](auto const& l) { return l.get() == layer; }));
+    jassert(layer != nullptr);
+    jassert(not isSelected(layer));
 
     _layers.emplace_back(layer);
     layer->setSelected(true);
@@ -21,20 +24,27 @@ auto LayerSelection::add(Layer* layer) -> void
 
 auto LayerSelection::remove(Layer* layer) -> void
 {
-    jassert(not ranges::none_of(_layers, [layer](auto const& l) { return l.get() == layer; }));
+    jassert(layer != nullptr);
+    jassert(isSelected(layer));
 
-    layer->setSelected(false);
     std::erase(_layers, layer);
+    layer->setSelected(false);
     _listeners.call(&Listener::layerSelectionChanged, this);
 }
 
 auto LayerSelection::addOrRemove(Layer* layer) -> void
 {
-    if (ranges::none_of(_layers, [layer](auto const& l) { return l.get() == layer; })) {
+    jassert(layer != nullptr);
+    if (not isSelected(layer)) {
         add(layer);
     } else {
         remove(layer);
     }
+}
+
+auto LayerSelection::isSelected(Layer* layer) const -> bool
+{
+    return not ranges::none_of(_layers, [layer](auto const& l) { return l.get() == layer; });
 }
 
 auto LayerSelection::addListener(Listener* listener) -> void { _listeners.add(listener); }

@@ -25,6 +25,8 @@ struct LayerSelection
     auto addOrRemove(Layer* layer) -> void;
     auto clear() -> void;
 
+    [[nodiscard]] auto isSelected(Layer* layer) const -> bool;
+
     auto addListener(Listener* listener) -> void;
     auto removeListener(Listener* listener) -> void;
 

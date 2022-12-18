@@ -21,7 +21,7 @@ auto SelectionTool::paintTool(juce::Graphics& g) -> void
 {
     auto const& selection = getLayerSelection();
     for (auto layer : selection.getLayers()) {
-        jassert(layer.get() != nullptr);
+        if (layer.get() == nullptr) { continue; }
         auto const& lc = layer->getCanvas();
         g.setColour(juce::Colours::blue);
         g.drawRect(getDocumentCanvas().getLocalArea(&lc, lc.getLocalBounds()), 2);
