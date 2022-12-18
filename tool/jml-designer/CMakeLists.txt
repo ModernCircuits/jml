@@ -61,6 +61,8 @@ set(sources
     Layer/Layer.hpp
     Layer/LayerPropertyPanel.cpp
     Layer/LayerPropertyPanel.hpp
+    Layer/LayerSelection.cpp
+    Layer/LayerSelection.hpp
     Layer/LayerTree.cpp
     Layer/LayerTree.hpp
     Layer/LayerTreeItem.cpp

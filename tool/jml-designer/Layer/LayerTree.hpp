@@ -15,7 +15,11 @@ struct LayerTree final
     explicit LayerTree(Document& document);
     ~LayerTree() override;
 
+    auto getDocument() -> Document& { return _document; }
+    auto getDocument() const -> Document const& { return _document; }
+
 private:
+    Document& _document;
     UniquePtr<LayerTreeItem> _root;
 };
 

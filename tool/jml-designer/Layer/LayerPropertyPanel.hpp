@@ -1,21 +1,23 @@
 #pragma once
 
+#include "Layer/LayerSelection.hpp"
+
 #include <mc_gui_extra/mc_gui_extra.hpp>
 
 namespace mc {
 
 struct LayerPropertyPanel final
     : juce::Component
-    , juce::ChangeListener
+    , LayerSelection::Listener
 {
-    explicit LayerPropertyPanel(juce::ChangeBroadcaster& src);
+    explicit LayerPropertyPanel(LayerSelection& selection);
     ~LayerPropertyPanel() override;
 
     auto resized() -> void override;
-    auto changeListenerCallback(juce::ChangeBroadcaster* source) -> void override;
+    auto layerSelectionChanged(LayerSelection* selection) -> void override;
 
 private:
-    juce::ChangeBroadcaster& _src;
+    LayerSelection& _selection;
     juce::PropertyPanel _panel;
 };
 

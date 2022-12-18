@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Layer/Layer.hpp"
+#include "Layer/LayerSelection.hpp"
 
 #include <mc_data_structures/mc_data_structures.hpp>
 
@@ -11,6 +12,8 @@ struct Document
     Document(juce::ValueTree valueTree, juce::UndoManager* um);
 
     [[nodiscard]] auto getRootLayer() const -> Layer*;
+    [[nodiscard]] auto getLayerSelection() -> LayerSelection&;
+    [[nodiscard]] auto getLayerSelection() const -> LayerSelection const&;
 
     [[nodiscard]] auto getValueTree() -> juce::ValueTree&;
     [[nodiscard]] auto getValueTree() const -> juce::ValueTree const&;
@@ -24,6 +27,7 @@ private:
     juce::UndoManager* _undoManager;
 
     UniquePtr<Layer> _root;
+    LayerSelection _layerSelection;
 };
 
 } // namespace mc

@@ -1,6 +1,7 @@
 #include "LayerTreeItem.hpp"
 
 #include "Component/TreeView.hpp"
+#include "Layer/LayerTree.hpp"
 
 namespace mc {
 
@@ -40,14 +41,21 @@ auto LayerTreeItem::itemOpennessChanged(bool isNowOpen) -> void
     clearSubItems();
 }
 
-auto LayerTreeItem::itemSelectionChanged(bool /*isNowSelected*/) -> void
+auto LayerTreeItem::itemSelectionChanged(bool isNowSelected) -> void
 {
     auto* const ov = getOwnerView();
     if (ov == nullptr) { return; }
 
-    auto* const cb = dynamic_cast<juce::ChangeBroadcaster*>(ov);
-    if (cb == nullptr) { return; }
-    cb->sendChangeMessage();
+    auto* const layerTree = dynamic_cast<LayerTree*>(ov);
+    jassert(layerTree != nullptr);
+    if (layerTree == nullptr) { return; }
+
+    auto& selection = layerTree->getDocument().getLayerSelection();
+    if (isNowSelected) {
+        selection.add(&getLayer());
+    } else {
+        selection.remove(&getLayer());
+    }
 }
 
 auto LayerTreeItem::getDragSourceDescription() -> juce::var { return getState().getType().toString(); }

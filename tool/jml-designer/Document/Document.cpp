@@ -50,6 +50,9 @@ Document::Document(juce::ValueTree valueTree, juce::UndoManager* um)
 }
 
 auto Document::getRootLayer() const -> Layer* { return _root.get(); }
+auto Document::getLayerSelection() -> LayerSelection& { return _layerSelection; }
+auto Document::getLayerSelection() const -> LayerSelection const& { return _layerSelection; }
+
 auto Document::getValueTree() -> juce::ValueTree& { return _valueTree; }
 auto Document::getValueTree() const -> juce::ValueTree const& { return _valueTree; }
 auto Document::getUndoManager() const -> juce::UndoManager* { return _undoManager; }

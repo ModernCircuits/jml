@@ -22,7 +22,7 @@ private:
     ToolBar _toolBar;
     DocumentCanvas _canvas{_document, _toolBar};
     LayerTree _layerTree{_document};
-    LayerPropertyPanel _propertyPanel{_layerTree};
+    LayerPropertyPanel _propertyPanel{_document.getLayerSelection()};
 };
 
 } // namespace mc

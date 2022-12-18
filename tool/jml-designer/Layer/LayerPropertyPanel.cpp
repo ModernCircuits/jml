@@ -5,28 +5,24 @@
 
 namespace mc {
 
-LayerPropertyPanel::LayerPropertyPanel(juce::ChangeBroadcaster& src) : _src{src}
+LayerPropertyPanel::LayerPropertyPanel(LayerSelection& selection) : _selection{selection}
 {
     addAndMakeVisible(_panel);
-    _src.addChangeListener(this);
+    _selection.addListener(this);
 }
 
-LayerPropertyPanel::~LayerPropertyPanel() { _src.removeChangeListener(this); }
+LayerPropertyPanel::~LayerPropertyPanel() { _selection.removeListener(this); }
 
 auto LayerPropertyPanel::resized() -> void { _panel.setBounds(getLocalBounds()); }
 
-auto LayerPropertyPanel::changeListenerCallback(juce::ChangeBroadcaster* source) -> void
+auto LayerPropertyPanel::layerSelectionChanged(LayerSelection* selection) -> void
 {
+    jassertquiet(selection == &_selection);
     _panel.clear();
 
-    auto* const tree = dynamic_cast<LayerTree*>(source);
-    if (tree == nullptr) { return; }
-    if (tree->getNumSelectedItems() > 1) { return; }
-
-    auto* const selected      = tree->getSelectedItem(0);
-    auto* const layerTreeItem = dynamic_cast<LayerTreeItem*>(selected);
-    if (layerTreeItem == nullptr) { return; }
-    layerTreeItem->getLayer().fillPropertyPanel(_panel);
+    auto layers = selection->getLayers();
+    if (layers.size() != 1) { return; }
+    layers[0]->fillPropertyPanel(_panel);
 }
 
 } // namespace mc
