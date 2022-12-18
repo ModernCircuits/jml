@@ -1,8 +1,8 @@
 #include "Layer.hpp"
 
 #include "Component/PropertyPanel.hpp"
-#include "Layer/Drawable/DrawableLayer.hpp"
 #include "Layer/Group/GroupLayer.hpp"
+#include "Layer/Shape/ShapeLayer.hpp"
 
 namespace mc {
 
@@ -17,14 +17,14 @@ LayerList::~LayerList() { freeObjects(); }
 
 auto LayerList::isSuitableType(juce::ValueTree const& v) const -> bool
 {
-    if (v.getType() == juce::StringRef{DrawableLayer::IDs::type}) { return true; }
+    if (v.getType() == juce::StringRef{ShapeLayer::IDs::type}) { return true; }
     if (v.getType() == juce::StringRef{GroupLayer::IDs::type}) { return true; }
     return false;
 }
 
 auto LayerList::createNewObject(juce::ValueTree const& v) -> Layer*
 {
-    if (v.getType() == juce::StringRef{DrawableLayer::IDs::type}) { return new DrawableLayer{v, _undoManager}; }
+    if (v.getType() == juce::StringRef{ShapeLayer::IDs::type}) { return new ShapeLayer{v, _undoManager}; }
     if (v.getType() == juce::StringRef{GroupLayer::IDs::type}) { return new GroupLayer{v, _undoManager}; }
     return nullptr;
 }

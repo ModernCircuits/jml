@@ -1,14 +1,14 @@
-#include "DrawableLayer.hpp"
+#include "ShapeLayer.hpp"
 
 #include "Component/PropertyPanel.hpp"
 
 namespace mc {
 
-DrawableLayer::DrawableLayer(juce::ValueTree vt, juce::UndoManager& um) : Layer{std::move(vt), um} {}
+ShapeLayer::ShapeLayer(juce::ValueTree vt, juce::UndoManager& um) : Layer{std::move(vt), um} {}
 
-auto DrawableLayer::paintLayer(juce::Graphics& g) -> void { g.fillAll(getBackground()); }
+auto ShapeLayer::paintLayer(juce::Graphics& g) -> void { g.fillAll(getBackground()); }
 
-auto DrawableLayer::addLayerProperties(juce::PropertyPanel& panel) -> void
+auto ShapeLayer::addLayerProperties(juce::PropertyPanel& panel) -> void
 {
     auto const fill = juce::Array<juce::PropertyComponent*>{
         makeColorProperty(valueTree(), IDs::background, "Background", true),

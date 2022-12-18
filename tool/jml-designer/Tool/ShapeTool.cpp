@@ -1,7 +1,7 @@
 #include "ShapeTool.hpp"
 
 #include "Document/DocumentCanvas.hpp"
-#include "Layer/Drawable/DrawableLayer.hpp"
+#include "Layer/Shape/ShapeLayer.hpp"
 
 namespace mc {
 
@@ -38,9 +38,9 @@ auto ShapeTool::mouseUp(juce::MouseEvent const& /*event*/) -> void
         juce::Point{_current->getX(), _current->getY()},
     };
 
-    auto shape = juce::ValueTree{DrawableLayer::IDs::type};
+    auto shape = juce::ValueTree{ShapeLayer::IDs::type};
     shape.setProperty(Layer::IDs::uuid, id.toString(), nullptr);
-    shape.setProperty(Layer::IDs::name, DrawableLayer::IDs::type, nullptr);
+    shape.setProperty(Layer::IDs::name, ShapeLayer::IDs::type, nullptr);
     shape.setProperty(Layer::IDs::x, bounds.getX(), nullptr);
     shape.setProperty(Layer::IDs::y, bounds.getY(), nullptr);
     shape.setProperty(Layer::IDs::width, bounds.getWidth(), nullptr);

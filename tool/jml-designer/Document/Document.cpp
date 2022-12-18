@@ -1,7 +1,7 @@
 #include "Document.hpp"
 
-#include "Layer/Drawable/DrawableLayer.hpp"
 #include "Layer/Group/GroupLayer.hpp"
+#include "Layer/Shape/ShapeLayer.hpp"
 
 namespace mc {
 
@@ -15,9 +15,9 @@ Document::Document(juce::ValueTree valueTree, juce::UndoManager* um)
     _root->setWidth(750.0F);
     _root->setHeight(750.0F);
     _root->setName("Document");
-    _root->valueTree().appendChild(juce::ValueTree{DrawableLayer::IDs::type}, nullptr);
-    _root->valueTree().appendChild(juce::ValueTree{DrawableLayer::IDs::type}, nullptr);
-    _root->valueTree().appendChild(juce::ValueTree{DrawableLayer::IDs::type}, nullptr);
+    _root->valueTree().appendChild(juce::ValueTree{ShapeLayer::IDs::type}, nullptr);
+    _root->valueTree().appendChild(juce::ValueTree{ShapeLayer::IDs::type}, nullptr);
+    _root->valueTree().appendChild(juce::ValueTree{ShapeLayer::IDs::type}, nullptr);
 
     auto& children = _root->getChildren();
     auto& green    = *children[0];
