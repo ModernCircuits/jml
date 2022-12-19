@@ -44,22 +44,27 @@ auto allJuceModules(sol::state& lua) -> void
     juce_Rectangle(table);
 
     // juce_gui_basics
+    juce_ArrowButton(table);
     juce_Button(table);
     juce_ComboBox(table);
     juce_ImageComponent(table);
     juce_Component(table);
     juce_ComponentListener(table);
     juce_Grid(table);
+    juce_HyperlinkButton(table);
+    juce_ImageButton(table);
     juce_Label(table);
     juce_ListBox(table);
     juce_ListBoxModel(table);
     juce_LookAndFeel(table);
     juce_LookAndFeel_V4(table);
     juce_MouseEvent(table);
+    juce_ShapeButton(table);
+    juce_Slider(table);
     juce_TextButton(table);
     juce_TextEditor(table);
+    juce_ToggleButton(table);
     juce_TreeView(table);
-    juce_Slider(table);
 
     // xtensions
     juce_LuaComponent(table);

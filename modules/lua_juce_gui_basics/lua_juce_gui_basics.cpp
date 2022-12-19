@@ -1,7 +1,12 @@
 #include <lua_juce_events/lua_juce_events.hpp>
 
+#include "buttons/ArrowButton.cpp"
 #include "buttons/Button.cpp"
+#include "buttons/HyperlinkButton.cpp"
+#include "buttons/ImageButton.cpp"
+#include "buttons/ShapeButton.cpp"
 #include "buttons/TextButton.cpp"
+#include "buttons/ToggleButton.cpp"
 #include "components/Component.cpp"
 #include "components/ComponentListener.cpp"
 #include "components/LuaComponent.cpp"

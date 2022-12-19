@@ -23,8 +23,13 @@ END_JUCE_MODULE_DECLARATION
 #include <juce_gui_basics/juce_gui_basics.h>
 #include <lua_juce_graphics/lua_juce_graphics.hpp>
 
+#include "buttons/ArrowButton.hpp"
 #include "buttons/Button.hpp"
+#include "buttons/HyperlinkButton.hpp"
+#include "buttons/ImageButton.hpp"
+#include "buttons/ShapeButton.hpp"
 #include "buttons/TextButton.hpp"
+#include "buttons/ToggleButton.hpp"
 #include "components/Component.hpp"
 #include "components/ComponentListener.hpp"
 #include "components/LuaComponent.hpp"
