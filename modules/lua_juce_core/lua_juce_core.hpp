@@ -63,6 +63,10 @@ auto to_string(T const& val) -> decltype(val.toStdString())
 } // namespace juce
 
 template<>
+struct sol::is_container<juce::MemoryBlock> : std::false_type
+{};
+
+template<>
 struct sol::is_container<juce::String> : std::false_type
 {};
 
@@ -83,9 +87,12 @@ struct sol::is_container<juce::Array<T>> : std::false_type
 #include "maths/Random.hpp"
 #include "maths/Range.hpp"
 #include "maths/StatisticsAccumulator.hpp"
+#include "memory/MemoryBlock.hpp"
 #include "misc/Result.hpp"
 #include "misc/Uuid.hpp"
 #include "network/IPAddress.hpp"
+#include "streams/InputStream.hpp"
+#include "streams/OutputStream.hpp"
 #include "text/String.hpp"
 #include "text/StringArray.hpp"
 #include "time/PerformanceCounter.hpp"

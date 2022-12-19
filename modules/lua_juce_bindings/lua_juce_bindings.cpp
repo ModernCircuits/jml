@@ -11,9 +11,12 @@ auto allJuceModules(sol::state& lua) -> void
     juce_BigInteger(table);
     juce_File(table);
     juce_IPAddress(table);
+    juce_InputStream(table);
     juce_Int(table);
     juce_MathConstants(table);
+    juce_MemoryBlock(table);
     juce_NormalisableRange(table);
+    juce_OutputStream(table);
     juce_Random(table);
     juce_Range(table);
     juce_Result(table);
