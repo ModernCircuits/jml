@@ -20,7 +20,7 @@ SelectionTool::~SelectionTool()
 auto SelectionTool::paintTool(juce::Graphics& g) -> void
 {
     auto const& selection = getLayerSelection();
-    for (auto layer : selection.getLayers()) {
+    for (auto const& layer : selection.getLayers()) {
         if (layer.get() == nullptr) { continue; }
         auto const& lc = layer->getCanvas();
         g.setColour(juce::Colours::blue);
@@ -33,7 +33,7 @@ auto SelectionTool::mouseDown(juce::MouseEvent const& event) -> void
     SCOPE_EXIT { getDocumentCanvas().repaint(); };
 
     getLayerSelection().clear();
-    auto layerCanvas = dynamic_cast<Layer::Canvas*>(event.eventComponent);
+    auto* layerCanvas = dynamic_cast<Layer::Canvas*>(event.eventComponent);
     if (layerCanvas == nullptr) { return; }
     getLayerSelection().addOrRemove(&layerCanvas->layer());
 }

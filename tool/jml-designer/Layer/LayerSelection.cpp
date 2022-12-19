@@ -5,7 +5,7 @@ auto LayerSelection::getLayers() const -> Span<juce::WeakReference<Layer> const>
 
 auto LayerSelection::clear() -> void
 {
-    for (auto layer : _layers) {
+    for (auto const& layer : _layers) {
         if (layer != nullptr) { remove(layer.get()); }
     }
     _layers.clear();

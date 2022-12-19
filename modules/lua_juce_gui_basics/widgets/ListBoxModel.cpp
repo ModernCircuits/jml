@@ -1,6 +1,7 @@
 #include "ListBoxModel.hpp"
 namespace mc::lua::bindings {
-auto juce_LuaListBoxModel(sol::table& state) -> void
+
+static auto juce_LuaListBoxModel(sol::table& state) -> void
 {
     // clang-format off
     auto model = state.new_usertype<LuaListBoxModel>("ListBoxModel",

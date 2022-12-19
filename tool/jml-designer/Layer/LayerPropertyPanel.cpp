@@ -30,7 +30,7 @@ auto LayerPropertyPanel::layerSelectionChanged(LayerSelection* selection) -> voi
     auto layers = selection->getLayers();
     if (layers.size() != 1) { return; }
 
-    auto selected = layers[0];
+    auto const& selected = layers[0];
     if (selected == nullptr) { return; }
     selected->fillPropertyPanel(_panel);
 }

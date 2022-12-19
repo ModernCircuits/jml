@@ -16,7 +16,7 @@ namespace mc {
 
 struct ClientConnection final : juce::InterprocessConnection
 {
-    ClientConnection() : juce::InterprocessConnection{} {}
+    ClientConnection() = default;
     ~ClientConnection() override { disconnect(); }
 
     auto connectionMade() -> void override { DBG("CLIENT MADE"); }

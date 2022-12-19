@@ -21,6 +21,7 @@ private:
 
 SOL_BASE_CLASSES(LuaListBox, juce::ListBox, juce::Component, juce::MouseListener, juce::SettableTooltipClient, juce::TooltipClient);
 namespace mc::lua::bindings {
+
 auto juce_ListBox(sol::table& state) -> void
 {
     // clang-format off

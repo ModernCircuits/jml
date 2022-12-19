@@ -18,8 +18,8 @@ Document::Document(juce::ValueTree valueTree, juce::UndoManager* um)
     group->valueTree().appendChild(juce::ValueTree{ShapeLayer::IDs::type}, nullptr);
     group->valueTree().appendChild(juce::ValueTree{ShapeLayer::IDs::type}, nullptr);
 
-    auto& children = group->getChildren();
-    auto& green    = *children[0];
+    auto const& children = group->getChildren();
+    auto& green          = *children[0];
     green.setX(300.0F);
     green.setY(300.0F);
     green.setWidth(100.0F);

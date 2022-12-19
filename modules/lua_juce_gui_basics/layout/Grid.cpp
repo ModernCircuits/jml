@@ -3,10 +3,10 @@
 #include <juce_gui_basics/juce_gui_basics.h>
 
 namespace juce {
-auto operator==(GridItem const&, GridItem const&) -> bool { return false; }
-auto operator!=(GridItem const&, GridItem const&) -> bool { return true; }
-auto operator==(Grid::TrackInfo const&, Grid::TrackInfo const&) -> bool { return false; }
-auto operator!=(Grid::TrackInfo const&, Grid::TrackInfo const&) -> bool { return true; }
+[[maybe_unused]] static auto operator==(GridItem const&, GridItem const&) -> bool { return false; }
+[[maybe_unused]] static auto operator!=(GridItem const&, GridItem const&) -> bool { return true; }
+[[maybe_unused]] static auto operator==(Grid::TrackInfo const&, Grid::TrackInfo const&) -> bool { return false; }
+[[maybe_unused]] static auto operator!=(Grid::TrackInfo const&, Grid::TrackInfo const&) -> bool { return true; }
 } // namespace juce
 namespace mc::lua::bindings {
 auto juce_Grid(sol::table& state) -> void

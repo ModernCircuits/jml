@@ -19,7 +19,7 @@ ImageExporter::ImageExporter(Format format) : _format{format} {}
 auto ImageExporter::exportLayer(juce::OutputStream& out, Layer& layer) -> juce::Result
 {
     auto& canvas = layer.getCanvas();
-    auto image   = canvas.createComponentSnapshot(canvas.getBounds(), 1.0F);
+    auto image   = canvas.createComponentSnapshot(canvas.getBounds(), true);
     if (not image.isValid()) { return fail("invalid image returned for layer: {}", layer.getName()); }
 
     auto format = makeImageFileFormatForExporter(_format);

@@ -21,7 +21,7 @@ struct SelectionTool final
 
 private:
     auto getLayerSelection() -> LayerSelection&;
-    auto getLayerSelection() const -> LayerSelection const&;
+    [[nodiscard]] auto getLayerSelection() const -> LayerSelection const&;
 };
 
 } // namespace mc

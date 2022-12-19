@@ -7,7 +7,7 @@ namespace mc {
 
 struct ServerConnection final : juce::InterprocessConnection
 {
-    ServerConnection() : juce::InterprocessConnection{} {}
+    ServerConnection() = default;
     ~ServerConnection() override { disconnect(); }
 
     auto connectionMade() -> void override
@@ -39,7 +39,7 @@ struct Server final : juce::InterprocessConnectionServer
     {
         _connection = std::make_unique<ServerConnection>();
         return _connection.get();
-    };
+    }
 
     std::unique_ptr<ServerConnection> _connection;
 };

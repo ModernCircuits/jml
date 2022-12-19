@@ -82,7 +82,7 @@ struct Layer
     using Canvas   = LayerCanvas;
 
     Layer(juce::ValueTree vt, juce::UndoManager& um);
-    virtual ~Layer();
+    ~Layer() override;
 
     [[nodiscard]] virtual auto mightHaveChildren() -> bool;
     virtual auto paintLayer(juce::Graphics& g) -> void;

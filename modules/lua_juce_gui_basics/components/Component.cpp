@@ -26,7 +26,7 @@ private:
     std::unordered_set<sol::object, sol::reference_hash> _objects;
 };
 
-auto getSolObjectSet(juce::NamedValueSet& properties) -> SolObjectSet&
+static auto getSolObjectSet(juce::NamedValueSet& properties) -> SolObjectSet&
 {
     if (properties.contains("lua-objects")) {
         auto const& v = properties["lua-objects"];

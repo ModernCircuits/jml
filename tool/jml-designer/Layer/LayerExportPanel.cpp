@@ -6,7 +6,7 @@ namespace mc {
 
 struct ExportButtonPropertyComponent final : juce::ButtonPropertyComponent
 {
-    ExportButtonPropertyComponent(std::function<void()>&& callback)
+    explicit ExportButtonPropertyComponent(std::function<void()>&& callback)
         : juce::ButtonPropertyComponent{"Image", false}, _callback{std::move(callback)}
     {
         jassert(_callback);
@@ -15,7 +15,7 @@ struct ExportButtonPropertyComponent final : juce::ButtonPropertyComponent
     ~ExportButtonPropertyComponent() override = default;
 
     auto buttonClicked() -> void override { _callback(); }
-    auto getButtonText() const -> juce::String override { return "Select File"; }
+    [[nodiscard]] auto getButtonText() const -> juce::String override { return "Select File"; }
 
 private:
     std::function<void()> _callback;
@@ -48,10 +48,10 @@ auto LayerExportPanel::launchExportFileChooser() -> void
 {
     auto const format = fromVar<ImageExporter::Format>(_format);
 
-    auto const* msg = "Please select the image file you want to save to...";
-    auto const dir  = juce::File::getCurrentWorkingDirectory();
-    auto const ext  = format == ImageExporter::Format::png ? "*.png" : "*.jpg";
-    _fileChooser    = makeUnique<juce::FileChooser>(msg, dir, ext);
+    auto const* msg       = "Please select the image file you want to save to...";
+    auto const dir        = juce::File::getCurrentWorkingDirectory();
+    auto const* const ext = format == ImageExporter::Format::png ? "*.png" : "*.jpg";
+    _fileChooser          = makeUnique<juce::FileChooser>(msg, dir, ext);
 
     auto const chooserFlags = juce::FileBrowserComponent::saveMode | juce::FileBrowserComponent::warnAboutOverwriting;
     auto const load = [this, format](juce::FileChooser const& chooser) { exportToImage(chooser.getResult(), format); };
@@ -63,7 +63,7 @@ auto LayerExportPanel::exportToImage(juce::File const& file, ImageExporter::Form
     auto const layers = _selection.getLayers();
     if (layers.size() != 1) { return; }
 
-    auto selected = layers[0];
+    auto const& selected = layers[0];
     if (selected == nullptr) { return; }
 
     if (file.existsAsFile()) { file.deleteFile(); }
