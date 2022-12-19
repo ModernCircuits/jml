@@ -6,7 +6,7 @@ BEGIN_JUCE_MODULE_DECLARATION
     version:            0.1.0
     name:               Lua bindings for juce_gui_basics
     description:        Lua/Sol2 bindings for juce_gui_basics
-    dependencies:       mc_lua_juce_graphics, juce_gui_basics
+    dependencies:       mc_lua_juce_graphics, mc_lua_juce_data_structures, juce_gui_basics
     website:            http://github.com/ModernCircuits/jml
     license:            GPL/Commercial
     minimumCppStandard: 20
@@ -21,6 +21,7 @@ END_JUCE_MODULE_DECLARATION
 #endif
 
 #include <juce_gui_basics/juce_gui_basics.h>
+#include <mc_lua_juce_data_structures/mc_lua_juce_data_structures.hpp>
 #include <mc_lua_juce_graphics/mc_lua_juce_graphics.hpp>
 
 #include "buttons/ArrowButton.hpp"

@@ -6,7 +6,7 @@ juce_add_modules(ALIAS_NAMESPACE mc
     mc_lua_juce_events
     mc_lua_juce_graphics
     mc_lua_juce_gui_basics
-
+    mc_lua_juce_gui_extra
     mc_lua_juce
 
     mc_gui_testing

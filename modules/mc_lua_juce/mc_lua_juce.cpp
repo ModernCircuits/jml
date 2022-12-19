@@ -76,6 +76,9 @@ auto allJuceModules(sol::state& lua) -> void
     juce_ToggleButton(table);
     juce_TreeView(table);
 
+    // juce_gui_extra
+    juce_CodeDocument(table);
+
     // xtensions
     juce_LuaComponent(table);
     juce_LuaLookAndFeel_V4(table);
