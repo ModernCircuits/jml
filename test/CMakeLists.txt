@@ -1,6 +1,6 @@
 project(test)
 
-function(mc_add_lua_juce_test _name)
+function(mc_add_mc_lua_juce_test _name)
     add_test(
         NAME
             "lua: ${_name}"
@@ -11,7 +11,7 @@ function(mc_add_lua_juce_test _name)
     )
 endfunction()
 
-mc_add_lua_juce_test("core/Array")
-mc_add_lua_juce_test("core/BigInteger")
-mc_add_lua_juce_test("core/File")
-mc_add_lua_juce_test("core/String")
+mc_add_mc_lua_juce_test("core/Array")
+mc_add_mc_lua_juce_test("core/BigInteger")
+mc_add_mc_lua_juce_test("core/File")
+mc_add_mc_lua_juce_test("core/String")

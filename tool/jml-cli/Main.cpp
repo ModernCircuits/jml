@@ -3,7 +3,7 @@
 #include "Command/Snapshot.hpp"
 #include "Command/Test.hpp"
 
-#include <lua_juce_bindings/lua_juce_bindings.hpp>
+#include <mc_lua_juce/mc_lua_juce.hpp>
 
 static auto run(auto const func, auto const& app) -> int
 {

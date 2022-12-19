@@ -1,7 +1,7 @@
 #pragma once
 
 #include <juce_gui_extra/juce_gui_extra.h>
-#include <lua_juce_core/lua_juce_core.hpp>
+#include <mc_lua_juce_core/mc_lua_juce_core.hpp>
 
 #include "Application/MenuBar.hpp"
 #include "Viewer/ComponentContainer.hpp"

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <lua_juce_bindings/lua_juce_bindings.hpp>
+#include <mc_lua_juce/mc_lua_juce.hpp>
 
 JUCE_BEGIN_IGNORE_WARNINGS_GCC_LIKE("-Wimplicit-int-float-conversion")
 #include <CLI/CLI.hpp>

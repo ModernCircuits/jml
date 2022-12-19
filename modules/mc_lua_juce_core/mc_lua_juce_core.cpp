@@ -1,4 +1,4 @@
-#include <lua_juce_core/lua_juce_core.hpp>
+#include <mc_lua_juce_core/mc_lua_juce_core.hpp>
 
 #include "containers/Array.cpp"            // NOLINT
 #include "files/File.cpp"                  // NOLINT

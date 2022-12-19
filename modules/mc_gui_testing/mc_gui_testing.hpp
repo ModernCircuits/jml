@@ -7,8 +7,8 @@ BEGIN_JUCE_MODULE_DECLARATION
     name:               Lua bindings for juce_events
     description:        Lua/Sol2 bindings for juce_events
     dependencies:       mc_gui_extra
-    website:            http://github.com/ModernCircuits/juce-lua-bindings
-    license:            BSL-1.0
+    website:            http://github.com/ModernCircuits/jml
+    license:            GPL/Commercial
     minimumCppStandard: 20
 
 END_JUCE_MODULE_DECLARATION

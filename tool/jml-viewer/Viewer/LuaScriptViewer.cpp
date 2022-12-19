@@ -1,6 +1,6 @@
 #include "LuaScriptViewer.hpp"
 
-#include <lua_juce_bindings/lua_juce_bindings.hpp>
+#include <mc_lua_juce/mc_lua_juce.hpp>
 
 namespace mc {
 namespace {
