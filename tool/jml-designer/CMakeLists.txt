@@ -63,6 +63,8 @@ set(sources
 
     "Layer/Layer.cpp"
     "Layer/Layer.hpp"
+    "Layer/LayerExportPanel.cpp"
+    "Layer/LayerExportPanel.hpp"
     "Layer/LayerPropertyPanel.cpp"
     "Layer/LayerPropertyPanel.hpp"
     "Layer/LayerSelection.cpp"

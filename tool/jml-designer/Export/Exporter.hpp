@@ -10,7 +10,7 @@ struct Exporter
 {
     virtual ~Exporter() = default;
 
-    [[nodiscard]] virtual auto exportLayer(Layer& layer, juce::OutputStream& out) -> juce::Result = 0;
+    [[nodiscard]] virtual auto exportLayer(juce::OutputStream& out, Layer& layer) -> juce::Result = 0;
 };
 
 } // namespace mc

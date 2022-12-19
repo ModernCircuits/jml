@@ -6,10 +6,27 @@ namespace mc {
 
 struct ImageExporter final : Exporter
 {
-    ImageExporter()           = default;
+    enum struct Format
+    {
+        invalid,
+        jpg,
+        png,
+    };
+
+    explicit ImageExporter(Format format);
     ~ImageExporter() override = default;
 
-    [[nodiscard]] auto exportLayer(Layer& layer, juce::OutputStream& out) -> juce::Result override;
+    [[nodiscard]] auto exportLayer(juce::OutputStream& out, Layer& layer) -> juce::Result override;
+
+private:
+    Format _format{Format::invalid};
 };
 
 } // namespace mc
+
+template<>
+struct juce::VariantConverter<mc::ImageExporter::Format>
+{
+    [[nodiscard]] static auto toVar(mc::ImageExporter::Format const& format) -> juce::var;
+    [[nodiscard]] static auto fromVar(juce::var const& v) -> mc::ImageExporter::Format;
+};

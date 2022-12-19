@@ -1,8 +1,7 @@
 #pragma once
 
+#include "Layer/LayerExportPanel.hpp"
 #include "Layer/LayerSelection.hpp"
-
-#include <mc_gui_extra/mc_gui_extra.hpp>
 
 namespace mc {
 
@@ -19,7 +18,7 @@ struct LayerPropertyPanel final
 private:
     LayerSelection& _selection;
     juce::PropertyPanel _panel;
-    juce::TextButton _export{"Export to PNG"};
+    LayerExportPanel _export{_selection};
 };
 
 } // namespace mc
