@@ -2,3 +2,4 @@
 
 #include "undomanager/UndoManager.cpp"    // NOLINT
 #include "undomanager/UndoableAction.cpp" // NOLINT
+#include "values/ValueTree.cpp"           // NOLINT

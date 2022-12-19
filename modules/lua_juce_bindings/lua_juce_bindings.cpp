@@ -33,6 +33,7 @@ auto allJuceModules(sol::state& lua) -> void
     // juce_data_structures
     juce_UndoableAction(table);
     juce_UndoManager(table);
+    juce_ValueTree(table);
 
     // juce_events
     juce_Timer(table);

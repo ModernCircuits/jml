@@ -25,3 +25,4 @@ END_JUCE_MODULE_DECLARATION
 
 #include "undomanager/UndoManager.hpp"
 #include "undomanager/UndoableAction.hpp"
+#include "values/ValueTree.hpp"
