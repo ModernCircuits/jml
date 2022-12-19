@@ -6,7 +6,7 @@ BEGIN_JUCE_MODULE_DECLARATION
     version:            0.1.0
     name:               Lua bindings for juce_events
     description:        Lua/Sol2 bindings for juce_events
-    dependencies:       lua_juce_core, lua_juce_events, lua_juce_graphics, lua_juce_gui_basics
+    dependencies:       lua_juce_core, lua_juce_data_structures, lua_juce_events, lua_juce_graphics, lua_juce_gui_basics
     website:            http://github.com/ModernCircuits/juce-lua-bindings
     license:            BSL-1.0
     minimumCppStandard: 20
@@ -21,6 +21,7 @@ END_JUCE_MODULE_DECLARATION
 #endif
 
 #include <lua_juce_core/lua_juce_core.hpp>
+#include <lua_juce_data_structures/lua_juce_data_structures.hpp>
 #include <lua_juce_events/lua_juce_events.hpp>
 #include <lua_juce_graphics/lua_juce_graphics.hpp>
 #include <lua_juce_gui_basics/lua_juce_gui_basics.hpp>
