@@ -19,6 +19,7 @@ private:
     auto exportToImage(juce::File const& file, ImageExporter::Format format) -> void;
 
     juce::Value _format{toVar(ImageExporter::Format::png)};
+    juce::Value _scale{juce::var{1.0F}};
     LayerSelection& _selection;
     juce::PropertyPanel _panel;
 

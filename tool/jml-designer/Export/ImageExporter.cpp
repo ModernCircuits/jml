@@ -16,10 +16,10 @@ namespace mc {
 
 ImageExporter::ImageExporter(Format format) : _format{format} {}
 
-auto ImageExporter::exportLayer(juce::OutputStream& out, Layer& layer) -> juce::Result
+auto ImageExporter::exportLayer(juce::OutputStream& out, Layer& layer, float scale) -> juce::Result
 {
     auto& canvas = layer.getCanvas();
-    auto image   = canvas.createComponentSnapshot(canvas.getBounds(), true);
+    auto image   = canvas.createComponentSnapshot(canvas.getLocalBounds(), true, scale);
     if (not image.isValid()) { return fail("invalid image returned for layer: {}", layer.getName()); }
 
     auto format = makeImageFileFormatForExporter(_format);

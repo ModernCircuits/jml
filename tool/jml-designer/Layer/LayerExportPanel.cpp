@@ -31,6 +31,12 @@ LayerExportPanel::LayerExportPanel(LayerSelection& selection) : _selection{selec
             juce::StringArray{"PNG", "JPG"},
             juce::Array{toVar(ImageExporter::Format::png), toVar(ImageExporter::Format::jpg)},
         },
+        new juce::ChoicePropertyComponent{
+            _scale,
+            "Scale",
+            juce::StringArray{"1x", "2x", "4x"},
+            juce::Array{juce::var{1.0F}, juce::var{2.0F}, juce::var{4.0F}},
+        },
     };
 
     _panel.clear();
@@ -71,7 +77,8 @@ auto LayerExportPanel::exportToImage(juce::File const& file, ImageExporter::Form
     if (out == nullptr) { return; }
 
     auto exporter = ImageExporter{format};
-    auto result   = exporter.exportLayer(*out, *selected);
+    auto scale    = static_cast<float>(_scale.getValue());
+    auto result   = exporter.exportLayer(*out, *selected, scale);
     if (result.failed()) { DBG(result.getErrorMessage()); }
 }
 

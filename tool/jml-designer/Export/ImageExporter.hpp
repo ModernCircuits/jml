@@ -16,7 +16,7 @@ struct ImageExporter final : Exporter
     explicit ImageExporter(Format format);
     ~ImageExporter() override = default;
 
-    [[nodiscard]] auto exportLayer(juce::OutputStream& out, Layer& layer) -> juce::Result override;
+    [[nodiscard]] auto exportLayer(juce::OutputStream& out, Layer& layer, float scale) -> juce::Result override;
 
 private:
     Format _format{Format::invalid};
