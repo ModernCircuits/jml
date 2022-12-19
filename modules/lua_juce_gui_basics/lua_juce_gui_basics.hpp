@@ -26,6 +26,7 @@ END_JUCE_MODULE_DECLARATION
 #include "buttons/Button.hpp"
 #include "buttons/TextButton.hpp"
 #include "components/Component.hpp"
+#include "components/ComponentListener.hpp"
 #include "components/LuaComponent.hpp"
 #include "layout/Grid.hpp"
 #include "lookandfeel/LookAndFeel.hpp"

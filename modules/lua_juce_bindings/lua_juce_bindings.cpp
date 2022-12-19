@@ -48,6 +48,7 @@ auto allJuceModules(sol::state& lua) -> void
     juce_ComboBox(table);
     juce_ImageComponent(table);
     juce_Component(table);
+    juce_ComponentListener(table);
     juce_Grid(table);
     juce_Label(table);
     juce_ListBox(table);

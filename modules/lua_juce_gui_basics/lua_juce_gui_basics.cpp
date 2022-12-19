@@ -3,6 +3,7 @@
 #include "buttons/Button.cpp"
 #include "buttons/TextButton.cpp"
 #include "components/Component.cpp"
+#include "components/ComponentListener.cpp"
 #include "components/LuaComponent.cpp"
 #include "layout/Grid.cpp"
 #include "lookandfeel/LookAndFeel.cpp"
