@@ -23,4 +23,8 @@ END_JUCE_MODULE_DECLARATION
 #include <juce_gui_extra/juce_gui_extra.h>
 #include <mc_lua_juce_gui_basics/mc_lua_juce_gui_basics.hpp>
 
+#include "code_editor/CPlusPlusCodeTokeniser.hpp"
 #include "code_editor/CodeDocument.hpp"
+#include "code_editor/CodeTokeniser.hpp"
+#include "code_editor/LuaTokeniser.hpp"
+#include "code_editor/XmlTokeniser.hpp"
