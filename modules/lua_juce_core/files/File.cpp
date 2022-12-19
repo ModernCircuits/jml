@@ -156,8 +156,8 @@ auto juce_File(sol::table& state) -> void
     file["getLinkedTarget"]               = &juce::File::getLinkedTarget;
     file["getNativeLinkedTarget"]         = &juce::File::getNativeLinkedTarget;
     file["getChildFile"]                  = sol::overload(                                                 //
-        [](juce::File* file, char const* child) { return file->getChildFile(child); },    //
-        [](juce::File* file, juce::StringRef child) { return file->getChildFile(child); } //
+        [](juce::File* self, char const* child) { return self->getChildFile(child); },    //
+        [](juce::File* self, juce::StringRef child) { return self->getChildFile(child); } //
     );                                                                                    //
 
 #if JUCE_WINDOWS

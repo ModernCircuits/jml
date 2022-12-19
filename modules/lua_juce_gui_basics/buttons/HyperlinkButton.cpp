@@ -1,3 +1,5 @@
+#include "HyperlinkButton.hpp"
+
 #include <juce_gui_basics/juce_gui_basics.h>
 
 namespace mc::lua::bindings {
