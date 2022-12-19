@@ -92,7 +92,6 @@ auto juce_File(sol::table& state) -> void
     file["getFileNameWithoutExtension"]   = &juce::File::getFileNameWithoutExtension;
     file["hashCode"]                      = &juce::File::hashCode;
     file["hashCode64"]                    = &juce::File::hashCode64;
-    file["getChildFile"]                  = &juce::File::getChildFile;
     file["getSiblingFile"]                = &juce::File::getSiblingFile;
     file["getParentDirectory"]            = &juce::File::getParentDirectory;
     file["isAChildOf"]                    = &juce::File::isAChildOf;
@@ -156,6 +155,10 @@ auto juce_File(sol::table& state) -> void
     file["isSymbolicLink"]                = &juce::File::isSymbolicLink;
     file["getLinkedTarget"]               = &juce::File::getLinkedTarget;
     file["getNativeLinkedTarget"]         = &juce::File::getNativeLinkedTarget;
+    file["getChildFile"]                  = sol::overload(                                                 //
+        [](juce::File* file, char const* child) { return file->getChildFile(child); },    //
+        [](juce::File* file, juce::StringRef child) { return file->getChildFile(child); } //
+    );                                                                                    //
 
 #if JUCE_WINDOWS
     file["createShortcut"] = &juce::File::createShortcut;
