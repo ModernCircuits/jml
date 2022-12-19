@@ -92,6 +92,8 @@ struct sol::is_container<juce::Array<T>> : std::false_type
 #include "misc/Uuid.hpp"
 #include "network/IPAddress.hpp"
 #include "streams/InputStream.hpp"
+#include "streams/MemoryInputStream.hpp"
+#include "streams/MemoryOutputStream.hpp"
 #include "streams/OutputStream.hpp"
 #include "text/String.hpp"
 #include "text/StringArray.hpp"

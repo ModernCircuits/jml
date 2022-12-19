@@ -15,6 +15,8 @@ auto allJuceModules(sol::state& lua) -> void
     juce_Int(table);
     juce_MathConstants(table);
     juce_MemoryBlock(table);
+    juce_MemoryInputStream(table);
+    juce_MemoryOutputStream(table);
     juce_NormalisableRange(table);
     juce_OutputStream(table);
     juce_Random(table);
