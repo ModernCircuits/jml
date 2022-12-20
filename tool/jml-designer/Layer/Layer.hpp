@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Layer/Effect/LayerEffectList.hpp"
+
 #include <mc_data_structures/mc_data_structures.hpp>
 #include <mc_graphics/mc_graphics.hpp>
 #include <mc_gui_extra/mc_gui_extra.hpp>
@@ -134,6 +136,7 @@ struct Layer
 private:
     juce::ListenerList<Listener> _listeners;
     Canvas _canvas{*this};
+    LayerEffectList _effects{valueTree(), *undoManager()};
     LayerList _children{valueTree(), *undoManager()};
     bool _selected{false};
 

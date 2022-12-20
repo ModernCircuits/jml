@@ -79,6 +79,8 @@ set(sources
     "Layer/Effect/GlowLayerEffect.hpp"
     "Layer/Effect/LayerEffect.cpp"
     "Layer/Effect/LayerEffect.hpp"
+    "Layer/Effect/LayerEffectList.cpp"
+    "Layer/Effect/LayerEffectList.hpp"
 
     "Layer/Export/Exporter.hpp"
     "Layer/Export/ImageExporter.cpp"
