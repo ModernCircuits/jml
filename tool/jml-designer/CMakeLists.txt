@@ -73,6 +73,13 @@ set(sources
     "Layer/LayerTreeItem.cpp"
     "Layer/LayerTreeItem.hpp"
 
+    "Layer/Effect/DropShadowLayerEffect.cpp"
+    "Layer/Effect/DropShadowLayerEffect.hpp"
+    "Layer/Effect/GlowLayerEffect.cpp"
+    "Layer/Effect/GlowLayerEffect.hpp"
+    "Layer/Effect/LayerEffect.cpp"
+    "Layer/Effect/LayerEffect.hpp"
+
     "Layer/Export/Exporter.hpp"
     "Layer/Export/ImageExporter.cpp"
     "Layer/Export/ImageExporter.hpp"
