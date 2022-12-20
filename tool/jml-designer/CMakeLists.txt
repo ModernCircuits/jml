@@ -50,6 +50,9 @@ set(sources
     "Component/PropertyPanel.hpp"
     "Component/TreeView.hpp"
 
+    "Core/Justification.cpp"
+    "Core/Justification.hpp"
+
     "Document/Document.cpp"
     "Document/Document.hpp"
     "Document/DocumentCanvas.cpp"

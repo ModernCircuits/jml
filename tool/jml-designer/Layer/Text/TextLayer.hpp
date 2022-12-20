@@ -6,10 +6,11 @@ namespace mc {
 
 struct TextLayerIDs : Layer::IDs
 {
-    inline static constexpr auto const* type      = "Text";
-    inline static constexpr auto const* text      = "text";
-    inline static constexpr auto const* fontSize  = "fontSize";
-    inline static constexpr auto const* fontColor = "fontColor";
+    inline static constexpr auto const* type          = "Text";
+    inline static constexpr auto const* text          = "text";
+    inline static constexpr auto const* justification = "justification";
+    inline static constexpr auto const* fontSize      = "fontSize";
+    inline static constexpr auto const* fontColor     = "fontColor";
 };
 
 struct TextLayer final : Layer
@@ -21,6 +22,9 @@ struct TextLayer final : Layer
 
     auto setText(juce::String const& text) -> void;
     [[nodiscard]] auto getText() const -> juce::String;
+
+    auto setTextJustification(juce::Justification const& justification) -> void;
+    [[nodiscard]] auto getTextJustification() const -> juce::Justification;
 
     auto setFontSize(float fontSize) -> void;
     [[nodiscard]] auto getFontSize() const -> float;
