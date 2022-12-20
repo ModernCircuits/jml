@@ -1,64 +1,11 @@
 #pragma once
 
 #include "Layer/Effect/LayerEffectList.hpp"
-
-#include <mc_data_structures/mc_data_structures.hpp>
-#include <mc_graphics/mc_graphics.hpp>
-#include <mc_gui_extra/mc_gui_extra.hpp>
+#include "Layer/LayerCanvas.hpp"
+#include "Layer/LayerList.hpp"
+#include "Layer/LayerListener.hpp"
 
 namespace mc {
-
-struct Layer;
-
-struct LayerList final : ValueTreeObjectList<Layer>
-{
-    LayerList(juce::ValueTree v, juce::UndoManager& undoManager);
-    ~LayerList() override;
-
-    std::function<void(Layer*)> onAdded{};
-    std::function<void(Layer*)> onRemoved{};
-    std::function<void()> onOrderChanged{};
-
-private:
-    [[nodiscard]] auto isSuitableType(juce::ValueTree const& v) const -> bool override;
-    auto createNewObject(juce::ValueTree const& v) -> Layer* override;
-    auto deleteObject(Layer* c) -> void override;
-    auto newObjectAdded(Layer* layer) -> void override;
-    auto objectRemoved(Layer* layer) -> void override;
-    auto objectOrderChanged() -> void override;
-
-    juce::UndoManager& _undoManager;
-};
-
-struct LayerListener
-{
-    virtual ~LayerListener() = default;
-
-    virtual auto layerPropertyChanged(Layer* layer, juce::Identifier const& property) -> void;
-    virtual auto layerChildrenChanged(Layer* layer) -> void;
-    virtual auto layerSelectionChanged(Layer* layer) -> void;
-    virtual auto layerBeingDeleted(Layer* layer) -> void;
-};
-
-struct LayerCanvas final
-    : juce::Component
-    , LayerListener
-{
-    ~LayerCanvas() override;
-
-    [[nodiscard]] auto layer() -> Layer&;
-    [[nodiscard]] auto layer() const -> Layer const&;
-
-    auto paint(juce::Graphics& g) -> void override;
-    auto paintOverChildren(juce::Graphics& g) -> void override;
-    auto layerPropertyChanged(Layer* layer, juce::Identifier const& property) -> void override;
-
-private:
-    explicit LayerCanvas(Layer& layer);
-
-    friend Layer;
-    Layer& _layer;
-};
 
 struct LayerIDs
 {
