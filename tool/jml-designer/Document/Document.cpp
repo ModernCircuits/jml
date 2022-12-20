@@ -2,6 +2,7 @@
 
 #include "Layer/Group/GroupLayer.hpp"
 #include "Layer/Shape/ShapeLayer.hpp"
+#include "Layer/Text/TextLayer.hpp"
 
 namespace mc {
 
@@ -14,12 +15,23 @@ Document::Document(juce::ValueTree valueTree, juce::UndoManager* um)
     group->setWidth(750.0F);
     group->setHeight(750.0F);
     group->setName("Document");
+    group->valueTree().appendChild(juce::ValueTree{TextLayer::IDs::type}, nullptr);
     group->valueTree().appendChild(juce::ValueTree{ShapeLayer::IDs::type}, nullptr);
     group->valueTree().appendChild(juce::ValueTree{ShapeLayer::IDs::type}, nullptr);
     group->valueTree().appendChild(juce::ValueTree{ShapeLayer::IDs::type}, nullptr);
 
     auto const& children = group->getChildren();
-    auto& green          = *children[0];
+
+    auto& text = *children[0];
+    text.setX(500.0F);
+    text.setY(300.0F);
+    text.setWidth(100.0F);
+    text.setHeight(100.0F);
+    text.setBackgroundFill(juce::Colours::yellow);
+    text.setOpacity(1.0F);
+    text.setName("Text");
+
+    auto& green = *children[1];
     green.setX(300.0F);
     green.setY(300.0F);
     green.setWidth(100.0F);
@@ -28,7 +40,7 @@ Document::Document(juce::ValueTree valueTree, juce::UndoManager* um)
     green.setOpacity(1.0F);
     green.setName("Green");
 
-    auto& black = *children[1];
+    auto& black = *children[2];
     black.setX(250.0F);
     black.setY(250.0F);
     black.setWidth(250.0F);
@@ -37,7 +49,7 @@ Document::Document(juce::ValueTree valueTree, juce::UndoManager* um)
     black.setOpacity(1.0F);
     black.setName("Black");
 
-    auto& red = *children[2];
+    auto& red = *children[3];
     red.setX(520.0F);
     red.setY(250.0F);
     red.setWidth(150.0F);

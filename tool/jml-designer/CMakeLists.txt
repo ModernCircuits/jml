@@ -76,9 +76,10 @@ set(sources
 
     "Layer/Group/GroupLayer.cpp"
     "Layer/Group/GroupLayer.hpp"
-
     "Layer/Shape/ShapeLayer.cpp"
     "Layer/Shape/ShapeLayer.hpp"
+    "Layer/Text/TextLayer.cpp"
+    "Layer/Text/TextLayer.hpp"
 
     "LookAndFeel/LookAndFeel.hpp"
 
