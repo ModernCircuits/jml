@@ -4,7 +4,7 @@
 
 namespace mc {
 
-struct DropShadowLayerEffectIDs
+struct DropShadowIDs
 {
     inline static constexpr auto const* type = "DropShadow";
 
@@ -13,12 +13,12 @@ struct DropShadowLayerEffectIDs
     inline static constexpr auto const* offset = "offset";
 };
 
-struct DropShadowLayerEffect final : LayerEffect
+struct DropShadow final : LayerEffect
 {
-    using IDs = DropShadowLayerEffectIDs;
+    using IDs = DropShadowIDs;
 
-    DropShadowLayerEffect(juce::ValueTree vt, juce::UndoManager& um);
-    ~DropShadowLayerEffect() override = default;
+    DropShadow(juce::ValueTree vt, juce::UndoManager& um);
+    ~DropShadow() override = default;
 
     [[nodiscard]] auto getName() -> juce::String override;
     [[nodiscard]] auto getImageEffect() -> juce::ImageEffectFilter* override;

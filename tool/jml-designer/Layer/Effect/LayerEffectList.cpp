@@ -1,7 +1,7 @@
 #include "LayerEffectList.hpp"
 
-#include "Layer/Effect/DropShadowLayerEffect.hpp"
-#include "Layer/Effect/GlowLayerEffect.hpp"
+#include "Layer/Effect/DropShadow.hpp"
+#include "Layer/Effect/GlowEffect.hpp"
 
 namespace mc {
 
@@ -16,16 +16,16 @@ LayerEffectList::~LayerEffectList() { freeObjects(); }
 auto LayerEffectList::isSuitableType(juce::ValueTree const& v) const -> bool
 {
     auto const type = v.getType().toString();
-    if (type == DropShadowLayerEffect::IDs::type) { return true; }
-    if (type == GlowLayerEffect::IDs::type) { return true; }
+    if (type == DropShadow::IDs::type) { return true; }
+    if (type == GlowEffect::IDs::type) { return true; }
     return false;
 }
 
 auto LayerEffectList::createNewObject(juce::ValueTree const& v) -> LayerEffect*
 {
     auto const type = v.getType().toString();
-    if (type == DropShadowLayerEffect::IDs::type) { return new DropShadowLayerEffect{v, _undoManager}; }
-    if (type == GlowLayerEffect::IDs::type) { return new GlowLayerEffect{v, _undoManager}; }
+    if (type == DropShadow::IDs::type) { return new DropShadow{v, _undoManager}; }
+    if (type == GlowEffect::IDs::type) { return new GlowEffect{v, _undoManager}; }
     return nullptr;
 }
 

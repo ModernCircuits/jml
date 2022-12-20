@@ -4,7 +4,7 @@
 
 namespace mc {
 
-struct GlowLayerEffectIDs
+struct GlowEffectIDs
 {
     inline static constexpr auto const* type   = "Glow";
     inline static constexpr auto const* color  = "color";
@@ -12,12 +12,12 @@ struct GlowLayerEffectIDs
     inline static constexpr auto const* offset = "offset";
 };
 
-struct GlowLayerEffect final : LayerEffect
+struct GlowEffect final : LayerEffect
 {
-    using IDs = GlowLayerEffectIDs;
+    using IDs = GlowEffectIDs;
 
-    GlowLayerEffect(juce::ValueTree vt, juce::UndoManager& um);
-    ~GlowLayerEffect() override = default;
+    GlowEffect(juce::ValueTree vt, juce::UndoManager& um);
+    ~GlowEffect() override = default;
 
     [[nodiscard]] auto getName() -> juce::String override;
     [[nodiscard]] auto getImageEffect() -> juce::ImageEffectFilter* override;
