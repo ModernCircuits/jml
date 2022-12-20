@@ -1,9 +1,9 @@
 #include "Layer.hpp"
 
 #include "Component/PropertyPanel.hpp"
-#include "Layer/Group/GroupLayer.hpp"
-#include "Layer/Shape/ShapeLayer.hpp"
-#include "Layer/Text/TextLayer.hpp"
+#include "Layers/GroupLayer.hpp"
+#include "Layers/ShapeLayer.hpp"
+#include "Layers/TextLayer.hpp"
 
 namespace mc {
 

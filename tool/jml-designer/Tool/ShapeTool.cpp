@@ -1,7 +1,7 @@
 #include "ShapeTool.hpp"
 
 #include "Document/DocumentCanvas.hpp"
-#include "Layer/Shape/ShapeLayer.hpp"
+#include "Layers/ShapeLayer.hpp"
 
 namespace mc {
 

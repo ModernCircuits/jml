@@ -77,12 +77,12 @@ set(sources
     "Layer/LayerTreeItem.cpp"
     "Layer/LayerTreeItem.hpp"
 
-    "Layer/Group/GroupLayer.cpp"
-    "Layer/Group/GroupLayer.hpp"
-    "Layer/Shape/ShapeLayer.cpp"
-    "Layer/Shape/ShapeLayer.hpp"
-    "Layer/Text/TextLayer.cpp"
-    "Layer/Text/TextLayer.hpp"
+    "Layers/GroupLayer.cpp"
+    "Layers/GroupLayer.hpp"
+    "Layers/ShapeLayer.cpp"
+    "Layers/ShapeLayer.hpp"
+    "Layers/TextLayer.cpp"
+    "Layers/TextLayer.hpp"
 
     "LookAndFeel/LookAndFeel.hpp"
 

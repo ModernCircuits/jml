@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Document/Document.hpp"
-#include "Layer/Group/GroupLayer.hpp"
 #include "Tool/Tool.hpp"
 #include "Tool/ToolBar.hpp"
 

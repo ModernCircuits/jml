@@ -1,6 +1,7 @@
 #include "DocumentCanvas.hpp"
 
-#include "Layer/Shape/ShapeLayer.hpp"
+#include "Layers/GroupLayer.hpp"
+#include "Layers/ShapeLayer.hpp"
 #include "Tool/SelectionTool.hpp"
 #include "Tool/ShapeTool.hpp"
 
