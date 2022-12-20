@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Export/ImageExporter.hpp"
+#include "Layer/Export/ImageExporter.hpp"
 #include "Layer/LayerSelection.hpp"
 
 #include <mc_gui_extra/mc_gui_extra.hpp>

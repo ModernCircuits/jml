@@ -1,6 +1,6 @@
 #include "LayerPropertyPanel.hpp"
 
-#include "Export/ImageExporter.hpp"
+#include "Layer/Export/ImageExporter.hpp"
 #include "Layer/LayerTree.hpp"
 #include "Layer/LayerTreeItem.hpp"
 

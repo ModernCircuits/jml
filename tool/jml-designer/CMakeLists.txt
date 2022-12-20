@@ -60,10 +60,6 @@ set(sources
     "Document/DocumentEditor.cpp"
     "Document/DocumentEditor.hpp"
 
-    "Export/Exporter.hpp"
-    "Export/ImageExporter.cpp"
-    "Export/ImageExporter.hpp"
-
     "Layer/Layer.cpp"
     "Layer/Layer.hpp"
     "Layer/LayerExportPanel.cpp"
@@ -76,6 +72,10 @@ set(sources
     "Layer/LayerTree.hpp"
     "Layer/LayerTreeItem.cpp"
     "Layer/LayerTreeItem.hpp"
+
+    "Layer/Export/Exporter.hpp"
+    "Layer/Export/ImageExporter.cpp"
+    "Layer/Export/ImageExporter.hpp"
 
     "Layers/GroupLayer.cpp"
     "Layers/GroupLayer.hpp"
